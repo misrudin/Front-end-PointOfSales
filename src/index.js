@@ -5,6 +5,7 @@ import App from './App';
 import Content from './Component/Content/Content';
 import History from './Component/History/History';
 import Product from './Component/Product/Product';
+import Cart from './Component/Cart/Cart';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from './Component/Auth/Auth'
@@ -16,10 +17,11 @@ class Routing extends React.Component {
         return (
             <Router>
                 <Route path="/" exact component={Login} />
-                <Route path="/home" component={App} />
-                <Route path="/home/product" component={Content} />
-                <Route path="/home/history" component={History} />
-                <Route path="/home/product-add" component={Product} />
+                <Route path="/home" component={() => (<App title="Home" />)} />
+                <Route path="/home/product" component={() => (<Content title="List Product" />)} />
+                <Route path="/home/history" component={() => (<History title="History" />)} />
+                <Route path="/home/product-add" component={() => (<Product title="Product Management" />)} />
+                <Route path="/cart" component={() => (<Cart title="Cart" />)} />
             </Router>
         )
     }

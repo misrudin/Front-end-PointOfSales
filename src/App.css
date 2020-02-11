@@ -6,7 +6,7 @@ div.mynav{
   background-color: #fff;
   box-shadow: -1px -1px 10px rgba(0, 0, 0, 0.25);
   overflow: hidden;
-  z-index: 1;
+  z-index: 99;
 }
 
 div.menu{
@@ -14,6 +14,7 @@ div.menu{
   top: 20%;
   left: 25px;
   cursor: pointer;
+  width: 50px;
 }
 
 div.myTitlePage{
@@ -24,15 +25,13 @@ div.myTitlePage{
   top: 20px;
 }
 
-div.search, div.cart{
+div.cart{
   position: absolute;
   right: 100px;
   height: 80px;
   top: 20px;
-}
-
-div.cart{
   right: 50px;
+  cursor: pointer;
 }
 
 p.cartCount{
@@ -60,12 +59,13 @@ div.wrapper{
 div.sideBar{
   flex: .5;
   min-width: 80px;
-  max-width: 80px;
   min-height: 90vh;
   background-color: #fff;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
   margin-top: 80px;
   position: fixed;
+  z-index: 1;
+  transition: all 1s ease-in;
 }
 
 
@@ -88,13 +88,8 @@ div.menuSide ul li{
   cursor: pointer;
 }
 
-div.container-cart{
-  height: calc(100% - 80px);
-  width: 500px;
-  background-color: red;
-
-  position: absolute;
-  right: -500px;
-  margin-top: 80px;
-  transition: .3s;
+.sidebarLeft{
+  width: 200px;
+  z-index: 999;
+  transition: all 1s ease-in;
 }

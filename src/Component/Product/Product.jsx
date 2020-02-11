@@ -3,11 +3,14 @@ import axios from 'axios'
 import './Product.css'
 import TableProduct from './Table'
 import { Table, Button } from 'react-bootstrap'
+import ModalCenter from '../Modal/Modal'
 
 
 class AddProduct extends Component {
     state = {
-        product: []
+        modalShow: false,
+        product: [],
+        keyword: ''
     }
 
 
@@ -19,21 +22,37 @@ class AddProduct extends Component {
         })
             .then((res) => {
                 this.setState({
-                    product: res.data.result,
+                    product: res.data.result
                 })
             })
     }
+
+
 
     componentDidMount = () => {
         this.getProduct()
     }
 
+    handleClose = () => {
+        this.setState({ modalShow: false })
+        this.getProduct()
+    }
+    getData = (e) => {
+        const keyword = e.target.value
+        this.setState({
+            keyword: keyword
+        })
+    }
+
     render() {
+        let filterProduct = this.state.product.filter((product) => {
+            return product.name.toLowerCase().indexOf(this.state.keyword.toLowerCase()) !== -1;
+        })
         return (
             < Fragment >
                 <div className="daftar">
-                    <Button className="btn btn-info">Add Product</Button>
-                    <input type="text" />
+                    <Button className="btn btn-info" onClick={() => this.setState({ modalShow: true })}>Add Product</Button>
+                    <input type="text" name="keyword" placeholder="Search..." className="keyword" onChange={this.getData} />
                     <Table responsive="m" className="mt-4">
                         <thead>
                             <tr>
@@ -47,7 +66,7 @@ class AddProduct extends Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.product.map(product => {
+                                filterProduct.map(product => {
                                     return (
                                         <TableProduct key={product.id} data={product} />
                                     )
@@ -56,6 +75,10 @@ class AddProduct extends Component {
                         </tbody>
                     </Table>
                 </div>
+                <ModalCenter
+                    show={this.state.modalShow}
+                    onHide={this.handleClose}
+                />
             </Fragment >
         )
     }

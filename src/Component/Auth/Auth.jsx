@@ -6,6 +6,7 @@ import { Redirect } from 'react-router-dom'
 
 
 class Login extends Component {
+
     state = {
         user: {
             username: '',
@@ -13,6 +14,7 @@ class Login extends Component {
         },
         msg: ''
     }
+
 
 
     handleChange = (e) => {
@@ -28,15 +30,20 @@ class Login extends Component {
         axios.post('http://localhost:4001/api/v1/auth/login', data)
             .then((res) => {
                 if (!res.data.token) {
-                    this.setState({ msg: res.data.msg })
-                    document.querySelector('.alert').style.display = 'block'
+                    localStorage.setItem('msg', res.data.msg);
                 } else {
+                    localStorage.setItem('msg', 'Thank you for using the app.');
                     localStorage.setItem('Token', res.data.token);
-                    this.history.push()
+                    this.history.push('/home')
                 }
             })
     }
 
+    componentDidMount = () => {
+        this.setState({
+            msg: localStorage.getItem('msg')
+        })
+    }
 
 
 
@@ -48,8 +55,8 @@ class Login extends Component {
                     <div className="main">
                         <div className="loginarea">
                             <h2 className="title">Login</h2>
-                            <Alert key="warning" variant="warning" className='alert'>{this.state.msg}</Alert>
-                            <Form>
+                            <Alert variant="light" className="alert">{this.state.msg}</Alert>
+                            <Form onSubmit={(e) => this.handleLogin()}>
                                 <Form.Group as={Row} controlId="username" className="justify-content-center mt-5">
                                     <Col lg={8}>
                                         <Form.Control type="text" className="txt" name="username" required onChange={this.handleChange} placeholder="Username" value={this.state.user.username} />
@@ -62,7 +69,7 @@ class Login extends Component {
                                 </Form.Group>
                                 <Form.Group as={Row} controlId="login" className="justify-content-center mt-4">
                                     <Col lg={6}>
-                                        <Button className="form-control btn btn-primary txt" onClick={(e) => this.handleLogin()} type="submit" name="login">Login</Button>
+                                        <Button className="form-control btn btn-primary txt" type="submit" name="login">Login</Button>
                                     </Col>
                                 </Form.Group>
                             </Form>

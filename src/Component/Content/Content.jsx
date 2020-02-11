@@ -16,7 +16,7 @@ class Content extends Component {
         })
             .then((res) => {
                 this.setState({
-                    product: res.data.result,
+                    product: res.data.result
                 })
             })
     }
@@ -33,7 +33,7 @@ class Content extends Component {
                     {
                         this.state.product.map(product => {
                             return (
-                                <Product key={product.id} name={product.name} price={product.price} image={product.image} />
+                                <Product key={product.id} data={product} />
                             )
                         })
                     }
