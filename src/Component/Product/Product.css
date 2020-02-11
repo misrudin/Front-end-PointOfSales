@@ -1,0 +1,12 @@
+.imp{
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.daftar{
+    margin-top: 80px;
+    margin-left: 80px;
+    padding: 20px;
+}

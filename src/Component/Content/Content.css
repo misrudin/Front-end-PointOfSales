@@ -1,0 +1,15 @@
+div.content{
+    position: relative;
+    flex: 9;
+    min-height: 85vh;
+    padding: 20px;
+    margin-top: 80px;
+    margin-left: 80px;
+}
+
+div.items{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    grid-auto-rows: 250px;
+    grid-gap: 10px;
+}
