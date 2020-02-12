@@ -19,32 +19,7 @@ div.detail{
     grid-template-columns: 100px 100px;
     justify-content: center;
     align-items: center;
-    margin-top: -10px;
-    cursor: pointer;
-    font-size: 14px;
-    color: rgb(36, 35, 35);
-}
-
-.addtocart {
-    margin: -20px 5px 20px 5px !important;
-    border-radius: 4px;
-    background-color: orange;
-    color: white;
-    font-size: 12px !important;
-    font-weight: bold !important;
-    line-height: 22px !important;
-    cursor: pointer;
-    padding-top: 2px;
-    padding-bottom: 2px;
-}
-
-.product{
-    width: 100%;
-    display: grid;
-    grid-template-columns: 150px 100px;
-    justify-content: center;
-    align-items: center;
-    margin-top: -10px;
+    margin-top: 5px;
     cursor: pointer;
     font-size: 14px;
     color: rgb(36, 35, 35);

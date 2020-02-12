@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 const Items = (props) => {
     return (
         <div className="box-cart">
@@ -8,15 +9,15 @@ const Items = (props) => {
             </div>
             <div className="cart-product">
                 <p className="name-product">{props.data.name}</p>
-                <p className="des-product">{props.data.price} </p>
+                <div className="qty">
+                    <div className="minus" onClick={() => props.minus(props.data)}>-</div>
+                    <div className="value-cart">{props.data.qty} </div>
+                    <div className="plus" onClick={() => props.plus(props.data)}>+</div>
+                </div>
             </div>
-            <div className="qty">
-                <div className="minus" onClick={() => props.minus(props.data)}>-</div>
-                <div className="value-cart">{props.data.qty} </div>
-                <div className="plus" onClick={() => props.plus(props.data)}>+</div>
-            </div>
-            <div className="action-cart">
-                <p>Delete</p>
+            <p className="des-product">Rp. {props.data.price * props.data.qty} </p>
+            <div className="action-cart" onClick={() => props.delete(props.data)}>
+                <p>X</p>
             </div>
         </div>
     )

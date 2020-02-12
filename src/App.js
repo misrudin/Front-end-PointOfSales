@@ -78,13 +78,17 @@ class App extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props)
-    const id_user = this.parseJwt()
-    this.setState({
-      id_user: id_user
-    }, () => {
-      this.getAllCart()
-    })
+    if (localStorage.getItem('Token')) {
+      console.log(this.props)
+      const id_user = this.parseJwt()
+      this.setState({
+        id_user: id_user
+      }, () => {
+        this.getAllCart()
+      })
+    } else {
+      return <Redirect to="/" />
+    }
   }
 
 
@@ -104,7 +108,7 @@ class App extends Component {
                 </div>
               </Link>
 
-              <Link to="/cart">
+              <Link to="/home/product/cart">
                 <div className="cart">
                   <img className="cart-logo" onClick={() => this.getAllCart} src={cartLogo} alt="Cart" width="35px" />
                   <p className="cartCount">{this.state.qty}</p>

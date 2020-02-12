@@ -3,6 +3,8 @@ import './Cart.css'
 // import { RootContext } from '../../App'
 import axios from 'axios'
 import Items from './Items'
+import { Modal, Button } from 'react-bootstrap'
+
 
 class Cart extends Component {
     constructor(props) {
@@ -10,8 +12,18 @@ class Cart extends Component {
         this.state = {
             id_user: '',
             cart: [],
-            qty: 0
+            qty: 0,
+            setShow: false,
+            id_cart: '',
+            cekout: false
         }
+    }
+
+    handleClose = () => {
+        this.setState({
+            setShow: false,
+            cekout: false
+        })
     }
     parseJwt = () => {
         const token = localStorage.getItem('Token')
@@ -51,8 +63,30 @@ class Cart extends Component {
 
     handleMinus = (data) => {
         const id_cart = data.id
-        console.log(data.id)
-        axios.patch(`http://localhost:4001/api/v1/cart/min/${id_cart}`, {
+
+        // console.log(data.qty - 1)
+        const newQty = data.qty - 1
+        if (newQty < 1) {
+            this.handleDelete(data)
+        } else {
+            axios.patch(`http://localhost:4001/api/v1/cart/min/${id_cart}`, {
+                headers: {
+                    token: localStorage.getItem('Token')
+                }
+            })
+                .then((res) => {
+                    this.setState({
+                        cart: res.data.result
+                    }, () => {
+                        this.getAllCart()
+                    })
+                })
+        }
+    }
+    handlePlus = (data) => {
+        const id_cart = data.id
+        // console.log(data.id)
+        axios.patch(`http://localhost:4001/api/v1/cart/add/${id_cart}`, {
             headers: {
                 token: localStorage.getItem('Token')
             }
@@ -65,9 +99,49 @@ class Cart extends Component {
                 })
             })
     }
-    handlePlus = (data) => {
-        console.log('plus')
-        console.log(data.id)
+    handleDelete = (data) => {
+        this.setState({
+            id_cart: data.id,
+            setShow: true
+        })
+    }
+    deleteOk = () => {
+        const id_cart = this.state.id_cart
+        axios.delete(`http://localhost:4001/api/v1/cart/${id_cart}`, {
+            headers: {
+                token: localStorage.getItem('Token')
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    cart: res.data.result
+                }, () => {
+                    this.getAllCart()
+                    this.handleClose()
+                })
+            })
+    }
+
+    handleCheckout = () => {
+        this.setState({
+            cekout: true
+        })
+    }
+    checkoutOk = () => {
+        const id_user = this.state.id_user
+        axios.get(`http://localhost:4001/api/v1/cart/checkout/all/${id_user}`, {
+            headers: {
+                token: localStorage.getItem('Token')
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    cart: res.data.result
+                }, () => {
+                    this.getAllCart()
+                    this.handleClose()
+                })
+            })
     }
 
     componentDidMount() {
@@ -83,26 +157,60 @@ class Cart extends Component {
         return (
 
             <Fragment>
-                <div className="header-cart">
-
-                </div>
-                <div className="container-cart">
-                    {
-                        this.state.cart !== 'undefined' && this.state.cart.length > 0 ?
-                            this.state.cart.map(data => {
-                                return (
-                                    <Items key={data.id} data={data} minus={() => this.handleMinus(data)} plus={() => this.handlePlus(data)} />
+                <div className="cover">
+                    <div className="container-cart">
+                        {
+                            this.state.cart !== 'undefined' && this.state.cart.length > 0 ?
+                                this.state.cart.map(data => {
+                                    return (
+                                        <Items key={data.id} data={data} minus={() => this.handleMinus(data)} plus={() => this.handlePlus(data)} delete={() => this.handleDelete(data)} />
+                                    )
+                                })
+                                : (
+                                    <p>Loading</p>
                                 )
-                            })
-                            : (
-                                <p>Loading</p>
-                            )
-                    }
-
-
+                        }
+                    </div>
+                    <div className="footer">
+                        <p>Total</p> <p>Rp. 0000</p>
+                        <Button className="btn btn-primary" onClick={() => this.handleCheckout()}>Checkout</Button>
+                        <Button className="btn btn-danger">Cancel</Button>
+                    </div>
                 </div>
-                <div className="footer-cart"></div>
-            </Fragment>
+
+
+
+                <Modal show={this.state.setShow} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Are You Sure?</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Delete the selected item?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>
+                            Close
+              </Button>
+                        <Button variant="danger" onClick={this.deleteOk}>
+                            Delete
+              </Button>
+                    </Modal.Footer>
+                </Modal>
+
+                {/* checkoout */}
+                <Modal show={this.state.cekout} onHide={this.handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>This is data</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>Checkout all item?</Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={this.handleClose}>
+                            Cancel
+              </Button>
+                        <Button variant="primary" onClick={this.checkoutOk}>
+                            Yes
+              </Button>
+                    </Modal.Footer>
+                </Modal>
+            </Fragment >
         );
     }
 }

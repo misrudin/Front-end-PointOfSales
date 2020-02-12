@@ -6,10 +6,15 @@ div.content{
     margin-top: 80px;
     margin-left: 80px;
     transition: 1s;
+    max-width: 850px;
 }
 
 .contentSlide{
     margin-left: 120px;
+}
+
+.cartshow{
+    width: 900px;
 }
 
 div.items{

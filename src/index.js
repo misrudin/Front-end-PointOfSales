@@ -21,7 +21,7 @@ class Routing extends React.Component {
                 <Route path="/home/product" component={() => (<Content title="List Product" />)} />
                 <Route path="/home/history" component={() => (<History title="History" />)} />
                 <Route path="/home/product-add" component={() => (<Product title="Product Management" />)} />
-                <Route path="/cart" component={() => (<Cart title="Cart" />)} />
+                <Route path="/home/product/cart" component={() => (<Cart title="Cart" />)} />
             </Router>
         )
     }

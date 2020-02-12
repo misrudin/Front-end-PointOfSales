@@ -27,7 +27,7 @@ class Product extends Component {
     };
 
 
-    handeAddToCart = (id_product) => {
+    handleAddToCart = (id_product) => {
         const id_user = this.parseJwt()
         this.setState({
             id_user: id_user,
@@ -42,22 +42,17 @@ class Product extends Component {
             })
                 .then((res) => {
                     console.log(res)
-                    window.location.href = "/home/product"
+                    window.location.href = "/product/cart"
                 })
         })
     }
     render() {
         return (
-            <div className="item">
+            <div className="item" onClick={() => this.handleAddToCart(this.props.data.id)}>
                 <img className="imgProduct" src={this.props.data.image} alt="imgProduct" />
                 <div className="detail">
-
-                    <p className="addtocart" onClick={() => this.handeAddToCart(this.props.data.id)} >Add To Cart</p>
-                    <p className="addtocart">Detail</p>
-
                     <span className="name"> {this.props.data.name} </span>
                     <span className="price">Rp. {this.props.data.price} </span>
-
                 </div>
             </div>
 
