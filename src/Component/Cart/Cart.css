@@ -1,12 +1,3 @@
-div.container-cart{
-    min-height: calc(100vh - 150px);
-    padding: 10px;
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-    grid-auto-rows: 90px;
-    grid-gap: 5px;
-}
 .cover{
     height: auto;
     background-color: #f7f9fc;
@@ -14,9 +5,18 @@ div.container-cart{
     margin-top: 60px;
     width: 400px;
     position: absolute;
-    top: 20px;
-    right: 0px;
+    top: -55px;
+    right: -410px;
     transition: 1s;
+}
+div.container-cart{
+    min-height: calc(100vh - 235px);
+    padding: 10px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    grid-auto-rows: 90px;
+    grid-gap: 5px;
 }
 
 .box-cart{

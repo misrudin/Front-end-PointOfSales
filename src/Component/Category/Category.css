@@ -1,0 +1,58 @@
+.daftar{
+    margin-top: 80px;
+    margin-left: 80px;
+    padding: 20px;
+}
+
+.keyword{
+    margin-left: 20px;
+    border:none;
+    border-bottom: 2px solid #c0c0c0;
+    outline: none;
+    width: 400px;
+    color: #333;
+      font-size: 14px;
+      padding: 0.5em 1em 0.5em 0;
+      transition: 1s;
+}
+
+.keyword:focus{
+    border-bottom: 2px solid #f18c07;
+}
+
+.delete{
+    text-transform: capitalize;
+    font-weight: bold;
+    color: red;
+    font-style: 14px;
+}
+.edit{
+    text-transform: capitalize;
+    font-weight: bold;
+    color: orange;
+    font-style: 14px;
+}
+
+.delete,.edit{
+    display: inline-block;
+    transition: .2s;
+    padding: 2px 5px;
+    box-sizing: border-box;
+    border: 1px solid rgb(255, 255, 255);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.delete:hover,.edit:hover{
+    border: 1px solid rgb(185, 185, 185);
+}
+
+
+.preview{
+    max-width: 400px;
+    max-height: 250px;
+    border: 2px solid salmon;
+    box-shadow: -1px -1px 20px -1px #888;
+    border-radius: 2px;
+}

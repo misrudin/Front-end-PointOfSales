@@ -17,12 +17,9 @@ div.menu{
   width: 50px;
 }
 
-div.myTitlePage{
+div.myTitlePage h3{
   cursor: pointer;
-  position: absolute;
-  height: 80px;
-  left: 100px;
-  top: 20px;
+  text-decoration: none;
 }
 
 div.cart{
@@ -57,7 +54,7 @@ div.wrapper{
 /* //sidebar */
 
 div.sideBar{
-  flex: .5;
+  /* flex: .5; */
   min-width: 80px;
   min-height: 90vh;
   background-color: #fff;
@@ -66,6 +63,7 @@ div.sideBar{
   position: fixed;
   z-index: 1;
   transition: all 1s ease-in;
+  width: 0;
 }
 
 
@@ -86,10 +84,20 @@ div.menuSide ul li{
   list-style: none;
   margin-bottom: 40px;
   cursor: pointer;
+  text-align: center;
+}
+
+.menuSide p{
+  font-size: 12px;
+  color: #888;
 }
 
 .sidebarLeft{
-  width: 200px;
+ width: 80px;
   z-index: 999;
   transition: all 1s ease-in;
+}
+
+.home:hover{
+  text-decoration: none;
 }

@@ -1,7 +1,7 @@
 div.content{
     position: relative;
     flex: 2;
-    min-height: 85vh;
+    min-height: 100vh;
     padding: 20px;
     margin-top: 80px;
     margin-left: 80px;
@@ -22,4 +22,45 @@ div.items{
     grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
     grid-auto-rows: 250px;
     grid-gap: 10px;
+}
+
+div.sch{
+    position: fixed;
+    top: 15px;
+    z-index: 9999;
+}
+
+div.sch input{
+    border:none;
+    border-bottom: 2px solid #c0c0c0;
+    outline: none;
+    width: 200px;
+    color: #333;
+      font-size: 14px;
+      padding: 0.5em 1em 0.5em 0;
+      transition: .4s;
+}
+
+.sch input:focus{
+    border-bottom: 2px solid #f18c07;
+    width: 250px;
+}
+
+.page{
+    position: relative;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: 100px 100px;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+.page p{
+    margin:0;
+    text-align: center;
+    color: royalblue;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
 }

@@ -1,16 +1,13 @@
-import React, { Component, Fragment, createContext } from 'react';
+import React, { Component, Fragment } from 'react';
 import './App.css'
-import menuLogo from './img/menu.svg'
 import cartLogo from './img/commerce-and-shopping.svg'
 import foodres from '../src/img/silverware.svg'
 import clipboard from '../src/img/attendant-list.svg'
 import addbtn from '../src/img/plus.svg'
+import addbtnc from '../src/img/add.svg'
 import logout from '../src/img/logout.svg'
 import { Redirect, Link } from "react-router-dom";
 import axios from 'axios'
-
-export const RootContext = createContext()
-const Provider = RootContext.Provider
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +18,14 @@ class App extends Component {
       cart: [],
       id_user: '',
       qty: 0,
+      keyword: ''
     }
+  }
+
+  handleSearch = (e) => {
+    this.setState({
+      keyword: e.target.value
+    })
   }
 
   handleLogout = () => {
@@ -79,7 +83,6 @@ class App extends Component {
 
   componentDidMount() {
     if (localStorage.getItem('Token')) {
-      console.log(this.props)
       const id_user = this.parseJwt()
       this.setState({
         id_user: id_user
@@ -96,56 +99,68 @@ class App extends Component {
     // console.log(this.parseJwt())
     if (localStorage.getItem('Token')) {
       return (
-        <Provider value={this.state}>
-          <Fragment>
-            <div className="mynav">
-              <div className="menu">
-                <img src={menuLogo} alt="Menu" width="40px" onClick={this.alo} />
-              </div>
-              <Link to="/home">
+        <Fragment>
+          <div className="mynav">
+            <div className="menu">
+              <Link to="/home/product">
                 <div className="myTitlePage" >
-                  <h3>{this.props.title}</h3>
-                </div>
-              </Link>
-
-              <Link to="/home/product/cart">
-                <div className="cart">
-                  <img className="cart-logo" onClick={() => this.getAllCart} src={cartLogo} alt="Cart" width="35px" />
-                  <p className="cartCount">{this.state.qty}</p>
+                  <h3 className="home">POS</h3>
                 </div>
               </Link>
             </div>
 
-            <div className="wrapper">
-              <div className="sideBar">
-                <div className="menuSide">
-                  <ul>
-                    <li>
-                      <Link to="/home/Product">
-                        <img src={foodres} alt="menu" width="40px" />
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/home/history">
-                        <img src={clipboard} alt="clipboard" width="40px" />
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/home/product-add">
-                        <img src={addbtn} alt="addbtn" width="40px" onClick={() => this.setState({ modalShow: true })} />
-                      </Link>
-                    </li>
-                    <li>
-                      <img src={logout} onClick={() => this.handleLogout()} alt="Logout" width="40px" />
-                    </li>
-                  </ul>
-                </div>
+            {/* <div className="search-text" >
+              <input type="text" name="keyword" id="keyword" onChange={this.handleSearch} />
+            </div> */}
+
+
+            <Link to="/home/product">
+              <div className="cart">
+                <img className="cart-logo" onClick={() => this.getAllCart} src={cartLogo} alt="Cart" width="35px" />
+                <p className="cartCount">{this.state.qty}</p>
               </div>
-              {/* call children */}
+            </Link>
+          </div>
 
+          <div className="wrapper">
+            <div className="sideBar">
+              <div className="menuSide">
+                <ul>
+                  <li>
+                    <Link to="/home/Product">
+                      <img src={foodres} alt="menu" width="40px" />
+                    </Link>
+                    <p>Product</p>
+                  </li>
+                  <li>
+                    <Link to="/home/history">
+                      <img src={clipboard} alt="clipboard" width="40px" />
+                    </Link>
+                    <p>History</p>
+                  </li>
+                  <li>
+                    <Link to="/home/product-add">
+                      <img src={addbtn} alt="addbtn" width="40px" onClick={() => this.setState({ modalShow: true })} />
+                    </Link>
+                    <p>Add Product</p>
+                  </li>
+                  <li>
+                    <Link to="/home/category">
+                      <img src={addbtnc} alt="addbtn" width="40px" onClick={() => this.setState({ modalShow: true })} />
+                    </Link>
+                    <p>Add Category</p>
+                  </li>
+                  <li>
+                    <img src={logout} onClick={() => this.handleLogout()} alt="Logout" width="40px" />
+                    <p>Logout</p>
+                  </li>
+                </ul>
+              </div>
             </div>
-          </Fragment>
-        </Provider >
+            {/* call children */}
+
+          </div>
+        </Fragment>
       )
     } else {
       return <Redirect to="/" />

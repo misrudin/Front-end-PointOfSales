@@ -74,26 +74,28 @@ class TableProduct extends Component {
 
     handleSave = (product) => {
         const id = this.state.id
-        this.setState({
-            editShow: false,
-        })
-        let fd = new FormData()
-        fd.append('image', product.image, product.image.name)
-        fd.set('name', product.name)
-        fd.set('description', product.description)
-        fd.set('stok', product.stok)
-        fd.set('price', product.price)
-        fd.set('id_category', product.id_category)
-        axios.patch(`http://localhost:4001/api/v1/product/${id}`, fd, {
-            headers: {
-                token: localStorage.getItem('Token')
-            }
-        })
-            .then(response => {
-                console.log(response)
-                window.location.href = "/home/product-add"
+        if (product.name !== '' && product.description !== '' && product.stok !== '' && product.price !== '' && product.id_category !== '') {
+            this.setState({
+                editShow: false,
             })
-            .catch(err => console.log(err))
+            let fd = new FormData()
+            fd.append('image', product.image, product.image.name)
+            fd.set('name', product.name)
+            fd.set('description', product.description)
+            fd.set('stok', product.stok)
+            fd.set('price', product.price)
+            fd.set('id_category', product.id_category)
+            axios.patch(`http://localhost:4001/api/v1/product/${id}`, fd, {
+                headers: {
+                    token: localStorage.getItem('Token')
+                }
+            })
+                .then(response => {
+                    console.log(response)
+                    window.location.href = "/home/product-add"
+                })
+                .catch(err => console.log(err))
+        }
     }
 
     handleDelete = () => {
@@ -133,7 +135,6 @@ class TableProduct extends Component {
                     <td>{this.props.data.name}</td>
                     <td>{this.props.data.description}</td>
                     <td>Rp. {this.props.data.price}</td>
-                    <td>{this.props.data.nama_category}</td>
                     <td>{this.props.data.stok}</td>
                     <td>
                         <p className="edit" onClick={() => this.handleShowEdit(this.props.data)}>Edit</p> | <p className="delete" onClick={() => this.handleShow(this.props.data.id)}> Delete</p>
@@ -203,14 +204,14 @@ class TableProduct extends Component {
                                 <Form.Label column sm={2}>
                                     Price</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="number" value={this.state.product.price} className="txt" name="price" onChange={this.handleChange} />
+                                    <Form.Control type="number" required value={this.state.product.price} className="txt" name="price" onChange={this.handleChange} />
                                 </Col>
                             </Form.Group>
                             <Form.Group as={Row} controlId="formHorizontalstok">
                                 <Form.Label column sm={2}>
                                     Stok</Form.Label>
                                 <Col sm={7}>
-                                    <Form.Control type="number" value={this.state.product.stok} className="txt" name="stok" onChange={this.handleChange} />
+                                    <Form.Control type="number" required value={this.state.product.stok} className="txt" name="stok" onChange={this.handleChange} />
                                 </Col>
                             </Form.Group>
 
@@ -218,7 +219,7 @@ class TableProduct extends Component {
                                 <Form.Label column sm={2}>
                                     Category</Form.Label>
                                 <Col sm={7}>
-                                    <Form.Control as="select" value={this.state.product.id_category} className="txt" name="id_category" onChange={this.handleChange}>
+                                    <Form.Control as="select" required value={this.state.product.id_category} className="txt" name="id_category" onChange={this.handleChange}>
                                         <option>Chose...</option>
                                         {
                                             this.state.category.map(data => {

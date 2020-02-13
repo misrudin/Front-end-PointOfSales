@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import axios from 'axios'
 import './Product.css'
 import TableProduct from './Table'
-import { Table, Modal, Button, Form, Col, Row, Alert } from 'react-bootstrap'
+import { Table, Modal, Button, Form, Col, Row } from 'react-bootstrap'
 
 
 class AddProduct extends Component {
@@ -20,7 +20,7 @@ class AddProduct extends Component {
                 price: '',
                 image: null,
                 id_category: '',
-                stok: 0
+                stok: ''
             },
             msg: ''
         }
@@ -57,23 +57,25 @@ class AddProduct extends Component {
 
     handleSubmit = () => {
         let product = this.state.dataproduct
-        let fd = new FormData()
-        fd.append('image', product.image, product.image.name)
-        fd.set('name', product.name)
-        fd.set('description', product.description)
-        fd.set('stok', product.stok)
-        fd.set('price', product.price)
-        fd.set('id_category', product.id_category)
-        axios.post('http://localhost:4001/api/v1/product', fd, {
-            headers: {
-                token: localStorage.getItem('Token')
-            }
-        })
-            .then(response => {
-                console.log(response)
-                this.handleClose()
+        if (product.name !== '' && product.description !== '' && product.stok !== '' && product.price !== '' && product.id_category !== '') {
+            let fd = new FormData()
+            fd.append('image', product.image, product.image.name)
+            fd.set('name', product.name)
+            fd.set('description', product.description)
+            fd.set('stok', product.stok)
+            fd.set('price', product.price)
+            fd.set('id_category', product.id_category)
+            axios.post('http://localhost:4001/api/v1/product', fd, {
+                headers: {
+                    token: localStorage.getItem('Token')
+                }
             })
-            .catch(err => console.log(err))
+                .then(response => {
+                    console.log(response)
+                    this.handleClose()
+                })
+                .catch(err => console.log(err))
+        }
     }
 
     componentDidMount = () => {
@@ -116,7 +118,6 @@ class AddProduct extends Component {
                                 <th>Name</th>
                                 <th>Description</th>
                                 <th>Price</th>
-                                <th>Category</th>
                                 <th>Stok</th>
                                 <th></th>
                             </tr>
@@ -144,7 +145,6 @@ class AddProduct extends Component {
                             Add Product</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Alert key="warning" variant="warning" className='alert'>{this.state.msg}</Alert>
 
                         <Form>
                             <Form.Group as={Row} controlId="formHorizontalName">
@@ -175,7 +175,14 @@ class AddProduct extends Component {
                                 <Form.Label column sm={2}>
                                     Price</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="number" className="txt" name="price" onChange={this.handleChange} />
+                                    <Form.Control type="number" className="txt" required name="price" onChange={this.handleChange} />
+                                </Col>
+                            </Form.Group>
+                            <Form.Group as={Row} controlId="formHorizontalstok">
+                                <Form.Label column sm={2}>
+                                    Stok</Form.Label>
+                                <Col sm={10}>
+                                    <Form.Control type="number" className="txt" required name="stok" onChange={this.handleChange} />
                                 </Col>
                             </Form.Group>
 
@@ -183,7 +190,7 @@ class AddProduct extends Component {
                                 <Form.Label column sm={2}>
                                     Category</Form.Label>
                                 <Col sm={7}>
-                                    <Form.Control as="select" className="txt" name="id_category" onChange={this.handleChange}>
+                                    <Form.Control as="select" className="txt" required name="id_category" onChange={this.handleChange}>
                                         <option>Chose...</option>
                                         {
                                             this.state.category.map(data => {

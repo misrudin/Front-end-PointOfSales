@@ -1,28 +1,45 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import Content from './Component/Content/Content';
+// import Content from './Component/Content/Content';
 import History from './Component/History/History';
 import Product from './Component/Product/Product';
-import Cart from './Component/Cart/Cart';
+import Content from './Component/Content/Content';
+import Category from './Component/Category/Category';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from './Component/Auth/Auth'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+export const RootContext = createContext()
+const Provider = RootContext.Provider
 
 class Routing extends React.Component {
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            modalShow: false,
+            product: [],
+            cart: [],
+            id_user: '',
+            qty: 0,
+            keyword: ''
+        }
+    }
     render() {
         return (
-            <Router>
-                <Route path="/" exact component={Login} />
-                <Route path="/home" component={() => (<App title="Home" />)} />
-                <Route path="/home/product" component={() => (<Content title="List Product" />)} />
-                <Route path="/home/history" component={() => (<History title="History" />)} />
-                <Route path="/home/product-add" component={() => (<Product title="Product Management" />)} />
-                <Route path="/home/product/cart" component={() => (<Cart title="Cart" />)} />
-            </Router>
+            <Provider value={this.state}>
+                <Router>
+                    <Route path="/" exact component={Login} />
+                    <Route path="/home" component={App} />
+                    <Route path="/home/product" component={Content} />
+                    <Route path="/home/history" component={History} />
+                    <Route path="/home/product-add" component={Product} />
+                    <Route path="/home/category" component={Category} />
+                </Router>
+            </Provider >
         )
     }
 }

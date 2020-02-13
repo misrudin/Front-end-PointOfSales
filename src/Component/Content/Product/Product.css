@@ -5,6 +5,7 @@ div.item{
     text-align: center !important;
     transition: .3s;
     border: 1px solid rgb(240, 240, 240);
+    z-index: 5;
 }
 
 img.imgProduct{

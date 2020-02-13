@@ -15,7 +15,8 @@ class Cart extends Component {
             qty: 0,
             setShow: false,
             id_cart: '',
-            cekout: false
+            cekout: false,
+            refresh: false
         }
     }
 
@@ -38,7 +39,7 @@ class Cart extends Component {
     };
 
     getAllCart = () => {
-        const id_user = this.state.id_user
+        const id_user = this.parseJwt()
         axios.get(`http://localhost:4001/api/v1/cart/${id_user}`, {
             headers: {
                 token: localStorage.getItem('Token')
@@ -121,15 +122,9 @@ class Cart extends Component {
                 })
             })
     }
-
-    handleCheckout = () => {
-        this.setState({
-            cekout: true
-        })
-    }
-    checkoutOk = () => {
-        const id_user = this.state.id_user
-        axios.get(`http://localhost:4001/api/v1/cart/checkout/all/${id_user}`, {
+    handleAll = () => {
+        const id_user = this.parseJwt()
+        axios.delete(`http://localhost:4001/api/v1/cart/user/${id_user}`, {
             headers: {
                 token: localStorage.getItem('Token')
             }
@@ -144,37 +139,61 @@ class Cart extends Component {
             })
     }
 
-    componentDidMount() {
-        const id_user = this.parseJwt()
+    handleCheckout = () => {
         this.setState({
-            id_user: id_user
-        }, () => {
-            this.getAllCart()
+            cekout: true
         })
+    }
+    checkoutOk = () => {
+        const id_user = this.parseJwt()
+        axios.get(`http://localhost:4001/api/v1/cart/checkout/all/${id_user}`, {
+            headers: {
+                token: localStorage.getItem('Token')
+            }
+        })
+            .then((res) => {
+                this.setState({
+                    cart: res.data.result
+                }, () => {
+                    this.handleClose()
+                    window.location.href = "/home/history"
+                })
+            })
+    }
+
+    componentDidMount() {
+        if (localStorage.getItem('Token')) {
+            const id_user = this.parseJwt()
+            this.setState({
+                id_user: id_user
+            }, () => {
+                this.getAllCart()
+                console.log(this.state)
+            })
+        }
     }
 
     render() {
         return (
-
-            <Fragment>
+            < Fragment >
                 <div className="cover">
                     <div className="container-cart">
                         {
-                            this.state.cart !== 'undefined' && this.state.cart.length > 0 ?
+                            this.state.cart.length > 0 ?
                                 this.state.cart.map(data => {
                                     return (
                                         <Items key={data.id} data={data} minus={() => this.handleMinus(data)} plus={() => this.handlePlus(data)} delete={() => this.handleDelete(data)} />
                                     )
                                 })
                                 : (
-                                    <p>Loading</p>
+                                    <p>Cart Empty!</p>
                                 )
                         }
                     </div>
                     <div className="footer">
-                        <p>Total</p> <p>Rp. 0000</p>
+                        {/* <p>Total</p> <p>Rp. {this.state.total}</p> */}
                         <Button className="btn btn-primary" onClick={() => this.handleCheckout()}>Checkout</Button>
-                        <Button className="btn btn-danger">Cancel</Button>
+                        <Button className="btn btn-danger" onClick={() => this.handleAll()}>Cancel</Button>
                     </div>
                 </div>
 
@@ -188,30 +207,30 @@ class Cart extends Component {
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.handleClose}>
                             Close
-              </Button>
+                  </Button>
                         <Button variant="danger" onClick={this.deleteOk}>
                             Delete
-              </Button>
+                  </Button>
                     </Modal.Footer>
                 </Modal>
 
                 {/* checkoout */}
                 <Modal show={this.state.cekout} onHide={this.handleClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>This is data</Modal.Title>
+                        <Modal.Title>Checkout</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>Checkout all item?</Modal.Body>
                     <Modal.Footer>
                         <Button variant="secondary" onClick={this.handleClose}>
                             Cancel
-              </Button>
+                  </Button>
                         <Button variant="primary" onClick={this.checkoutOk}>
                             Yes
-              </Button>
+                  </Button>
                     </Modal.Footer>
                 </Modal>
             </Fragment >
-        );
+        )
     }
 }
 
