@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -7,42 +7,32 @@ import History from './Component/History/History';
 import Product from './Component/Product/Product';
 import Content from './Component/Content/Content';
 import Category from './Component/Category/Category';
+import Register from './Component/Auth/Register/Register';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from './Component/Auth/Auth'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export const RootContext = createContext()
-const Provider = RootContext.Provider
+import { Provider } from 'react-redux'
+import store from './redux/store'
 
-class Routing extends React.Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            modalShow: false,
-            product: [],
-            cart: [],
-            id_user: '',
-            qty: 0,
-            keyword: ''
-        }
-    }
-    render() {
-        return (
-            <Provider value={this.state}>
-                <Router>
-                    <Route path="/" exact component={Login} />
-                    <Route path="/home" component={App} />
-                    <Route path="/home/product" component={Content} />
-                    <Route path="/home/history" component={History} />
-                    <Route path="/home/product-add" component={Product} />
-                    <Route path="/home/category" component={Category} />
-                </Router>
-            </Provider >
-        )
-    }
+const Routing = () => {
+    return (
+        <Provider store={store}>
+            <Router>
+                <Route path="/" exact component={Login} />
+                <Route path="/home" component={App} />
+                <Route path="/home/product" component={Content} />
+                <Route path="/home/history" component={History} />
+                <Route path="/home/product-add" component={Product} />
+                <Route path="/home/category" component={Category} />
+                <Route path="/register" component={Register} />
+            </Router>
+        </Provider >
+    )
 }
+
+
 
 ReactDOM.render(<Routing />, document.getElementById('root'));
 

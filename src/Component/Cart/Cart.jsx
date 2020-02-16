@@ -168,7 +168,6 @@ class Cart extends Component {
                 id_user: id_user
             }, () => {
                 this.getAllCart()
-                console.log(this.state)
             })
         }
     }

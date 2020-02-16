@@ -116,7 +116,7 @@ class App extends Component {
 
             <Link to="/home/product">
               <div className="cart">
-                <img className="cart-logo" onClick={() => this.getAllCart} src={cartLogo} alt="Cart" width="35px" />
+                <img className="cart-logo" onClick={() => this.getAllCart} src={cartLogo} alt="Cart" width="45px" height="35px" />
                 <p className="cartCount">{this.state.qty}</p>
               </div>
             </Link>

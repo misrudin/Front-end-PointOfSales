@@ -3,9 +3,10 @@ div.item{
     background-color: rgb(245, 245, 245);
     overflow: hidden;
     text-align: center !important;
-    transition: .3s;
+    transition: .1s;
     border: 1px solid rgb(240, 240, 240);
     z-index: 5;
+    box-sizing: border-box;
 }
 
 img.imgProduct{
@@ -29,7 +30,7 @@ div.detail{
 .item:hover{
     /* margin-top: -90px; */
     border-color: rgba(206, 204, 204, 0.9);
-    box-shadow: -1px -1px 10px 1px rgba(136, 136, 136, 0.2);
+    box-shadow: 1px 1px 10px 1px rgba(136, 136, 136, 0.2);
     margin-top: -3px;
 }
 

@@ -1,14 +1,21 @@
 .cover{
     height: auto;
     background-color: #f7f9fc;
-    position: relative;
-    margin-top: 60px;
-    width: 400px;
-    position: absolute;
-    top: -55px;
-    right: -410px;
+    margin-left: 20px ;
+    width: 350px;
     transition: 1s;
+    position: -webkit-sticky;
+    position: sticky;
+    right: 20px;
+    top: 90px;
 }
+
+@media (max-width: 1200px) {
+    div.cover{
+        display: none;
+    }
+}
+
 div.container-cart{
     min-height: calc(100vh - 235px);
     padding: 10px;

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './Content.css'
 import Product from './Product/Product'
 import axios from 'axios'
+import { connect } from 'react-redux'
 import Cart from '../Cart/Cart'
-// import { RootContext } from '../../index'
+// import { countAdd, countSubstract } from '../../redux/actions/count'
 
 class Content extends Component {
     state = {
@@ -23,7 +24,8 @@ class Content extends Component {
             stok: 0
         },
         keyword: '',
-        nomor: 1
+        nomor: 1,
+        number: 0
     }
 
     searchProduct = (e) => {
@@ -41,8 +43,6 @@ class Content extends Component {
             }
         })
             .then((res) => {
-                console.log(res.data[0])
-                console.log(res.data[1])
                 this.setState({
                     product: res.data[2],
                     nomor: res.data[1]
@@ -64,12 +64,6 @@ class Content extends Component {
         return decoded.id_user
     };
 
-    reloadCart = () => {
-        return (
-            <Cart refresh={this.state.refresh} />
-        )
-    }
-
     handleAddToCart = (product) => {
         if (product.stok > 0) {
             const id_product = product.id
@@ -87,7 +81,6 @@ class Content extends Component {
                     }
                 })
                     .then((res) => {
-                        console.log(res)
                         this.getProduct()
                         this.setState({
                             refresh: true
@@ -98,27 +91,33 @@ class Content extends Component {
         }
     }
 
-    reloadCart = () => {
+
+    changeNumber = (e) => {
+        let number = parseInt(e.target.value) || 0;
         this.setState({
-            refresh: false
-        })
+            number
+        });
     }
 
     prev = () => {
-        this.setState({
-            page: this.state.page - 1
-        }, () => {
-            console.log(this.state.page)
-            // this.getProduct()
-        })
+        // this.setState({
+        //     page: this.state.page - 1
+        // }, () => {
+        //     console.log(this.state.page)
+        //     // this.getProduct()
+        // })
+        //min
+        // this.props.dispatch(countSubstract(this.state.number))
     }
+
     next = () => {
-        this.setState({
-            page: 2
-        }, () => {
-            console.log(this.state.nomor)
-            // this.getProduct()
-        })
+        // this.setState({
+        //     page: 2
+        // }, () => {
+        //     console.log(this.state.nomor)
+        //     // this.getProduct()
+        // })
+        // this.props.dispatch(countAdd(this.state.number))
     }
 
     componentDidMount = () => {
@@ -126,15 +125,11 @@ class Content extends Component {
     }
 
     render() {
+        // const { count } = this.props
         let filterProduct = this.state.product.filter((product) => {
             return product.name.toLowerCase().indexOf(this.state.keyword.toLowerCase()) !== -1;
         })
         return (
-            // <RootContext.Provider>
-            //     {
-            //         value => {
-            //             console.log(value)
-            //             return (
             < div className="content" >
                 <div className="items">
                     {
@@ -149,22 +144,30 @@ class Content extends Component {
                             )
                     }
                 </div>
-                <Cart refresh={() => this.reloadCart()} />
-
                 <div className="sch">
                     <input type="text" onChange={this.searchProduct} placeholder="Search Product....." />
                 </div>
-                <div className="page">
+                <Cart />
+                {/* <div className="page">
                     <p className="prev" onClick={() => this.prev()}>Previous</p>
-                    <p className="next" onClick={() => this.prev()}>Next</p>
-                </div>
+                    <h2>{count.number}</h2>
+                    <input type="number" onChange={this.changeNumber} />
+                    <p className="next" onClick={() => this.next()}>Next</p>
+                </div> */}
             </div >
-            //             )
-            //         }
-            //     }
-            // </RootContext.Provider >
         )
     }
 }
 
-export default Content;
+// 2 enhacer
+//1. mapStateToProps
+// 2. mapDispatchToProps
+
+
+const mapStateToProps = ({ count }) => {
+    return {
+        count
+    }
+}
+
+export default connect(mapStateToProps)(Content);

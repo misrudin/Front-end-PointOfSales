@@ -1,0 +1,112 @@
+const initialValue = {
+    productData: [],
+    errMsg: [],
+    isPending: false,
+    isRejected: false,
+    isFulfilled: false
+
+}
+
+
+const productReducer = (state = initialValue, action) => {
+    switch (action.type) {
+        //for get product data
+        case "GET_PRODUCT_PENDING":
+            return {
+                ...state,
+                isPending: true,
+                isRejected: false,
+                isFulfilled: false
+            };
+        case "GET_PRODUCT_REJECTED":
+            return {
+                ...state,
+                isPending: false,
+                isRejected: true,
+                errMsg: action.payload.data.msg
+            };
+        case "GET_PRODUCT_FULFILLED":
+            return {
+                ...state,
+                isPending: false,
+                isFulfilled: true,
+                productData: action.payload.data.result
+            };
+
+        //form post product data
+        case "ADD_PRODUCT_PENDING":
+            return {
+                ...state,
+                isPending: true,
+                isRejected: false,
+                isFulfilled: false
+            };
+        case "ADD_PRODUCT_REJECTED":
+            return {
+                ...state,
+                isPending: false,
+                isRejected: true,
+                errMsg: action.payload.data.msg
+            };
+        case "ADD_PRODUCT_FULFILLED":
+            state.productData.unshift(action.payload.data.result)
+            return {
+                ...state,
+                isPending: false,
+                isFulfilled: true,
+                productData: state.userData
+            };
+
+        // delete product data
+        case "DELETE_PRODUCT_PENDING":
+            return {
+                ...state,
+                isPending: true,
+                isRejected: false,
+                isFulfilled: false
+            };
+        case "DELETE_PRODUCT_REJECTED":
+            return {
+                ...state,
+                isPending: false,
+                isRejected: true,
+                errMsg: action.payload.data.result
+            };
+        case "DELETE_PRODUCT_FULFILLED":
+            state.productData.filter(data => data.id !== action.payload.data.result)
+            return {
+                ...state,
+                isPending: false,
+                isFulfilled: true,
+                productData: state.productData
+            };
+
+        //update product data
+        case "EDIT_PRODUCT_PENDING":
+            return {
+                ...state,
+                isPending: true,
+                isRejected: false,
+                isFulfilled: false
+            };
+        case "EDIT_PRODUCT_REJECTED":
+            return {
+                ...state,
+                isPending: false,
+                isRejected: true,
+                errMsg: action.payload.data.result
+            };
+        case "EDIT_PRODUCT_FULFILLED":
+            return {
+                ...state,
+                isPending: false,
+                isFulfilled: true,
+                productData: state.productData
+            };
+
+        default:
+            return state;
+    }
+}
+
+export default productReducer
