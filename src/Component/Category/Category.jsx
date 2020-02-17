@@ -1,76 +1,116 @@
 import React, { Component, Fragment } from 'react'
-import axios from 'axios'
 import './Category.css'
 import TableCategory from './Table'
 import { Table, Modal, Button, Form, Col, Row } from 'react-bootstrap'
+import { connect } from 'react-redux'
+import { getAllCategory, addCategory, deleteCategory, editCategory } from '../../redux/actions/category.js'
+import swal from 'sweetalert'
 
 
 class AddCategory extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            modalShow: false,
-            keyword: '',
-            category: [],
-            dataCategory: {
-                nama_category: ''
-            }
+    state = {
+        modalShow: false,
+        showEdit: false,
+        category: [],
+        keyword: '',
+        formCategory: {
+            id: '',
+            category: ''
         }
     }
 
 
-    getDataCategory = () => {
-        axios.get('http://localhost:4001/api/v1/category', {
-            headers: {
-                token: localStorage.getItem('Token')
-            }
+    getCategory = async () => {
+        await this.props.dispatch(getAllCategory())
+        this.setState({
+            category: this.props.category.categoryData
         })
-            .then((res) => {
-                this.setState({
-                    category: res.data.result
-                })
-            })
+    }
+
+    handleSubmit = () => {
+        const data = this.state.formCategory
+        this.props.dispatch(addCategory(data));
+        setTimeout(() => {
+            this.handleClose()
+            this.getCategory()
+        }, 100)
+        swal("Good job!", "Success add category", "success");
     }
 
     handleChange = (e) => {
-        let newData = { ...this.state.dataCategory };
+        let newData = { ...this.state.formCategory };
         newData[e.target.name] = e.target.value;
         this.setState({
-            dataCategory: newData
+            formCategory: newData
         })
     }
 
-
-    handleSubmit = () => {
-        const data = this.state.dataCategory
-        axios.post('http://localhost:4001/api/v1/category', {
-            category: data.nama_category
-        }, {
-            headers: {
-                token: localStorage.getItem('Token')
-            }
+    handleDelete = (id) => {
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this category!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
         })
-            .then(response => {
-                console.log(response)
-                this.handleClose()
-            })
-            .catch(err => console.log(err))
+            .then((willDelete) => {
+                if (willDelete) {
+                    this.props.dispatch(deleteCategory(id))
+                    this.getCategory()
+                    swal("Poof! Category has been deleted!", {
+                        icon: "success",
+                    });
+                } else {
+                    this.getCategory()
+                }
+            });
     }
 
-    componentDidMount = () => {
-        this.getDataCategory()
+    handleEdit = (data) => {
+        let newCategory = { ...this.state.formCategory };
+        newCategory.id = data.id;
+        newCategory.category = data.nama_category;
+        this.setState({
+            showEdit: true,
+            formCategory: newCategory,
+        })
+    }
+
+    editOk = () => {
+        const data = this.state.formCategory
+
+        swal({
+            title: "Are you sure?",
+            text: "you will edit this category!",
+            buttons: true
+        })
+            .then((willEdit) => {
+                if (willEdit) {
+                    this.props.dispatch(editCategory(data))
+                    setTimeout(() => {
+                        this.handleClose()
+                        this.getCategory()
+                    }, 100)
+                    swal("Poof! Category has been updated!", {
+                        icon: "success",
+                    });
+                } else {
+                    this.getCategory()
+                }
+            });
     }
 
     handleClose = () => {
-        this.setState({ modalShow: false })
-        this.getDataCategory()
-    }
-    getData = (e) => {
-        const keyword = e.target.value
         this.setState({
-            keyword: keyword
+            modalShow: false,
+            showEdit: false
         })
+    }
+
+    componentDidMount = () => {
+        setTimeout(() => {
+            this.getCategory()
+        }, 100)
     }
 
     render() {
@@ -93,16 +133,15 @@ class AddCategory extends Component {
                             {
                                 filterData.map(data => {
                                     return (
-                                        <TableCategory key={data.id} data={data} />
+                                        <TableCategory key={data.id} data={data} delete={this.handleDelete} edit={this.handleEdit} />
                                     )
                                 })
                             }
                         </tbody>
                     </Table>
                 </div>
-                {/* <ModalCenter show={this.state.modalShow} onHide={this.handleClose} btnSave={() => this.handleSubmit} /> */}
                 <Modal
-                    show={this.state.modalShow}
+                    show={this.state.modalShow} onHide={this.handleClose}
                     size="md"
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
@@ -117,14 +156,45 @@ class AddCategory extends Component {
                                 <Form.Label column sm={2}>
                                     Name</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control type="text" className="txt" name="nama_category" required onChange={this.handleChange} />
+                                    <Form.Control type="text" className="txt" name="category" required onChange={this.handleChange} />
                                 </Col>
                             </Form.Group>
                         </Form>
 
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="primary" onClick={(e) => this.handleSubmit()} > Save</Button>
+                        <Button variant="primary" onClick={this.handleSubmit} > Save</Button>
+                        <Button variant="secondary" onClick={this.handleClose}>Close</Button>
+                    </Modal.Footer>
+                </Modal >
+
+
+                {/* edit */}
+                <Modal
+                    show={this.state.showEdit} onHide={this.handleClose}
+                    size="md"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="contained-modal-title-vcenter">
+                            Edit Category</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+
+                            <Form.Group as={Row} controlId="formHorizontalName">
+                                <Form.Label column sm={2}>
+                                    Name</Form.Label>
+                                <Col sm={10}>
+                                    <Form.Control type="text" value={this.state.formCategory.category} className="txt" name="category" required onChange={this.handleChange} />
+                                </Col>
+                            </Form.Group>
+                        </Form>
+
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="primary" onClick={() => this.editOk(this.state.formCategory)} > Save</Button>
                         <Button variant="secondary" onClick={this.handleClose}>Close</Button>
                     </Modal.Footer>
                 </Modal >
@@ -133,4 +203,12 @@ class AddCategory extends Component {
     }
 }
 
-export default AddCategory
+
+const mapStateToProps = ({ category }) => {
+    return {
+        category
+    }
+}
+
+
+export default connect(mapStateToProps)(AddCategory)

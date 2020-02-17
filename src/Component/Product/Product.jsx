@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { getAllProduct, addProduct, deleteProduct, editProduct } from '../../redux/actions/product'
 import { getAllCategory } from '../../redux/actions/category'
 import TableProduct from './Table'
+import swal from 'sweetalert'
 
 
 class AddProduct extends Component {
@@ -15,6 +16,7 @@ class AddProduct extends Component {
         keyword: '',
         category: [],
         formProduct: {
+            id: '',
             name: '',
             description: '',
             price: '',
@@ -58,6 +60,10 @@ class AddProduct extends Component {
         fd.set('id_category', data.id_category)
         this.props.dispatch(addProduct(fd));
         this.handleClose()
+        setTimeout(() => {
+            this.getProduct()
+        }, 1000)
+        swal("Good job!", "Success add product", "success");
     }
 
 
@@ -78,14 +84,29 @@ class AddProduct extends Component {
 
 
     deleteProductData = (id) => {
-        this.props.dispatch(deleteProduct(id));
-        this.getCategory()
-        this.getProduct()
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this product!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    this.props.dispatch(deleteProduct(id));
+                    this.getProduct()
+                    swal("Poof! Product has been deleted!", {
+                        icon: "success",
+                    });
+                } else {
+                    this.getProduct()
+                }
+            });
     }
 
     //edit
     handleShowEdit = (product) => {
-        let newProduct = { ...this.state.product };
+        let newProduct = { ...this.state.formProduct };
         newProduct.id = product.id;
         newProduct.name = product.name;
         newProduct.description = product.description;
@@ -109,12 +130,26 @@ class AddProduct extends Component {
         fd.set('stok', data.stok)
         fd.set('price', data.price)
         fd.set('id_category', data.id_category)
-        this.props.dispatch(editProduct(data.id, fd));
-        setTimeout(() => {
-            this.getCategory()
-            this.getProduct()
-            this.handleClose()
-        }, 1000)
+
+        swal({
+            title: "Are you sure?",
+            text: "you will edit this product!",
+            buttons: true
+        })
+            .then((willEdit) => {
+                if (willEdit) {
+                    this.props.dispatch(editProduct(data.id, fd));
+                    setTimeout(() => {
+                        this.getProduct()
+                        this.handleClose()
+                    }, 100)
+                    swal("Poof! Product has been updated!", {
+                        icon: "success",
+                    });
+                } else {
+                    this.getProduct()
+                }
+            });
     }
 
 

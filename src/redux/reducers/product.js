@@ -23,7 +23,7 @@ const productReducer = (state = initialValue, action) => {
                 ...state,
                 isPending: false,
                 isRejected: true,
-                errMsg: action.payload.data.msg
+                errMsg: action.payload.data
             };
         case "GET_PRODUCT_FULFILLED":
             return {
@@ -46,10 +46,10 @@ const productReducer = (state = initialValue, action) => {
                 ...state,
                 isPending: false,
                 isRejected: true,
-                errMsg: action.payload.data.msg
+                errMsg: action.payload.data
             };
         case "ADD_PRODUCT_FULFILLED":
-            state.productData.unshift(action.payload.data.result)
+            // state.productData.unshift(action.payload.data.result)
             return {
                 ...state,
                 isPending: false,

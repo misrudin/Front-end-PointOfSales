@@ -55,7 +55,6 @@ div.wrapper{
 /* //sidebar */
 
 div.sideBar{
-  /* flex: .5; */
   min-width: 80px;
   min-height: 90vh;
   background-color: #fff;
@@ -65,6 +64,12 @@ div.sideBar{
   z-index: 1;
   transition: all 1s ease-in;
   width: 0;
+}
+
+@media (max-width: 550px) {
+  div.sideBar{
+      display: none;
+  }
 }
 
 

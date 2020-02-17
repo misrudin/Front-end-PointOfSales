@@ -16,9 +16,6 @@ const Items = (props) => {
                 </div>
             </div>
             <p className="des-product">Rp. {props.data.price * props.data.qty} </p>
-            <div className="action-cart" onClick={() => props.delete(props.data)}>
-                <p>X</p>
-            </div>
         </div>
     )
 }

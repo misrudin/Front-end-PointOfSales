@@ -21,7 +21,7 @@ class Product extends Component {
             //     {
             //         value => {
             //             return (
-            <div className="item" onClick={() => this.props.crt(this.props.data)}>
+            <div className="item" onClick={() => this.props.addToCart(this.props.data)}>
                 <img className="imgProduct" src={this.props.data.image} alt="imgProduct" />
                 <div className="detail">
                     <span className="name"> {this.props.data.name} </span>

@@ -6,20 +6,17 @@ import clipboard from '../src/img/attendant-list.svg'
 import addbtn from '../src/img/plus.svg'
 import addbtnc from '../src/img/add.svg'
 import logout from '../src/img/logout.svg'
-import { Redirect, Link } from "react-router-dom";
-import axios from 'axios'
+import { Redirect, Link } from "react-router-dom"
+import { connect } from 'react-redux'
+// import { getQty } from './redux/actions/cart'
 
 class App extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      modalShow: false,
-      product: [],
-      cart: [],
-      id_user: '',
-      qty: 0,
-      keyword: ''
-    }
+  state = {
+    modalShow: false,
+    product: [],
+    cart: [],
+    id_user: '',
+    keyword: ''
   }
 
   handleSearch = (e) => {
@@ -31,18 +28,6 @@ class App extends Component {
   handleLogout = () => {
     localStorage.removeItem('Token')
     window.location.href = "/"
-  }
-
-  alo = () => {
-    const side = document.querySelector('.sideBar')
-    const items = document.querySelector('.items')
-    if (side.classList.contains('sidebarLeft')) {
-      side.classList.remove('sidebarLeft');
-      items.classList.remove('contentSlide');
-    } else {
-      side.classList.add('sidebarLeft');
-      items.classList.add('contentSlide');
-    }
   }
 
 
@@ -58,36 +43,11 @@ class App extends Component {
     return decoded.id_user
   };
 
-  getAllCart = () => {
-    const id_user = this.state.id_user
-    axios.get(`http://localhost:4001/api/v1/cart/${id_user}`, {
-      headers: {
-        token: localStorage.getItem('Token')
-      }
-    })
-      .then((res) => {
-        this.setState({
-          cart: res.data.result
-        }, () => {
-          const cart = this.state.cart
-          const newQty = []
-          cart.forEach((e) => {
-            newQty.push(e.qty)
-          })
-          this.setState({
-            qty: newQty.reduce((a, b) => a + b, 0)
-          })
-        })
-      })
-  }
-
   componentDidMount() {
     if (localStorage.getItem('Token')) {
       const id_user = this.parseJwt()
       this.setState({
         id_user: id_user
-      }, () => {
-        this.getAllCart()
       })
     } else {
       return <Redirect to="/" />
@@ -96,7 +56,7 @@ class App extends Component {
 
 
   render() {
-    // console.log(this.parseJwt())
+    const qty = this.props.cart.qty
     if (localStorage.getItem('Token')) {
       return (
         <Fragment>
@@ -109,15 +69,11 @@ class App extends Component {
               </Link>
             </div>
 
-            {/* <div className="search-text" >
-              <input type="text" name="keyword" id="keyword" onChange={this.handleSearch} />
-            </div> */}
-
 
             <Link to="/home/product">
               <div className="cart">
                 <img className="cart-logo" onClick={() => this.getAllCart} src={cartLogo} alt="Cart" width="45px" height="35px" />
-                <p className="cartCount">{this.state.qty}</p>
+                <p className="cartCount">{qty}</p>
               </div>
             </Link>
           </div>
@@ -169,4 +125,11 @@ class App extends Component {
 
 }
 
-export default App;
+
+const mapStateToProps = ({ cart }) => {
+  return {
+    cart
+  }
+}
+
+export default connect(mapStateToProps)(App);
