@@ -49,7 +49,7 @@ const productReducer = (state = initialValue, action) => {
                 errMsg: action.payload.data
             };
         case "ADD_CATEGORY_FULFILLED":
-            // state.categoryData.push(action.payload.data.result)
+            state.categoryData.push(action.payload.data.result)
             return {
                 ...state,
                 isPending: false,

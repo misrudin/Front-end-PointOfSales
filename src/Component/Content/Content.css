@@ -51,7 +51,11 @@ div.items{
     }
 
     div.content{
-        margin-left: 10px;
+        margin-left: 0px;
+    }
+
+    .items{
+        padding-left: 90px;
     }
 }
 
@@ -164,6 +168,7 @@ div.sch input{
     text-align: center;
     height: 590px;
     z-index: 90;
+    transition: 1s;
 }
 
 .empty h5{
@@ -176,9 +181,19 @@ div.sch input{
 }
 
 .picEmpty{
-    -webkit-animation: 1s linear 1s infinite alternate bounce;
-    animation: 1s linear 1s infinite alternate bounce;
+    -webkit-animation: 1s linear 1s infinite alternate rotateMe;
+    animation: 1s linear 1s infinite alternate rotateMe;
 }
 
-@-webkit-keyframes bounce { from { transform: rotate(-5deg); } to { transform: rotate(5deg); }  }
-        @keyframes bounce { from { transform: rotate(-5deg); } to { transform: rotate(5deg); }  }
+
+        @keyframes rotateMe {
+            0% {
+                transform: rotate(-4deg);
+            }
+            50% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(4deg);
+            }
+          }

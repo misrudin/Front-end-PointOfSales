@@ -21,11 +21,11 @@ const Routing = () => {
         <Provider store={store}>
             <Router>
                 <Route path="/" exact component={Login} />
-                <Route path="/home" component={App} />
-                <Route path="/home/product" component={Content} />
-                <Route path="/home/history" component={History} />
-                <Route path="/home/product-add" component={Product} />
-                <Route path="/home/category" component={Category} />
+                <Route path="/pos" component={App} />
+                <Route path="/pos/product" component={Content} />
+                <Route path="/pos/history" component={History} />
+                <Route path="/pos/product-add" component={Product} />
+                <Route path="/pos/category" component={Category} />
                 <Route path="/register" component={Register} />
             </Router>
         </Provider >

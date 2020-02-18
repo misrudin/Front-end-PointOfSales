@@ -13,7 +13,7 @@ div.main{
 div.Registerarea{
     background-color: #fff;
     width: 400px;
-    height: 400px;
+    height: 450px;
     box-shadow: 0 0 7px rgba(136, 136, 136, 0.7);
     border-radius: 4px;
     padding-left: 40px;
@@ -31,6 +31,12 @@ h2.title{
     border-bottom: 1px solid rgb(209, 209, 209);
 }
 
-.txt{
-    box-shadow: 0 0 7px rgba(136, 136, 136, 0.2);
+/* .form-register input{
+    box-shadow: none;
+    border: 1px solid salmon;
 }
+.form-register input:active{
+    box-shadow: none !important;
+    border: 1px solid salmon !important;
+} */
+

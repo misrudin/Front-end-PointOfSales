@@ -8,7 +8,7 @@ import addbtnc from '../src/img/add.svg'
 import logout from '../src/img/logout.svg'
 import { Redirect, Link } from "react-router-dom"
 import { connect } from 'react-redux'
-// import { getQty } from './redux/actions/cart'
+import swal from 'sweetalert'
 
 class App extends Component {
   state = {
@@ -26,8 +26,17 @@ class App extends Component {
   }
 
   handleLogout = () => {
-    localStorage.removeItem('Token')
-    window.location.href = "/"
+    swal({
+      text: "Are you sure to logout?",
+      dangerMode: true,
+      buttons: ["Cancel", "Yes"]
+    })
+      .then((logoutOk) => {
+        if (logoutOk) {
+          localStorage.removeItem('Token')
+          this.props.history.push('/')
+        }
+      });
   }
 
 
@@ -83,25 +92,25 @@ class App extends Component {
               <div className="menuSide">
                 <ul>
                   <li>
-                    <Link to="/home/Product">
+                    <Link to="/pos/Product">
                       <img src={foodres} alt="menu" width="40px" />
                     </Link>
                     <p>Product</p>
                   </li>
                   <li>
-                    <Link to="/home/history">
+                    <Link to="/pos/history">
                       <img src={clipboard} alt="clipboard" width="40px" />
                     </Link>
                     <p>History</p>
                   </li>
                   <li>
-                    <Link to="/home/product-add">
+                    <Link to="/pos/product-add">
                       <img src={addbtn} alt="addbtn" width="40px" onClick={() => this.setState({ modalShow: true })} />
                     </Link>
                     <p>Add Product</p>
                   </li>
                   <li>
-                    <Link to="/home/category">
+                    <Link to="/pos/category">
                       <img src={addbtnc} alt="addbtn" width="40px" onClick={() => this.setState({ modalShow: true })} />
                     </Link>
                     <p>Add Category</p>

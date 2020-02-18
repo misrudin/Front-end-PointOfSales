@@ -131,7 +131,7 @@ class Content extends Component {
                 this.props.dispatch(addProductToCart(data))
                 setTimeout(() => {
                     this.getAllCart()
-                }, 100)
+                }, 200)
             })
         }
     }
@@ -224,13 +224,15 @@ class Content extends Component {
     }
 
     componentDidMount = () => {
-        this.getProduct()
-        this.getAllCart()
-        const user = this.parseJwt()
-        this.setState({
-            id_user: user.id_user,
-            username: user.username
-        })
+        if (localStorage.getItem('Token')) {
+            this.getProduct()
+            this.getAllCart()
+            const user = this.parseJwt()
+            this.setState({
+                id_user: user.id_user,
+                username: user.username
+            })
+        }
     }
 
     render() {
@@ -268,7 +270,7 @@ class Content extends Component {
                                 })
                                 : (
                                     <div className="empty">
-                                        <img src={picEmpty} alt="empty" width="200px" className="picEmpty" />
+                                        <img src={picEmpty} alt="empty" className="picEmpty" />
                                         <h5>Your cart is empty</h5>
                                         <p>Please add some items from the menu</p>
                                     </div>

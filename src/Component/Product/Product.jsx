@@ -122,15 +122,6 @@ class AddProduct extends Component {
 
 
     editProductData = () => {
-        const data = this.state.formProduct
-        let fd = new FormData()
-        fd.append('image', data.image, data.image.name)
-        fd.set('name', data.name)
-        fd.set('description', data.description)
-        fd.set('stok', data.stok)
-        fd.set('price', data.price)
-        fd.set('id_category', data.id_category)
-
         swal({
             title: "Are you sure?",
             text: "you will edit this product!",
@@ -138,6 +129,16 @@ class AddProduct extends Component {
         })
             .then((willEdit) => {
                 if (willEdit) {
+                    const data = this.state.formProduct
+                    let fd = new FormData()
+                    fd.append('image', data.image, data.image.name)
+                    fd.set('name', data.name)
+                    fd.set('description', data.description)
+                    fd.set('stok', data.stok)
+                    fd.set('price', data.price)
+                    fd.set('id_category', data.id_category)
+
+
                     this.props.dispatch(editProduct(data.id, fd));
                     setTimeout(() => {
                         this.getProduct()
