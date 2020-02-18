@@ -49,7 +49,7 @@ class History extends Component {
     render() {
         return (
             <Fragment>
-                <div className="wew">
+                <div className="contain">
                     <div className="kotak1">
                         <p className="head">Today's Income</p>
                         <p className="body">Rp. {this.state.history.INCOME_TODAY}</p>
@@ -67,7 +67,7 @@ class History extends Component {
                     </div>
                 </div>
                 <div className="daftar">
-                    <Table responsive="m" className="mt-4">
+                    <Table responsive="m" className="historyData">
                         <thead>
                             <tr>
                                 <th>User</th>

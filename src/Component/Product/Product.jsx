@@ -1,12 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import './Product.css'
-import { Table, Modal, Button, Form, Col, Row } from 'react-bootstrap'
+import { Table, Modal, Button, Form, Col, Row, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { getAllProduct, addProduct, deleteProduct, editProduct } from '../../redux/actions/product'
 import { getAllCategory } from '../../redux/actions/category'
 import TableProduct from './Table'
 import swal from 'sweetalert'
-
 
 class AddProduct extends Component {
     state = {
@@ -23,22 +22,33 @@ class AddProduct extends Component {
             image: null,
             id_category: '',
             stok: ''
-        }
+        },
+        msg: '',
+        show: false
     }
 
     handleClose = () => {
         this.setState({
             modalShow: false,
-            editShow: false
+            editShow: false,
+            msg: '',
+            show: false
+        })
+    }
+    handleCloseAlert = () => {
+        this.setState({
+            show: false
         })
     }
 
 
     getProduct = async () => {
         await this.props.dispatch(getAllProduct());
+        const product = this.props.product.productData
         this.setState({
-            product: this.props.product.productData
+            product: product
         });
+        this.handleClose()
     }
 
     getCategory = async () => {
@@ -51,19 +61,50 @@ class AddProduct extends Component {
 
     AddProduct = () => {
         let data = this.state.formProduct
-        let fd = new FormData()
-        fd.append('image', data.image, data.image.name)
-        fd.set('name', data.name)
-        fd.set('description', data.description)
-        fd.set('stok', data.stok)
-        fd.set('price', data.price)
-        fd.set('id_category', data.id_category)
-        this.props.dispatch(addProduct(fd));
-        this.handleClose()
-        setTimeout(() => {
-            this.getProduct()
-        }, 1000)
-        swal("Good job!", "Success add product", "success");
+        if (!/([A-Za-z0-9]{4})\w+/g.test(data.name)) {
+            this.setState({
+                msg: 'Name must be filed,minimum 5 char!',
+                show: true
+            })
+        } else if (!/([A-Za-z0-9]{10})\w+/g.test(data.description)) {
+            this.setState({
+                msg: 'Description must be filed, min 10 char!',
+                show: true
+            })
+        } else if (!data.image) {
+            this.setState({
+                msg: 'Select image!',
+                show: true
+            })
+        } else if (!/([0-9])\w+/g.test(data.stok)) {
+            this.setState({
+                msg: 'Stok must be filed!',
+                show: true
+            })
+        } else if (!/([0-9])\w+/g.test(data.stok)) {
+            this.setState({
+                msg: 'Price must be filed!',
+                show: true
+            })
+        } else if (!data.id_category) {
+            this.setState({
+                msg: 'Select category!',
+                show: true
+            })
+        } else {
+            let fd = new FormData()
+            fd.append('image', data.image, data.image.name)
+            fd.set('name', data.name)
+            fd.set('description', data.description)
+            fd.set('stok', data.stok)
+            fd.set('price', data.price)
+            fd.set('id_category', data.id_category)
+            this.props.dispatch(addProduct(fd));
+            setTimeout(() => {
+                this.getProduct()
+            }, 1000)
+            swal("Good job!", "Success add product", "success");
+        }
     }
 
 
@@ -75,11 +116,31 @@ class AddProduct extends Component {
         })
     }
     handleUpload = (ev) => {
+        let fileName = ev.target.files[0].name
+        let fileSize = ev.target.files[0].size
         let newProduct = { ...this.state.formProduct };
         newProduct.image = ev.target.files[0]
-        this.setState({
-            formProduct: newProduct
-        })
+        if (/.(jpg|gif|png)/g.test(fileName)) {
+            if (fileSize > 1048576) {
+                this.setState({
+                    msg: 'Image To Large, max 1 Mb!',
+                    show: true
+                })
+                newProduct.image = ''
+                ev.target.value = null;
+            } else {
+                this.setState({
+                    formProduct: newProduct
+                })
+            }
+        } else {
+            this.setState({
+                msg: 'Only image allowed!',
+                show: true
+            })
+            newProduct.image = ''
+            ev.target.value = null;
+        }
     }
 
 
@@ -122,57 +183,91 @@ class AddProduct extends Component {
 
 
     editProductData = () => {
-        swal({
-            title: "Are you sure?",
-            text: "you will edit this product!",
-            buttons: true
-        })
-            .then((willEdit) => {
-                if (willEdit) {
-                    const data = this.state.formProduct
-                    let fd = new FormData()
-                    fd.append('image', data.image, data.image.name)
-                    fd.set('name', data.name)
-                    fd.set('description', data.description)
-                    fd.set('stok', data.stok)
-                    fd.set('price', data.price)
-                    fd.set('id_category', data.id_category)
+        const data = this.state.formProduct
+        if (!/([A-Za-z0-9]{4})\w+/g.test(data.name)) {
+            this.setState({
+                msg: 'Name must be filed,minimum 5 char!',
+                show: true
+            })
+        } else if (!/([A-Za-z0-9]{10})\w+/g.test(data.description)) {
+            this.setState({
+                msg: 'Description must be filed, min 10 char!',
+                show: true
+            })
+        } else if (!data.image) {
+            this.setState({
+                msg: 'Select image!',
+                show: true
+            })
+        } else if (!/([0-9])\w+/g.test(data.stok)) {
+            this.setState({
+                msg: 'Stok must be filed!',
+                show: true
+            })
+        } else if (!/([0-9])\w+/g.test(data.stok)) {
+            this.setState({
+                msg: 'Price must be filed!',
+                show: true
+            })
+        } else if (!data.id_category) {
+            this.setState({
+                msg: 'Select category!',
+                show: true
+            })
+        } else {
+            swal({
+                title: "Are you sure?",
+                text: "you will edit this product!",
+                buttons: true
+            })
+                .then((willEdit) => {
+                    if (willEdit) {
+                        let fd = new FormData()
+                        fd.append('image', data.image, data.image.name)
+                        fd.set('name', data.name)
+                        fd.set('description', data.description)
+                        fd.set('stok', data.stok)
+                        fd.set('price', data.price)
+                        fd.set('id_category', data.id_category)
 
 
-                    this.props.dispatch(editProduct(data.id, fd));
-                    setTimeout(() => {
+                        this.props.dispatch(editProduct(data.id, fd));
+                        setTimeout(() => {
+                            this.getProduct()
+                        }, 100)
+                        swal("Poof! Product has been updated!", {
+                            icon: "success",
+                        });
+                    } else {
                         this.getProduct()
-                        this.handleClose()
-                    }, 100)
-                    swal("Poof! Product has been updated!", {
-                        icon: "success",
-                    });
-                } else {
-                    this.getProduct()
-                }
-            });
+                    }
+                });
+        }
     }
 
-
+    getData = (e) => {
+        this.setState({
+            keyword: e.target.value
+        })
+    }
 
     componentDidMount() {
         setTimeout(() => {
             this.getCategory()
             this.getProduct()
-        }, 1000)
+        }, 100)
     }
 
     render() {
         let filterProduct = this.state.product.filter((product) => {
             return product.name.toLowerCase().indexOf(this.state.keyword.toLowerCase()) !== -1;
         })
-        console.log(this.state.category)
         return (
             < Fragment >
                 <div className="daftar">
                     <Button className="btn btn-info" onClick={() => this.setState({ modalShow: true })}>Add Product</Button>
                     <input type="text" name="keyword" placeholder="Search..." className="keyword" onChange={this.getData} />
-                    <Table responsive="m" className="mt-4">
+                    <Table responsive="m" className="mt-4" striped bordered hover>
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -204,7 +299,7 @@ class AddProduct extends Component {
                             Add Product</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-
+                        <Alert variant="danger" show={this.state.show} onClose={this.handleCloseAlert} dismissible>{this.state.msg}</Alert>
                         <Form>
                             <Form.Group as={Row} controlId="formHorizontalName">
                                 <Form.Label column sm={2}>
@@ -286,11 +381,12 @@ class AddProduct extends Component {
                             Add Product</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <Alert variant="danger" show={this.state.show} onClose={this.handleCloseAlert} dismissible>{this.state.msg}</Alert>
                         <Form>
 
-                            <Form.Group as={Row} controlId="formHorizontalName" className="justify-content-center">
+                            {/* <Form.Group as={Row} controlId="formHorizontalName" className="justify-content-center">
                                 <img className="preview" src={this.state.formProduct.image} alt="img" />
-                            </Form.Group>
+                            </Form.Group> */}
 
                             <Form.Group as={Row} controlId="formHorizontalName">
                                 <Form.Label column sm={2}>

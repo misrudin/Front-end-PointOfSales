@@ -1,4 +1,4 @@
-div.wew{
+div.contain{
     width: calc(100% - 100px) ;
     height: auto;
     background-color: rgb(255, 255, 255);
@@ -7,11 +7,14 @@ div.wew{
     padding: 30px;
     position: relative;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(370px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
     grid-auto-rows: 200px;
     grid-gap: 10px;
 }
 
+.historyData{
+    margin-top: -90px;
+}
 
 .kotak1{
     background: linear-gradient(285.38deg, #FBB2B4 30.05%, rgba(255, 143, 178, 0) 133.19%);
@@ -54,4 +57,11 @@ p.foot{
 .daftar Table{
     box-shadow: -1px -1px 7px -1px #888;
     border-radius: 6px;
+}
+
+@media (max-width: 550px) {
+    div.contain{
+        margin-left: 0px;
+        grid-template-columns: repeat(auto-fit, minmax(430px,1fr));
+    }
 }

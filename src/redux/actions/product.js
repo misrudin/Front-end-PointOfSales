@@ -3,7 +3,7 @@ import axios from 'axios'
 export const getAllProduct = () => {
     return {
         type: "GET_PRODUCT",
-        payload: axios.get(process.env.REACT_APP_URL + 'product', {
+        payload: axios.get(process.env.REACT_APP_URL + 'product/all', {
             headers: {
                 token: localStorage.getItem('Token')
             }
@@ -40,3 +40,16 @@ export const editProduct = (id, fd) => {
         })
     }
 }
+
+export const pagination = (page, keyword) => {
+    return {
+        type: "PAGE",
+        payload: axios.get(process.env.REACT_APP_URL + `product?page=${page}&keyword=${keyword}`, {
+            headers: {
+                token: localStorage.getItem('Token')
+            }
+        })
+    }
+}
+
+

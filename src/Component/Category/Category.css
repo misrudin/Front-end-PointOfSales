@@ -4,6 +4,12 @@
     padding: 20px;
 }
 
+@media (max-width: 550px) {
+    div.daftar{
+        margin-left: 0px;
+    }
+}
+
 .keyword{
     margin-left: 20px;
     border:none;
@@ -38,9 +44,10 @@
     transition: .2s;
     padding: 2px 5px;
     box-sizing: border-box;
-    border: 1px solid rgb(255, 255, 255);
+    border: 1px solid rgb(255, 255, 255,0);
     border-radius: 4px;
     cursor: pointer;
+    margin-bottom: 0px;
 }
 
 

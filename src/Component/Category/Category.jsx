@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import './Category.css'
 import TableCategory from './Table'
-import { Table, Modal, Button, Form, Col, Row } from 'react-bootstrap'
+import { Table, Modal, Button, Form, Col, Row, Alert } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { getAllCategory, addCategory, deleteCategory, editCategory } from '../../redux/actions/category.js'
 import swal from 'sweetalert'
@@ -16,7 +16,25 @@ class AddCategory extends Component {
         formCategory: {
             id: '',
             category: ''
-        }
+        },
+        msg: '',
+        show: false
+    }
+
+    handleClose = () => {
+        this.setState({
+            modalShow: false,
+            showEdit: false,
+            msg: '',
+            show: false
+        })
+    }
+
+    handleCloseAlert = () => {
+        this.setState({
+            msg: '',
+            show: false
+        })
     }
 
 
@@ -29,12 +47,19 @@ class AddCategory extends Component {
 
     handleSubmit = () => {
         const data = this.state.formCategory
-        this.props.dispatch(addCategory(data));
-        setTimeout(() => {
-            this.handleClose()
-            this.getCategory()
-        }, 100)
-        swal("Good job!", "Success add category", "success");
+        if (!/([A-Za-z]{3})\w+/g.test(data.category)) {
+            this.setState({
+                msg: 'To sort of name!, name must a word',
+                show: true
+            })
+        } else {
+            this.props.dispatch(addCategory(data));
+            setTimeout(() => {
+                this.handleClose()
+                this.getCategory()
+            }, 100)
+            swal("Good job!", "Success add category", "success");
+        }
     }
 
     handleChange = (e) => {
@@ -78,32 +103,37 @@ class AddCategory extends Component {
 
     editOk = () => {
         const data = this.state.formCategory
-
-        swal({
-            title: "Are you sure?",
-            text: "you will edit this category!",
-            buttons: true
-        })
-            .then((willEdit) => {
-                if (willEdit) {
-                    this.props.dispatch(editCategory(data))
-                    setTimeout(() => {
-                        this.handleClose()
+        if (!/([A-Za-z]{3})\w+/g.test(data.category)) {
+            this.setState({
+                msg: 'To sort of name!, name must a word',
+                show: true
+            })
+        } else {
+            swal({
+                title: "Are you sure?",
+                text: "you will edit this category!",
+                buttons: true
+            })
+                .then((willEdit) => {
+                    if (willEdit) {
+                        this.props.dispatch(editCategory(data))
+                        setTimeout(() => {
+                            this.handleClose()
+                            this.getCategory()
+                        }, 100)
+                        swal("Poof! Category has been updated!", {
+                            icon: "success",
+                        });
+                    } else {
                         this.getCategory()
-                    }, 100)
-                    swal("Poof! Category has been updated!", {
-                        icon: "success",
-                    });
-                } else {
-                    this.getCategory()
-                }
-            });
+                    }
+                });
+        }
     }
 
-    handleClose = () => {
+    getData = (e) => {
         this.setState({
-            modalShow: false,
-            showEdit: false
+            keyword: e.target.value
         })
     }
 
@@ -122,7 +152,7 @@ class AddCategory extends Component {
                 <div className="daftar">
                     <Button className="btn btn-info" onClick={() => this.setState({ modalShow: true })}>Add Category</Button>
                     <input type="text" name="keyword" placeholder="Search..." className="keyword" onChange={this.getData} />
-                    <Table responsive="m" className="mt-4">
+                    <Table responsive="m" className="mt-4" striped bordered hover>
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -151,6 +181,7 @@ class AddCategory extends Component {
                             Add Category</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <Alert variant="danger" show={this.state.show} onClose={this.handleCloseAlert} dismissible>{this.state.msg}</Alert>
                         <Form>
                             <Form.Group as={Row} controlId="formHorizontalName">
                                 <Form.Label column sm={2}>
@@ -181,6 +212,7 @@ class AddCategory extends Component {
                             Edit Category</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
+                        <Alert variant="danger" show={this.state.show} onClose={this.handleCloseAlert} dismissible>{this.state.msg}</Alert>
                         <Form>
 
                             <Form.Group as={Row} controlId="formHorizontalName">

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Product.css'
-// import { RootContext } from '../../../index'
 
 class Product extends Component {
     constructor(props) {
@@ -17,10 +16,6 @@ class Product extends Component {
 
     render() {
         return (
-            // <RootContext.Provider>
-            //     {
-            //         value => {
-            //             return (
             <div className="item" onClick={() => this.props.addToCart(this.props.data)}>
                 <img className="imgProduct" src={this.props.data.image} alt="imgProduct" />
                 <div className="detail">
@@ -28,11 +23,6 @@ class Product extends Component {
                     <span className="price">Rp. {this.props.data.price} </span>
                 </div>
             </div>
-            //             )
-            //         }
-            //     }
-            // </RootContext.Provider >
-
         );
     }
 }

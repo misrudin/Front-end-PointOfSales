@@ -16,7 +16,7 @@ div.items{
     grid-template-columns: repeat(4,minmax(200px,1fr));
     grid-auto-rows: 250px;
     grid-gap: 5px;
-    width: 950px;
+    width: 1200px;
     background: rgba(190, 195, 202, 0.3);
 }
 
@@ -79,25 +79,6 @@ div.sch input{
 .sch input:focus{
     border-bottom: 2px solid #f18c07;
     width: 250px;
-}
-
-.page{
-    position: relative;
-    bottom: 0;
-    display: grid;
-    grid-template-columns: 100px 100px;
-    justify-content: space-between;
-    box-sizing: border-box;
-    margin-top: 10px;
-}
-
-.page p{
-    margin:0;
-    text-align: center;
-    color: royalblue;
-    font-weight: bold;
-    font-size: 16px;
-    cursor: pointer;
 }
 
 .printCheckout{
@@ -166,7 +147,7 @@ div.sch input{
     position: relative;
     background-color: #fff;
     text-align: center;
-    height: 590px;
+    min-height: 90vh;
     z-index: 90;
     transition: 1s;
 }
@@ -181,6 +162,7 @@ div.sch input{
 }
 
 .picEmpty{
+    transform: rotate(0deg);
     -webkit-animation: 1s linear 1s infinite alternate rotateMe;
     animation: 1s linear 1s infinite alternate rotateMe;
 }
@@ -197,3 +179,30 @@ div.sch input{
                 transform: rotate(4deg);
             }
           }
+
+.pages{
+   position: absolute;
+   display: inline-block;
+   background-color: rgba(190, 195, 202, 0.3);
+   margin-left: auto;
+   width: calc(100% - 320px) ;
+   height: 60px;
+   z-index: 0;
+   bottom: -60px;
+   display: flex;
+   align-items: center;
+}
+
+@media (max-width:1050px){
+    .pages{
+        width: 100%;
+    }
+}
+
+.pages p{
+    margin-left: 100px;
+    margin-top: 20px;
+    cursor: pointer;
+    color: blue;
+    font-weight: bold;
+}

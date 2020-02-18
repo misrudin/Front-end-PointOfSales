@@ -58,8 +58,9 @@ class App extends Component {
       this.setState({
         id_user: id_user
       })
+      this.props.history.push('/pos/product')
     } else {
-      return <Redirect to="/" />
+      this.props.history.push('/')
     }
   }
 
@@ -71,7 +72,7 @@ class App extends Component {
         <Fragment>
           <div className="mynav">
             <div className="menu">
-              <Link to="/home/product">
+              <Link to="/pos/product">
                 <div className="myTitlePage" >
                   <h3 className="home">POS</h3>
                 </div>
@@ -79,7 +80,7 @@ class App extends Component {
             </div>
 
 
-            <Link to="/home/product">
+            <Link to="/pos/product">
               <div className="cart">
                 <img className="cart-logo" onClick={() => this.getAllCart} src={cartLogo} alt="Cart" width="45px" height="35px" />
                 <p className="cartCount">{qty}</p>
@@ -123,7 +124,6 @@ class App extends Component {
               </div>
             </div>
             {/* call children */}
-
           </div>
         </Fragment>
       )

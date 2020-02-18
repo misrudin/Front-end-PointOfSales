@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './Content.css'
 import Product from './Product/Product'
 import { connect } from 'react-redux'
 import '../Cart/Cart.css'
 import Items from '../Cart/Items'
 import { Modal, Button } from 'react-bootstrap'
-import { getAllProduct } from '../../redux/actions/product'
+import { pagination } from '../../redux/actions/product'
 import { addProductToCart, getAllCart, getQty, checkOutAll, deleteAll, getDetail, addQty, minQty, deleteCart } from '../../redux/actions/cart'
 import swal from 'sweetalert'
 import picEmpty from '../../img/food-and-restaurant.svg'
@@ -41,7 +41,8 @@ class Content extends Component {
         },
         detailCart: [],
         id_user: '',
-        username: ''
+        username: '',
+        page: 1
     }
 
     handleClose = () => {
@@ -62,13 +63,6 @@ class Content extends Component {
         const decoded = JSON.parse(jsonPayload);
         return decoded
     };
-
-    searchProduct = (e) => {
-        const keyword = e.target.value
-        this.setState({
-            keyword: keyword
-        })
-    }
 
     sendQty = () => {
         const cart = this.state.cartData
@@ -92,7 +86,9 @@ class Content extends Component {
     }
 
     getProduct = async () => {
-        await this.props.dispatch(getAllProduct());
+        const page = this.state.page;
+        const keyword = this.state.keyword;
+        await this.props.dispatch(pagination(page, keyword));
         this.setState({
             product: this.props.product.productData
         });
@@ -223,7 +219,40 @@ class Content extends Component {
             });
     }
 
+    handleNextPage = (e) => {
+        this.setState({
+            page: this.state.page + 1
+        })
+        setTimeout(() => {
+            this.getProduct()
+        }, 100)
+    }
+    handlePrevPage = (e) => {
+        this.setState({
+            page: this.state.page - 1
+        })
+        setTimeout(() => {
+            this.getProduct()
+        }, 100)
+    }
+
+    // searchProduct = (e) => {
+    //     if (e.key === 'Enter') {
+
+    //     }
+    // }
+
+    handleChange = (e) => {
+        this.setState({
+            keyword: e.target.value
+        })
+        setTimeout(() => {
+            this.getProduct()
+        }, 100)
+    }
+
     componentDidMount = () => {
+        document.querySelector('.prev').display = "none";
         if (localStorage.getItem('Token')) {
             this.getProduct()
             this.getAllCart()
@@ -236,57 +265,60 @@ class Content extends Component {
     }
 
     render() {
-        let filterProduct = this.state.product.filter((product) => {
-            return product.name.toLowerCase().indexOf(this.state.keyword.toLowerCase()) !== -1;
-        })
         return (
-            < div className="content" >
-                <div className="items">
-                    {
-                        filterProduct !== 'undefined' && filterProduct.length > 0 ?
-                            filterProduct.map(product => {
-                                return (
-                                    <Product key={product.id} data={product} addToCart={() => this.handleAddToCart(product)} />
-                                )
-                            })
-                            : (
-                                <p>Empty..</p>
-                            )
-                    }
-                </div>
-                <div className="sch">
-                    <input type="text" onChange={this.searchProduct} placeholder="Search Product....." />
-                </div>
-
-                {/* CART */}
-                <div className="cover">
-                    <div className="container-cart">
+            <Fragment>
+                < div className="content" >
+                    <div className="items">
                         {
-                            this.state.cartData.length > 0 ?
-                                this.state.cartData.map(data => {
+                            this.state.product !== 'undefined' && this.state.product.length > 0 ?
+                                this.state.product.map(product => {
                                     return (
-                                        <Items key={data.id} data={data} minus={() => this.handleMinus(data)} plus={() => this.handlePlus(data)} delete={() => this.handleDelete(data)} />
+                                        <Product key={product.id} data={product} addToCart={() => this.handleAddToCart(product)} />
                                     )
                                 })
                                 : (
-                                    <div className="empty">
-                                        <img src={picEmpty} alt="empty" className="picEmpty" />
-                                        <h5>Your cart is empty</h5>
-                                        <p>Please add some items from the menu</p>
-                                    </div>
+                                    <p>Empty..</p>
                                 )
                         }
                     </div>
-                    <div className="footerTotal">
-                        <p>Total</p> <p>Rp. {this.state.total}*</p>
+                    <div className="sch">
+                        <input type="text" onChange={this.handleChange} placeholder="Search Product....." />
                     </div>
-                    <div className="footerBtn">
-                        <p>*Belum termasuk ppn</p>
-                        <Button className="btn btn-primary" onClick={() => this.handleCheckout()}>Checkout</Button>
-                        <Button className="btn btn-danger" onClick={() => this.handleAll()}>Cancel</Button>
-                    </div>
-                </div>
 
+                    {/* CART */}
+                    <div className="cover">
+                        <div className="container-cart">
+                            {
+                                this.state.cartData.length > 0 ?
+                                    this.state.cartData.map(data => {
+                                        return (
+                                            <Items key={data.id} data={data} minus={() => this.handleMinus(data)} plus={() => this.handlePlus(data)} delete={() => this.handleDelete(data)} />
+                                        )
+                                    })
+                                    : (
+                                        <div className="empty">
+                                            <img src={picEmpty} alt="empty" className="picEmpty" />
+                                            <h5>Your cart is empty</h5>
+                                            <p>Please add some items from the menu</p>
+                                        </div>
+                                    )
+                            }
+                        </div>
+                        <div className="footerTotal">
+                            <p>Total</p> <p>Rp. {this.state.total}*</p>
+                        </div>
+                        <div className="footerBtn">
+                            <p>*Belum termasuk ppn</p>
+                            <Button className="btn btn-primary" onClick={() => this.handleCheckout()}>Checkout</Button>
+                            <Button className="btn btn-danger" onClick={() => this.handleAll()}>Cancel</Button>
+                        </div>
+                    </div>
+
+                    <div className="pages">
+                        <p className="prev" onClick={this.handlePrevPage}>Prev</p>
+                        <p className="next" onClick={this.handleNextPage}>Next</p>
+                    </div>
+                </div >
                 {/* checkoout */}
                 <Modal show={this.state.modalCheckout} onHide={this.handleClose}>
                     <Modal.Header closeButton>
@@ -342,8 +374,7 @@ class Content extends Component {
                         </div>
                     </div>
                 </Modal >
-
-            </div >
+            </Fragment>
         )
     }
 }
