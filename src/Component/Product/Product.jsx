@@ -102,7 +102,7 @@ class AddProduct extends Component {
             this.props.dispatch(addProduct(fd));
             setTimeout(() => {
                 this.getProduct()
-            }, 1000)
+            }, 500)
             swal("Good job!", "Success add product", "success");
         }
     }

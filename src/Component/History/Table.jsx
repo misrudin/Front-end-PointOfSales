@@ -15,7 +15,7 @@ class TableHistory extends Component {
     }
 
     componentDidMount() {
-        this.getOrders()
+
     }
 
 
@@ -26,7 +26,7 @@ class TableHistory extends Component {
                     <td>{this.props.data.faktur}</td>
                     <td>{this.props.data.username}</td>
                     <td>{this.props.data.date_pay}</td>
-                    <td>{this.state.detail.name}</td>
+                    <td>pr</td>
                     <td>{this.props.data.total}</td>
                 </tr>
             </Fragment>
