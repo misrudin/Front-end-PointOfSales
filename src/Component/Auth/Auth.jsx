@@ -35,7 +35,7 @@ class Login extends Component {
 
     handleLogin = (e) => {
         let data = this.state.user
-        axios.post('http://localhost:4001/api/v1/auth/login', data)
+        axios.post(process.env.REACT_APP_URL + `auth/login`, data)
             .then((res) => {
                 if (!res.data.token) {
                     this.setState({
@@ -48,12 +48,6 @@ class Login extends Component {
                     this.props.history.push('/pos/product')
                 }
             })
-    }
-
-    componentDidMount = () => {
-        // this.setState({
-        //     show: true
-        // })
     }
 
 

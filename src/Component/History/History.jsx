@@ -15,7 +15,7 @@ class History extends Component {
     }
 
     getHistory = () => {
-        axios.get('http://localhost:4001/api/v1/payment/all', {
+        axios.get(process.env.REACT_APP_URL + `payment/all`, {
             headers: {
                 token: localStorage.getItem('Token')
             }
@@ -27,7 +27,7 @@ class History extends Component {
             })
     }
     getAllHistory = () => {
-        axios.get('http://localhost:4001/api/v1/payment', {
+        axios.get(process.env.REACT_APP_URL + `payment`, {
             headers: {
                 token: localStorage.getItem('Token')
             }
