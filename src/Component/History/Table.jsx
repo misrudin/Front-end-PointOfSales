@@ -1,23 +1,32 @@
 import React, { Component, Fragment } from 'react'
-// import { Modal, Button, Form, Col, Row } from 'react-bootstrap'
-// import axios from 'axios'
+import { connect } from 'react-redux'
+import { getDetail } from '../../redux/actions/cart'
 
 class TableHistory extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-
-        }
+    state = {
+        detail: []
     }
+    getOrders = async () => {
+        const faktur = this.props.data.faktur
+        await this.props.dispatch(getDetail(faktur))
+        this.setState({
+            detail: this.props.cart.cartDetail[0].name
+        })
+    }
+
+    componentDidMount() {
+        this.getOrders()
+    }
+
 
     render() {
         return (
             <Fragment>
                 <tr>
+                    <td>{this.props.data.faktur}</td>
                     <td>{this.props.data.username}</td>
                     <td>{this.props.data.date_pay}</td>
-                    <td>{this.props.data.name}</td>
+                    <td>{this.state.detail.name}</td>
                     <td>{this.props.data.total}</td>
                 </tr>
             </Fragment>
@@ -26,4 +35,10 @@ class TableHistory extends Component {
     }
 }
 
-export default TableHistory
+const mapStateToProps = ({ cart }) => {
+    return {
+        cart
+    }
+}
+
+export default connect(mapStateToProps)(TableHistory)
