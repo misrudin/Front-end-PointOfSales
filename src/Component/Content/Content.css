@@ -63,9 +63,11 @@ div.sch{
     position: fixed;
     top: 15px;
     z-index: 9999;
+    display: flex;
+    justify-content: space-between;
 }
 
-div.sch input{
+/* div.sch input{
     border:none;
     border-bottom: 2px solid #c0c0c0;
     outline: none;
@@ -75,10 +77,12 @@ div.sch input{
       padding: 0.5em 1em 0.5em 0;
       transition: .4s;
 }
+*/
 
 .sch input:focus{
-    border-bottom: 2px solid #f18c07;
-    width: 250px;
+    /* border-bottom: 2px solid #f18c07;
+    width: 250px; */
+    box-shadow: none;
 }
 
 .printCheckout{

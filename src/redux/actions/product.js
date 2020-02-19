@@ -41,10 +41,10 @@ export const editProduct = (id, fd) => {
     }
 }
 
-export const pagination = (page, keyword) => {
+export const pagination = (page, category, keyword) => {
     return {
         type: "PAGE",
-        payload: axios.get(process.env.REACT_APP_URL + `product?page=${page}&keyword=${keyword}`, {
+        payload: axios.get(process.env.REACT_APP_URL + `product?page=${page}&keyword=${keyword}&category=${category}`, {
             headers: {
                 token: localStorage.getItem('Token')
             }

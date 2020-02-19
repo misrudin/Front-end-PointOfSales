@@ -4,15 +4,16 @@ import Product from './Product/Product'
 import { connect } from 'react-redux'
 import '../Cart/Cart.css'
 import Items from '../Cart/Items'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button, Form, FormControl } from 'react-bootstrap'
 import { pagination } from '../../redux/actions/product'
 import { addProductToCart, getAllCart, getQty, checkOutAll, deleteAll, getDetail, addQty, minQty, deleteCart } from '../../redux/actions/cart'
 import swal from 'sweetalert'
 import picEmpty from '../../img/food-and-restaurant.svg'
-
+import { getAllCategory } from '../../redux/actions/category'
 
 class Content extends Component {
     state = {
+        category: [],
         product: [],
         cartData: [],
         cart: {
@@ -29,6 +30,7 @@ class Content extends Component {
             stok: 0
         },
         keyword: '',
+        categoryKey: '',
         qty: 0,
         total: 0,
         modalCheckout: false,
@@ -49,6 +51,13 @@ class Content extends Component {
         this.setState({
             modalCheckout: false,
             printCheckout: false
+        })
+    }
+
+    getCategory = async () => {
+        await this.props.dispatch(getAllCategory())
+        this.setState({
+            category: this.props.category.categoryData
         })
     }
 
@@ -88,9 +97,12 @@ class Content extends Component {
     getProduct = async () => {
         const page = this.state.page;
         const keyword = this.state.keyword;
-        await this.props.dispatch(pagination(page, keyword));
+        const category = this.state.categoryKey;
+        this.props.history.push(`?page=${page}`)
+        const currentPage = page
+        await this.props.dispatch(pagination(currentPage, category, keyword));
         this.setState({
-            product: this.props.product.productData
+            product: this.props.product.productData[2]
         });
     }
 
@@ -197,10 +209,23 @@ class Content extends Component {
             this.getAllCart()
         }
     }
+
     handlePlus = (data) => {
         const id_cart = data.id
-        this.props.dispatch(addQty(id_cart))
-        this.getAllCart()
+        this.state.product.forEach((e) => {
+            if (data.id_product === e.id) {
+                if (data.qty >= e.stok) {
+                    swal("Stok lack!", {
+                        icon: "warning",
+                    });
+                } else {
+                    this.props.dispatch(addQty(id_cart))
+                    this.getAllCart()
+                }
+            }
+
+        })
+
     }
 
     handleDelete = (data) => {
@@ -220,27 +245,25 @@ class Content extends Component {
     }
 
     handleNextPage = (e) => {
-        this.setState({
-            page: this.state.page + 1
-        })
-        setTimeout(() => {
-            this.getProduct()
-        }, 100)
+        if (this.state.page < this.props.product.productData[0]) {
+            this.setState({
+                page: this.state.page + 1
+            })
+            setTimeout(() => {
+                this.getProduct()
+            }, 100)
+        }
     }
     handlePrevPage = (e) => {
-        this.setState({
-            page: this.state.page - 1
-        })
-        setTimeout(() => {
-            this.getProduct()
-        }, 100)
+        if (this.state.page > 1) {
+            this.setState({
+                page: this.state.page - 1
+            })
+            setTimeout(() => {
+                this.getProduct()
+            }, 100)
+        }
     }
-
-    // searchProduct = (e) => {
-    //     if (e.key === 'Enter') {
-
-    //     }
-    // }
 
     handleChange = (e) => {
         this.setState({
@@ -251,11 +274,20 @@ class Content extends Component {
         }, 100)
     }
 
+    sortProduct = (e) => {
+        this.setState({
+            categoryKey: e.target.value
+        })
+        this.getProduct()
+        setTimeout(() => {
+        }, 100)
+    }
+
     componentDidMount = () => {
-        document.querySelector('.prev').display = "none";
         if (localStorage.getItem('Token')) {
             this.getProduct()
             this.getAllCart()
+            this.getCategory()
             const user = this.parseJwt()
             this.setState({
                 id_user: user.id_user,
@@ -282,7 +314,19 @@ class Content extends Component {
                         }
                     </div>
                     <div className="sch">
-                        <input type="text" onChange={this.handleChange} placeholder="Search Product....." />
+                        <Form inline>
+                            <Form.Control as="select" className="mr-sm-1" name="categoryKey" onChange={this.sortProduct}>
+                                <option value="">All</option>
+                                {
+                                    this.state.category.map(data => {
+                                        return (
+                                            <option key={data.id} value={data.id} >{data.nama_category} </option>
+                                        )
+                                    })
+                                }
+                            </Form.Control>
+                            <FormControl type="text" onChange={this.handleChange} placeholder="Search Product....." className="mr-sm-1" />
+                        </Form>
                     </div>
 
                     {/* CART */}
@@ -380,10 +424,11 @@ class Content extends Component {
 }
 
 
-const mapStateToProps = ({ product, cart }) => {
+const mapStateToProps = ({ product, cart, category }) => {
     return {
         product,
-        cart
+        cart,
+        category
     }
 }
 

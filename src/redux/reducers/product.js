@@ -134,7 +134,7 @@ const productReducer = (state = initialValue, action) => {
                 ...state,
                 isPending: false,
                 isFulfilled: true,
-                productData: action.payload.data[2]
+                productData: action.payload.data
             };
 
         default:

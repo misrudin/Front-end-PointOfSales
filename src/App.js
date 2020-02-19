@@ -58,7 +58,6 @@ class App extends Component {
       this.setState({
         id_user: id_user
       })
-      this.props.history.push('/pos/product')
     } else {
       this.props.history.push('/')
     }

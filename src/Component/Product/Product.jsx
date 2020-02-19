@@ -171,7 +171,7 @@ class AddProduct extends Component {
         newProduct.id = product.id;
         newProduct.name = product.name;
         newProduct.description = product.description;
-        newProduct.image = product.image;
+        newProduct.image = null;
         newProduct.price = product.price;
         newProduct.stok = product.stok;
         newProduct.id_category = product.id_category;
@@ -194,11 +194,6 @@ class AddProduct extends Component {
                 msg: 'Description must be filed, min 10 char!',
                 show: true
             })
-        } else if (!data.image) {
-            this.setState({
-                msg: 'Select image!',
-                show: true
-            })
         } else if (!/([0-9])\w+/g.test(data.stok)) {
             this.setState({
                 msg: 'Stok must be filed!',
@@ -218,19 +213,19 @@ class AddProduct extends Component {
             swal({
                 title: "Are you sure?",
                 text: "you will edit this product!",
-                buttons: true
+                buttons: ["Cancel", true]
             })
                 .then((willEdit) => {
                     if (willEdit) {
                         let fd = new FormData()
-                        fd.append('image', data.image, data.image.name)
+                        if (data.image !== null) {
+                            fd.append('image', data.image, data.image.name)
+                        }
                         fd.set('name', data.name)
                         fd.set('description', data.description)
                         fd.set('stok', data.stok)
                         fd.set('price', data.price)
                         fd.set('id_category', data.id_category)
-
-
                         this.props.dispatch(editProduct(data.id, fd));
                         setTimeout(() => {
                             this.getProduct()
@@ -238,8 +233,6 @@ class AddProduct extends Component {
                         swal("Poof! Product has been updated!", {
                             icon: "success",
                         });
-                    } else {
-                        this.getProduct()
                     }
                 });
         }
@@ -408,7 +401,7 @@ class AddProduct extends Component {
                                 <Form.Label column sm={2}>
                                     Image</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control className="upload txt" type="file" name="image" accept="image/*" onChange={this.handleUpload} />
+                                    <Form.Control className="upload txt" type="file" fileName={this.state.formProduct.image} name="image" accept="image/*" onChange={this.handleUpload} />
                                 </Col>
                             </Form.Group>
 
