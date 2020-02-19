@@ -61,14 +61,14 @@ class AddProduct extends Component {
 
     AddProduct = () => {
         let data = this.state.formProduct
-        if (!/([A-Za-z0-9]{4})\w+/g.test(data.name)) {
+        if (!/([A-Za-z0-9 ])\w+/g.test(data.name)) {
             this.setState({
                 msg: 'Name must be filed,minimum 5 char!',
                 show: true
             })
-        } else if (!/([A-Za-z0-9]{10})\w+/g.test(data.description)) {
+        } else if (!/([A-Za-z0-9., ])\w+/g.test(data.description)) {
             this.setState({
-                msg: 'Description must be filed, min 10 char!',
+                msg: 'Complete Description!',
                 show: true
             })
         } else if (!data.image) {
@@ -81,7 +81,7 @@ class AddProduct extends Component {
                 msg: 'Stok must be filed!',
                 show: true
             })
-        } else if (!/([0-9])\w+/g.test(data.stok)) {
+        } else if (!/([09])\w+/g.test(data.stok)) {
             this.setState({
                 msg: 'Price must be filed!',
                 show: true
@@ -100,9 +100,10 @@ class AddProduct extends Component {
             fd.set('price', data.price)
             fd.set('id_category', data.id_category)
             this.props.dispatch(addProduct(fd));
+            this.getProduct()
             setTimeout(() => {
                 this.getProduct()
-            }, 200)
+            }, 1000)
             swal("Good job!", "Success add product", "success");
         }
     }
@@ -155,12 +156,13 @@ class AddProduct extends Component {
             .then((willDelete) => {
                 if (willDelete) {
                     this.props.dispatch(deleteProduct(id));
+                    this.getProduct()
                     setTimeout(() => {
                         this.getProduct()
                         swal("Poof! Product has been deleted!", {
                             icon: "success",
                         });
-                    }, 200)
+                    }, 1000)
                 } else {
                     this.getProduct()
                 }
@@ -186,12 +188,12 @@ class AddProduct extends Component {
 
     editProductData = () => {
         const data = this.state.formProduct
-        if (!/([A-Za-z0-9]{4})\w+/g.test(data.name)) {
+        if (!/([A-Za-z0-9 ])\w+/g.test(data.name)) {
             this.setState({
                 msg: 'Name must be filed,minimum 5 char!',
                 show: true
             })
-        } else if (!/([A-Za-z0-9]{10})\w+/g.test(data.description)) {
+        } else if (!/([A-Za-z0-9 ])\w+/g.test(data.description)) {
             this.setState({
                 msg: 'Description must be filed, min 10 char!',
                 show: true
@@ -229,9 +231,10 @@ class AddProduct extends Component {
                         fd.set('price', data.price)
                         fd.set('id_category', data.id_category)
                         this.props.dispatch(editProduct(data.id, fd));
+                        this.getProduct()
                         setTimeout(() => {
                             this.getProduct()
-                        }, 200)
+                        }, 1000)
                         swal("Poof! Product has been updated!", {
                             icon: "success",
                         });

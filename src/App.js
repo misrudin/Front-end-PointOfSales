@@ -92,7 +92,7 @@ class App extends Component {
               <div className="menuSide">
                 <ul>
                   <li>
-                    <Link to="/pos/Product">
+                    <Link to="/pos/product">
                       <img src={foodres} alt="menu" width="40px" />
                     </Link>
                     <p>Product</p>

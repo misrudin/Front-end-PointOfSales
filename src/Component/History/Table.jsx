@@ -14,10 +14,6 @@ class TableHistory extends Component {
         })
     }
 
-    componentDidMount() {
-
-    }
-
 
     render() {
         return (
@@ -26,7 +22,7 @@ class TableHistory extends Component {
                     <td>{this.props.data.faktur}</td>
                     <td>{this.props.data.username}</td>
                     <td>{this.props.data.date_pay}</td>
-                    <td>pr</td>
+                    <td>{this.props.data.qty}</td>
                     <td>{this.props.data.total}</td>
                 </tr>
             </Fragment>

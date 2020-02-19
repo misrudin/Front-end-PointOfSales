@@ -50,7 +50,7 @@ const productReducer = (state = initialValue, action) => {
             };
         case "ADD_PRODUCT_FULFILLED":
             if (action.payload.data.result) {
-                // state.productData.unshift(action.payload.data.result)
+                state.productData.unshift(action.payload.data.result)
                 return {
                     ...state,
                     isPending: false,

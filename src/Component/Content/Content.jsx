@@ -153,7 +153,7 @@ class Content extends Component {
             this.setState({
                 printCheckout: true
             })
-        }, 100)
+        }, 1000)
     }
 
     handleCheckout = () => {
@@ -189,11 +189,16 @@ class Content extends Component {
                 if (willDelete) {
                     this.props.dispatch(deleteAll())
                     this.getAllCart()
+                    setTimeout(() => {
+                        this.getAllCart()
+                    }, 1000)
                     swal("Poof! Cart has been deleted!", {
                         icon: "success",
                     });
                 } else {
-                    this.getAllCart()
+                    setTimeout(() => {
+                        this.getAllCart()
+                    }, 100)
                 }
             });
     }
@@ -203,10 +208,18 @@ class Content extends Component {
         const id_cart = data.id
         const newQty = data.qty - 1
         if (newQty < 1) {
-            this.handleDelete(data)
+            // this.handleDelete(data)
+            this.props.dispatch(deleteCart(data.id));
+            this.getAllCart()
+            setTimeout(() => {
+                this.getAllCart()
+            }, 20)
         } else {
             this.props.dispatch(minQty(id_cart))
             this.getAllCart()
+            setTimeout(() => {
+                this.getAllCart()
+            }, 20)
         }
     }
 
@@ -215,12 +228,15 @@ class Content extends Component {
         this.state.product.forEach((e) => {
             if (data.id_product === e.id) {
                 if (data.qty >= e.stok) {
-                    swal("Stok lack!", {
+                    swal("Stok limit!", {
                         icon: "warning",
                     });
                 } else {
                     this.props.dispatch(addQty(id_cart))
                     this.getAllCart()
+                    setTimeout(() => {
+                        this.getAllCart()
+                    }, 20)
                 }
             }
 
@@ -285,9 +301,11 @@ class Content extends Component {
 
     componentDidMount = () => {
         if (localStorage.getItem('Token')) {
-            this.getProduct()
-            this.getAllCart()
-            this.getCategory()
+            setTimeout(() => {
+                this.getProduct()
+                this.getAllCart()
+                this.getCategory()
+            }, 200)
             const user = this.parseJwt()
             this.setState({
                 id_user: user.id_user,
@@ -315,7 +333,7 @@ class Content extends Component {
                     </div>
                     <div className="sch">
                         <Form inline>
-                            <Form.Control as="select" className="mr-sm-1" name="categoryKey" onChange={this.sortProduct}>
+                            <Form.Control as="select" className="mr-sm-1 ml-2 option" name="categoryKey" onChange={this.sortProduct}>
                                 <option value="">All</option>
                                 {
                                     this.state.category.map(data => {

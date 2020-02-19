@@ -85,6 +85,16 @@ div.sch{
     box-shadow: none;
 }
 
+@media (max-width: 600px){
+    .sch{
+        display: none;
+        margin-left: 90px;
+    }
+    .sch .option{
+        display: none;
+    }
+}
+
 .printCheckout{
     padding: 15px 20px;
     display: grid;
