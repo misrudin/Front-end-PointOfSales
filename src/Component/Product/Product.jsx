@@ -102,7 +102,7 @@ class AddProduct extends Component {
             this.props.dispatch(addProduct(fd));
             setTimeout(() => {
                 this.getProduct()
-            }, 500)
+            }, 200)
             swal("Good job!", "Success add product", "success");
         }
     }
@@ -155,10 +155,12 @@ class AddProduct extends Component {
             .then((willDelete) => {
                 if (willDelete) {
                     this.props.dispatch(deleteProduct(id));
-                    this.getProduct()
-                    swal("Poof! Product has been deleted!", {
-                        icon: "success",
-                    });
+                    setTimeout(() => {
+                        this.getProduct()
+                        swal("Poof! Product has been deleted!", {
+                            icon: "success",
+                        });
+                    }, 200)
                 } else {
                     this.getProduct()
                 }
@@ -229,7 +231,7 @@ class AddProduct extends Component {
                         this.props.dispatch(editProduct(data.id, fd));
                         setTimeout(() => {
                             this.getProduct()
-                        }, 100)
+                        }, 200)
                         swal("Poof! Product has been updated!", {
                             icon: "success",
                         });
