@@ -1,30 +1,75 @@
-import React, { Component } from 'react';
-import './Product.css'
+import React, { useState, useEffect } from "react";
+import "./Product.css";
+import oke from "../../../img/oke.svg";
+import buy from "../../../img/icons8-buy-96.png";
 
-class Product extends Component {
-    constructor(props) {
-        super(props)
+const Product = props => {
+  // const [id_user, setIdUser] = useState("");
+  // const [qty, setQty] = useState(1);
+  // const [id_product, setIdproduct] = useState("");
+  const [muncul, setMuncul] = useState(false);
+  const [cart, setCart] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  const addToCart = data => {
+    setLoading(true);
+    props.addToCart(data);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  };
 
-        this.state = {
-            id_user: '',
-            qty: 1,
-            id_product: ''
-        }
+  useEffect(() => {
+    setCart(props.dataCart);
+  });
 
-    }
+  useEffect(() => {
+    const arr = [];
+    cart.map(idp => {
+      arr.push(idp.id_product);
+    });
+    const cek = (element, index, array) => {
+      return element === props.data.id;
+    };
+    const sm = () => {
+      const val = arr.some(cek);
+      // console.log(props.dataCart.id_product);
+      // console.log("->", val);
+      if (val) {
+        setMuncul(true);
+      } else {
+        setMuncul(false);
+      }
+    };
 
-    render() {
-        return (
-            <div className="item" onClick={() => this.props.addToCart(this.props.data)}>
-                <img className="imgProduct" src={this.props.data.image} alt="imgProduct" />
-                <div className="detail">
-                    <span className="name"> {this.props.data.name} </span>
-                    <span className="price">Rp. {this.props.data.price} </span>
-                </div>
-            </div>
-        );
-    }
-}
+    sm();
+  }, [cart]);
+  return (
+    <div className="item" onClick={muncul ? null : () => addToCart(props.data)}>
+      {loading ? (
+        <div className="loadingContainer2">
+          <div class="lds-ripple">
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+      ) : null}
+      <img className="imgProduct" src={props.data.image} alt="imgProduct" />
+      <div className="detail">
+        <span className="name"> {props.data.name} </span>
+        <span className="price">Rp. {props.data.price} </span>
+      </div>
+      {muncul ? (
+        <div className="okeContainer">
+          <img src={oke} alt="Oke" className="oke" />
+        </div>
+      ) : (
+        <div className="buyContainer">
+          <img src={buy} alt="Buy" className="buy" />
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default Product;

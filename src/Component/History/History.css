@@ -1,67 +1,78 @@
-div.contain{
-    width: calc(100% - 100px) ;
-    height: auto;
-    background-color: rgb(255, 255, 255);
-    margin-left: 80px;
-    margin-top: 80px;
-    padding: 30px;
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-    grid-auto-rows: 200px;
-    grid-gap: 10px;
+div.contain {
+  width: calc(100% - 100px);
+  height: auto;
+  background-color: rgb(255, 255, 255);
+  margin-left: 80px;
+  margin-top: 80px;
+  padding: 30px;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-auto-rows: 200px;
+  grid-gap: 10px;
 }
 
-.historyData{
-    margin-top: -90px;
+.historyData {
+  margin-top: -90px;
 }
 
-.kotak1{
-    background: linear-gradient(285.38deg, #FBB2B4 30.05%, rgba(255, 143, 178, 0) 133.19%);
-    box-shadow: 10px 15px 10px rgba(255, 143, 178, 0.25);
-    border-radius: 10px;
-    padding: 40px;
+.kotak1 {
+  background: linear-gradient(
+    285.38deg,
+    #fbb2b4 30.05%,
+    rgba(255, 143, 178, 0) 133.19%
+  );
+  box-shadow: 10px 15px 10px rgba(255, 143, 178, 0.25);
+  border-radius: 10px;
+  padding: 40px;
 }
 
-.kotak2{
-background: linear-gradient(285.38deg, #29DFFF 30.05%, rgba(41, 223, 255, 0) 133.19%);
-box-shadow: 10px 15px 10px rgba(41, 223, 255, 0.25);
-border-radius: 10px;
-padding: 40px;
+.kotak2 {
+  background: linear-gradient(
+    285.38deg,
+    #29dfff 30.05%,
+    rgba(41, 223, 255, 0) 133.19%
+  );
+  box-shadow: 10px 15px 10px rgba(41, 223, 255, 0.25);
+  border-radius: 10px;
+  padding: 40px;
 }
 
-.kotak3{
-    background: linear-gradient(285.38deg, #AB84C8 30.05%, rgba(241, 201, 236, 0) 133.19%);
-    box-shadow: 10px 15px 10px rgba(241, 201, 236, 0.25);
-    border-radius: 10px;
-    padding: 40px;
+.kotak3 {
+  background: linear-gradient(
+    285.38deg,
+    #ab84c8 30.05%,
+    rgba(241, 201, 236, 0) 133.19%
+  );
+  box-shadow: 10px 15px 10px rgba(241, 201, 236, 0.25);
+  border-radius: 10px;
+  padding: 40px;
 }
 
-
-p.head{
-    font-size: 15px;
+p.head {
+  font-size: 15px;
 }
 
-p.body{
-    font-size: 30px;
-    font-weight: bold;
+p.body {
+  font-size: 30px;
+  font-weight: bold;
 }
 
-p.foot{
-    font-size: 15px;
+p.foot {
+  font-size: 15px;
 }
-.daftar{
-    margin-top: -90px;
+.daftar {
+  margin-top: -90px;
 }
 
-.daftar Table{
-    box-shadow: -1px -1px 7px -1px #888;
-    border-radius: 6px;
+.daftar table {
+  box-shadow: -1px -1px 7px -1px #888;
+  border-radius: 6px;
 }
 
 @media (max-width: 550px) {
-    div.contain{
-        margin-left: 0px;
-        grid-template-columns: repeat(auto-fit, minmax(430px,1fr));
-    }
+  div.contain {
+    margin-left: 0px;
+    grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
+  }
 }

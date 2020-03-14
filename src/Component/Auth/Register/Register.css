@@ -1,34 +1,45 @@
-div.main{
-    position: absolute;
-    height: 100vh;
-    width: 100%;
-    z-index: 10;
-    background-color: #f7f9fc;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+div.main {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  z-index: 10;
+  background-color: #f7f9fc;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-div.Registerarea{
-    background-color: #fff;
-    width: 400px;
-    height: 450px;
-    box-shadow: 0 0 7px rgba(136, 136, 136, 0.7);
-    border-radius: 4px;
-    padding-left: 40px;
-    padding-right: 40px;
-    padding-bottom: 40px;
-    text-align: center;
+div.bg {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  background: url(../../../img/undraw_enter_uhqk.svg);
+  background-repeat: no-repeat;
+  background-size: 40%;
+  background-position: right;
+  z-index: -1;
 }
 
-h2.title{
-    text-align: center;
-    display: inline-block;
-    width: 100%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgb(209, 209, 209);
+div.Registerarea {
+  background-color: #fff;
+  width: 400px;
+  height: 450px;
+  box-shadow: 0 0 7px rgba(136, 136, 136, 0.7);
+  border-radius: 4px;
+  padding-left: 40px;
+  padding-right: 40px;
+  padding-bottom: 40px;
+  text-align: center;
+}
+
+h2.title {
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgb(209, 209, 209);
 }
 
 /* .form-register input{
@@ -39,4 +50,3 @@ h2.title{
     box-shadow: none !important;
     border: 1px solid salmon !important;
 } */
-

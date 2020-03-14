@@ -81,14 +81,10 @@ class AddCategory extends Component {
             .then((willDelete) => {
                 if (willDelete) {
                     this.props.dispatch(deleteCategory(id))
-                    setTimeout(() => {
-                        this.getCategory()
-                        swal("Poof! Category has been deleted!", {
-                            icon: "success",
-                        });
-                    }, 200)
-                } else {
                     this.getCategory()
+                    swal("Poof! Category has been deleted!", {
+                        icon: "success",
+                    });
                 }
             });
     }
