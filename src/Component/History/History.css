@@ -1,19 +1,14 @@
 div.contain {
   width: calc(100% - 100px);
-  height: auto;
   background-color: rgb(255, 255, 255);
   margin-left: 80px;
-  margin-top: 80px;
-  padding: 30px;
+  margin-top: 85px;
+  padding: 4px 30px;
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-auto-rows: 200px;
   grid-gap: 10px;
-}
-
-.historyData {
-  margin-top: -90px;
 }
 
 .kotak1 {
@@ -61,8 +56,10 @@ p.body {
 p.foot {
   font-size: 15px;
 }
+
 .daftar {
-  margin-top: -90px;
+  padding-top: 0;
+  overflow: scroll;
 }
 
 .daftar table {
@@ -75,4 +72,11 @@ p.foot {
     margin-left: 0px;
     grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
   }
+}
+
+.containerHistory {
+  display: flex;
+  flex-direction: column;
+  max-height: 100vh;
+  overflow: scroll;
 }

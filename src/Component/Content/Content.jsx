@@ -338,14 +338,9 @@ class Content extends Component {
     console.log(filterProduct);
     return (
       <Fragment>
-        <div className="content">
-          {this.state.loading ? (
-            <div className="loadingContainer">
-              <Loading />
-            </div>
-          ) : null}
-          <div className="items">
-            {filterProduct.map(product => {
+        <div className="content" id="content">
+          <div className="items" id="items">
+            {this.state.product.map(product => {
               return (
                 <Product
                   key={product.id}
@@ -355,15 +350,24 @@ class Content extends Component {
                 />
               );
             })}
-            <div className="pages">
-              {/* <p className="prev" onClick={this.handlePrevPage}>
-              Prev
+            {this.state.loading ? (
+              <div className="load">
+                <div class="lds-ripple">
+                  <div></div>
+                  <div></div>
+                </div>
+              </div>
+            ) : null}
+          </div>
+          <div className="pages">
+            <p className="prev" onClick={this.handlePrevPage}>
+              &#8678;
             </p>
             <p className="next" onClick={this.handleNextPage}>
-              Next
-            </p> */}
-            </div>
+              &#8680;
+            </p>
           </div>
+
           <div className="sch">
             <Form inline>
               <Form.Control
@@ -406,7 +410,7 @@ class Content extends Component {
                   );
                 })
               ) : (
-                <div className="empty">
+                <div className="emptyCart">
                   <img src={picEmpty} alt="empty" className="picEmpty" />
                   <h5>Your cart is empty</h5>
                   <p>Please add some items from the menu</p>

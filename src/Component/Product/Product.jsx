@@ -255,9 +255,12 @@ class AddProduct extends Component {
   }
 
   render() {
-    // let filterProduct = this.state.product.filter((product) => {
-    //     return product.name.toLowerCase().indexOf(this.state.keyword.toLowerCase()) !== -1;
-    // })
+    let filterProduct = this.state.product.filter(product => {
+      return (
+        product.name.toLowerCase().indexOf(this.state.keyword.toLowerCase()) !==
+        -1
+      );
+    });
     return (
       <Fragment>
         <div className="daftar">
@@ -286,7 +289,7 @@ class AddProduct extends Component {
             </thead>
             {/* <div className="tbody"> */}
             <tbody>
-              {this.state.product.map(product => {
+              {filterProduct.map(product => {
                 return (
                   <TableProduct
                     key={product.id}

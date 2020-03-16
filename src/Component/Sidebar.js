@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import foodres from "../img/silverware.svg";
 import clipboard from "../img/attendant-list.svg";
 import addbtn from "../img/plus.svg";
-import addbtnc from "../img/add.svg";
+import addbtnc from "../img/addc.png";
 import logout from "../img/logout.svg";
 
 import { Redirect, Link } from "react-router-dom";
@@ -22,7 +22,7 @@ export const Sidebar = props => {
               <Link to="/pos/product">
                 <img src={foodres} alt="menu" width="40px" />
               </Link>
-              <p>Product</p>
+              <p>List</p>
             </li>
             <li>
               <Link to="/pos/history">
@@ -39,7 +39,7 @@ export const Sidebar = props => {
                   onClick={() => setModalShow(true)}
                 />
               </Link>
-              <p>Add Product</p>
+              <p>Product</p>
             </li>
             <li>
               <Link to="/pos/category">
@@ -50,7 +50,7 @@ export const Sidebar = props => {
                   onClick={() => setModalShow(true)}
                 />
               </Link>
-              <p>Add Category</p>
+              <p>Category</p>
             </li>
             <li>
               <img

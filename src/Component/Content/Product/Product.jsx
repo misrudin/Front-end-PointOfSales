@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Product.css";
 import oke from "../../../img/oke.svg";
+import emptystok from "../../../img/empty.png";
 import buy from "../../../img/icons8-buy-96.png";
 
 const Product = props => {
@@ -45,7 +46,16 @@ const Product = props => {
     sm();
   }, [cart]);
   return (
-    <div className="item" onClick={muncul ? null : () => addToCart(props.data)}>
+    <div
+      className="item"
+      onClick={
+        props.data.stok === 0
+          ? null
+          : muncul
+          ? null
+          : () => addToCart(props.data)
+      }
+    >
       {loading ? (
         <div className="loadingContainer2">
           <div class="lds-ripple">
@@ -59,7 +69,12 @@ const Product = props => {
         <span className="name"> {props.data.name} </span>
         <span className="price">Rp. {props.data.price} </span>
       </div>
-      {muncul ? (
+      {props.data.stok === 0 ? (
+        <div className="emptyContainer">
+          <img src={emptystok} alt="Empty" className="oke" />
+          {/* <p>Empty Stok</p> */}
+        </div>
+      ) : muncul ? (
         <div className="okeContainer">
           <img src={oke} alt="Oke" className="oke" />
         </div>

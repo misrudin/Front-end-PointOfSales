@@ -23,28 +23,17 @@ div.myTitlePage h3 {
   text-decoration: none;
 }
 
-div.cart {
+.cartCount {
   position: absolute;
-  right: 100px;
+  right: 150px;
   height: 80px;
-  top: 20px;
-  right: 50px;
+  top: 25px;
   cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: rgb(12, 12, 12);
 }
 
-p.cartCount {
-  position: absolute;
-  top: -10px;
-  left: 17px;
-  border: 2px solid rgb(17, 13, 226);
-  text-align: center;
-  padding: 1px 5px;
-  border-radius: 20px;
-  background-color: rgba(18, 122, 219, 0.8);
-  font-weight: bold;
-  color: white;
-  font-size: 14px;
-}
 /* end navbar */
 
 div.wrapper {
@@ -66,9 +55,43 @@ div.sideBar {
   width: 0;
 }
 
-@media (max-width: 550px) {
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
   div.sideBar {
     display: none;
+  }
+  .cartCount {
+    right: 50px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  div.sideBar {
+    display: block;
+  }
+  .cartCount {
+    right: 50px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  div.sideBar {
+    display: block;
+  }
+  .cartCount {
+    right: 50px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  div.sideBar {
+    display: block;
+  }
+  .cartCount {
+    right: 150px;
   }
 }
 
