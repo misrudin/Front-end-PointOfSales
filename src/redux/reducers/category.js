@@ -71,15 +71,15 @@ const productReducer = (state = initialValue, action) => {
         errMsg: action.payload.data
       };
     case "DELETE_CATEGORY_FULFILLED":
-      // const dataAfterDelete = state.categoryData.filter (
-      //     data => data.id != action.payload.data.data.id
-      //   );
-      console.log(action.id);
+      const dataAfterDelete = state.categoryData.filter(
+        data => data.id != action.payload.data.result.id
+      );
+      console.log(dataAfterDelete);
       return {
         ...state,
         isPending: false,
         isFulfilled: true,
-        categoryData: state.categoryData
+        categoryData: dataAfterDelete
       };
 
     // edit category
@@ -99,11 +99,12 @@ const productReducer = (state = initialValue, action) => {
       };
     case "EDIT_CATEGORY_FULFILLED":
       const dataAfterEdit = state.categoryData.map(data => {
-        if (data.id === action.payload.data.data.id) {
+        if (data.id == action.payload.data.result.id) {
           return action.payload.data.result;
         }
         return data;
       });
+      console.log(dataAfterEdit);
       return {
         ...state,
         isPending: false,

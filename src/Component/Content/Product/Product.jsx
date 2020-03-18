@@ -5,9 +5,6 @@ import emptystok from "../../../img/empty.png";
 import buy from "../../../img/icons8-buy-96.png";
 
 const Product = props => {
-  // const [id_user, setIdUser] = useState("");
-  // const [qty, setQty] = useState(1);
-  // const [id_product, setIdproduct] = useState("");
   const [muncul, setMuncul] = useState(false);
   const [cart, setCart] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -27,15 +24,13 @@ const Product = props => {
   useEffect(() => {
     const arr = [];
     cart.map(idp => {
-      arr.push(idp.id_product);
+      return arr.push(idp.id_product);
     });
     const cek = (element, index, array) => {
       return element === props.data.id;
     };
     const sm = () => {
       const val = arr.some(cek);
-      // console.log(props.dataCart.id_product);
-      // console.log("->", val);
       if (val) {
         setMuncul(true);
       } else {

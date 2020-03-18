@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import foodres from "../img/silverware.svg";
 import clipboard from "../img/attendant-list.svg";
@@ -6,13 +6,11 @@ import addbtn from "../img/plus.svg";
 import addbtnc from "../img/addc.png";
 import logout from "../img/logout.svg";
 
-import { Redirect, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-import swal from "sweetalert";
+// import swal from "sweetalert";
 
 export const Sidebar = props => {
-  const [modalShow, setModalShow] = useState("false");
-
   return (
     <>
       <div className="sideBar">
@@ -32,23 +30,13 @@ export const Sidebar = props => {
             </li>
             <li>
               <Link to="/pos/product-add">
-                <img
-                  src={addbtn}
-                  alt="addbtn"
-                  width="40px"
-                  onClick={() => setModalShow(true)}
-                />
+                <img src={addbtn} alt="addbtn" width="40px" />
               </Link>
               <p>Product</p>
             </li>
             <li>
               <Link to="/pos/category">
-                <img
-                  src={addbtnc}
-                  alt="addbtn"
-                  width="40px"
-                  onClick={() => setModalShow(true)}
-                />
+                <img src={addbtnc} alt="addbtn" width="40px" />
               </Link>
               <p>Category</p>
             </li>

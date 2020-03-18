@@ -15,7 +15,7 @@ export const Loading = () => {
         {/* <div class="lds-circle">
           <div></div>
         </div> */}
-        <div class="lds-ripple">
+        <div className="lds-ripple">
           <div></div>
           <div></div>
         </div>

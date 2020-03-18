@@ -6,7 +6,6 @@ import "../Cart/Cart.css";
 import Items from "../Cart/Items";
 import { Modal, Button, Form, FormControl } from "react-bootstrap";
 import { pagination } from "../../redux/actions/product";
-import { Loading } from "../loading";
 import {
   addProductToCart,
   getAllCart,
@@ -115,11 +114,8 @@ class Content extends Component {
   getProduct = async () => {
     this.setState({ loading: true });
     const page = this.state.page;
-    const keyword = this.state.keyword;
-    const category = this.state.categoryKey;
-    this.props.history.push(`?page=${page}`);
-    const currentPage = page;
-    await this.props.dispatch(pagination(currentPage, category, keyword));
+    await this.props.dispatch(pagination(page));
+    console.log(this.props.product.productData);
     this.setState({
       product: this.props.product.productData[2],
       loading: false
@@ -332,6 +328,7 @@ class Content extends Component {
   };
 
   render() {
+    console.log(this.state.product);
     let filterProduct = this.state.product.filter(
       product => product.stok !== 0
     );
@@ -352,7 +349,7 @@ class Content extends Component {
             })}
             {this.state.loading ? (
               <div className="load">
-                <div class="lds-ripple">
+                <div className="lds-ripple">
                   <div></div>
                   <div></div>
                 </div>
