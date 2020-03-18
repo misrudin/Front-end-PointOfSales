@@ -140,9 +140,7 @@ class AddCategory extends Component {
   };
 
   componentDidMount = () => {
-    setTimeout(() => {
-      this.getCategory();
-    }, 100);
+    this.getCategory();
   };
 
   render() {

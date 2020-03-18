@@ -102,12 +102,14 @@ class AddProduct extends Component {
       fd.set("stok", data.stok);
       fd.set("price", data.price);
       fd.set("id_category", data.id_category);
-      this.props.dispatch(addProduct(fd));
-      this.getProduct();
-      setTimeout(() => {
-        this.getProduct();
-      }, 1000);
-      swal("Good job!", "Success add product", "success");
+      this.props.dispatch(addProduct(fd)).then(() => {
+        const product = this.props.product.productData;
+        this.setState({
+          product: product
+        });
+        this.handleClose();
+        swal("Good job!", "Success add product", "success");
+      });
     }
   };
 
@@ -155,16 +157,20 @@ class AddProduct extends Component {
       dangerMode: true
     }).then(willDelete => {
       if (willDelete) {
-        this.props.dispatch(deleteProduct(id));
-        this.getProduct();
-        setTimeout(() => {
-          this.getProduct();
+        this.props.dispatch(deleteProduct(id)).then(() => {
+          const product = this.props.product.productData;
+          this.setState({
+            product: product
+          });
           swal("Poof! Product has been deleted!", {
             icon: "success"
           });
-        }, 1000);
+        });
       } else {
-        this.getProduct();
+        const product = this.props.product.productData;
+        this.setState({
+          product: product
+        });
       }
     });
   };
@@ -180,8 +186,8 @@ class AddProduct extends Component {
     newProduct.stok = product.stok;
     newProduct.id_category = product.id_category;
     this.setState({
-      editShow: true,
-      formProduct: newProduct
+      formProduct: newProduct,
+      editShow: true
     });
   };
 
@@ -228,13 +234,13 @@ class AddProduct extends Component {
           fd.set("stok", data.stok);
           fd.set("price", data.price);
           fd.set("id_category", data.id_category);
-          this.props.dispatch(editProduct(data.id, fd));
-          this.getProduct();
-          setTimeout(() => {
-            this.getProduct();
-          }, 1000);
-          swal("Poof! Product has been updated!", {
-            icon: "success"
+          this.props.dispatch(editProduct(data.id, fd)).then(() => {
+            this.setState({
+              product: this.props.product.productData
+            });
+            swal("Poof! Product has been updated!", {
+              icon: "success"
+            });
           });
         }
       });
@@ -248,10 +254,8 @@ class AddProduct extends Component {
   };
 
   componentDidMount() {
-    setTimeout(() => {
-      this.getCategory();
-      this.getProduct();
-    }, 100);
+    this.getCategory();
+    this.getProduct();
   }
 
   render() {

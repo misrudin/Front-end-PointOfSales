@@ -360,6 +360,7 @@ class Content extends Component {
             <p className="prev" onClick={this.handlePrevPage}>
               &#8678;
             </p>
+            <p>{this.props.product.productData[1]}</p>
             <p className="next" onClick={this.handleNextPage}>
               &#8680;
             </p>

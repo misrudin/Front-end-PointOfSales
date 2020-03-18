@@ -53,7 +53,7 @@ const productReducer = (state = initialValue, action) => {
           ...state,
           isPending: false,
           isFulfilled: true,
-          productData: state.userData
+          productData: state.productData
         };
       } else {
         return {
@@ -81,12 +81,15 @@ const productReducer = (state = initialValue, action) => {
         errMsg: action.payload.data
       };
     case "DELETE_PRODUCT_FULFILLED":
-      // state.productData.filter(data => data.id !== action.payload.data.result)
+      const dataAfterDelete = state.productData.filter(
+        data => data.id != action.payload.data.result.id
+      );
+      // console.log(dataAfterDelete);
       return {
         ...state,
         isPending: false,
         isFulfilled: true,
-        productData: state.productData
+        productData: dataAfterDelete
       };
 
     //update product data
@@ -105,17 +108,17 @@ const productReducer = (state = initialValue, action) => {
         errMsg: action.payload.data
       };
     case "EDIT_PRODUCT_FULFILLED":
-      //   const dataAfterEdit = state.productData.map(product => {
-      //     if (product.id == action.payload.data.data.id) {
-      //       return action.payload.data.result;
-      //     }
-      //     return product;
-      //   });
+        const dataAfterEdit = state.productData.map(product => {
+          if (product.id == action.payload.data.result.id) {
+            return action.payload.data.result;
+          }
+          return product;
+        });
       return {
         ...state,
         isPending: false,
         isFulfilled: true,
-        productData: state.productData
+        productData: dataAfterEdit
       };
 
     // pagination

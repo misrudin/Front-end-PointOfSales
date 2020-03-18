@@ -74,7 +74,7 @@ const productReducer = (state = initialValue, action) => {
       const dataAfterDelete = state.categoryData.filter(
         data => data.id != action.payload.data.result.id
       );
-      console.log(dataAfterDelete);
+      // console.log(dataAfterDelete);
       return {
         ...state,
         isPending: false,
@@ -104,7 +104,7 @@ const productReducer = (state = initialValue, action) => {
         }
         return data;
       });
-      console.log(dataAfterEdit);
+      // console.log(dataAfterEdit);
       return {
         ...state,
         isPending: false,
