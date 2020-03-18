@@ -38,7 +38,7 @@ class Register extends Component {
       }
     } else {
       this.setState({
-        msg: "Isi semua",
+        msg: "Please Complete data!",
         show: true
       });
     }
@@ -95,6 +95,8 @@ class Register extends Component {
       this.postUser();
     } else {
       this.setState({
+        password: "",
+        passwordRepeat: "",
         msg: "Password not Match!",
         show: true
       });

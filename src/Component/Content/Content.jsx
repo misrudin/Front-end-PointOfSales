@@ -279,9 +279,7 @@ class Content extends Component {
       this.setState({
         page: this.state.page + 1
       });
-      setTimeout(() => {
-        this.getProduct();
-      }, 100);
+      this.getProduct();
     }
   };
   handlePrevPage = e => {
@@ -289,9 +287,7 @@ class Content extends Component {
       this.setState({
         page: this.state.page - 1
       });
-      setTimeout(() => {
-        this.getProduct();
-      }, 100);
+      this.getProduct();
     }
   };
 
@@ -357,13 +353,21 @@ class Content extends Component {
             ) : null}
           </div>
           <div className="pages">
-            <p className="prev" onClick={this.handlePrevPage}>
-              &#8678;
-            </p>
-            <p>{this.props.product.productData[1]}</p>
-            <p className="next" onClick={this.handleNextPage}>
-              &#8680;
-            </p>
+            {this.state.page !== 1 ? (
+              <p className="prev" onClick={this.handlePrevPage}>
+                &#8678;
+              </p>
+            ) : (
+              <p> </p>
+            )}
+            <p className="page">{this.state.page}</p>
+            {this.state.page !== this.props.product.productData[0] ? (
+              <p className="next" onClick={this.handleNextPage}>
+                &#8680;
+              </p>
+            ) : (
+              <p> </p>
+            )}
           </div>
 
           <div className="sch">

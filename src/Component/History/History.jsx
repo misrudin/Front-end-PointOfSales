@@ -137,7 +137,7 @@ class History extends Component {
               <p className="foot">{year} % Last year</p>
             </div>
           </div>
-          <div className="daftar">
+          <div className="daftarHystory">
             <Table responsive="m" className="historyData">
               <thead>
                 <tr>

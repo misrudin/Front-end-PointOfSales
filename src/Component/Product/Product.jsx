@@ -203,7 +203,7 @@ class AddProduct extends Component {
         msg: "Description must be filed, min 10 char!",
         show: true
       });
-    } else if (!/([0-9])\w+/g.test(data.stok)) {
+    } else if (data.stok === "") {
       this.setState({
         msg: "Stok must be filed!",
         show: true
@@ -238,6 +238,7 @@ class AddProduct extends Component {
             this.setState({
               product: this.props.product.productData
             });
+            this.handleClose();
             swal("Poof! Product has been updated!", {
               icon: "success"
             });

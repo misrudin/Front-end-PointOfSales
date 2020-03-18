@@ -1,9 +1,9 @@
 .cover {
-  min-height: 70vh;
-  background-color: #ffffff;
+  min-height: calc(100vh - 80px);
+  background-color: #fff;
   width: 320px;
   transition: 1s;
-  right: 5px;
+  right: 0px;
   position: fixed;
   z-index: 99;
 }

@@ -1,9 +1,6 @@
 div.contain {
-  width: calc(100% - 100px);
-  background-color: rgb(255, 255, 255);
-  margin-left: 80px;
-  margin-top: 85px;
-  padding: 4px 30px;
+  /* width: calc(100% - 80px); */
+  padding: 4px 4px;
   position: relative;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -57,12 +54,11 @@ p.foot {
   font-size: 15px;
 }
 
-.daftar {
-  padding-top: 0;
-  overflow: scroll;
+.daftarHystory {
+  margin-top: 20px;
 }
 
-.daftar table {
+.daftarHystory table {
   box-shadow: -1px -1px 7px -1px #888;
   border-radius: 6px;
 }
@@ -75,8 +71,44 @@ p.foot {
 }
 
 .containerHistory {
-  display: flex;
-  flex-direction: column;
-  max-height: 100vh;
   overflow: scroll;
+  margin-left: 80px;
+  padding: 10px;
+  max-height: calc(100vh - 80px);
+  margin-top: 80px;
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .containerHistory {
+    margin-left: 0px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .containerHistory {
+    margin-left: 0px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .containerHistory {
+    margin-left: 0px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .containerHistory {
+    margin-left: 80px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .containerHistory {
+    margin-left: 80px;
+  }
 }
