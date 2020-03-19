@@ -28,10 +28,16 @@
 * [`react-native`](https://facebook.github.io/react-native/docs/getting-started)
 * [`react-native-cli`](https://facebook.github.io/react-native/docs/getting-started)
 
+
 ## Usage for development
 1. Open your terminal or command prompt
 2. Type `git clone https://github.com/misrudin/Hayuu-Chat-Backend.git`
 3. Open the folder and type `npm install` for install dependencies
+	#### Setup .env
+		Open .env file on your favorite code editor, and copy paste this code below :
+		```
+		REACT_APP_URL="http://localhost:4001/api/v1/"
+		```
 4. Before run this, you must run backend first
 5. Type `npx react-native run-android` for run this app. ***Make sure your device is connected with debugging mode***.
 
