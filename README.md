@@ -34,5 +34,6 @@
     <img width="70%" src="https://user-images.githubusercontent.com/37394664/77042665-acc5d280-69ee-11ea-8c61-4802fac04f76.gif">   
 </div>
 
-## Related Project (Backend)
+## Related Project
 * [`Hayuu-Cafe-Backend`](https://github.com/misrudin/NodeWithExpress-backend-PointOfSales.git)
+* [`Hayuu-Cafe-Mobile`](https://github.com/misrudin/PosReactNative.git)
