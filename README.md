@@ -37,7 +37,7 @@
 
 ## Screenshots
 <div align="center">
-    <img width="250" src="https://user-images.githubusercontent.com/37394664/76815543-7c383a00-6830-11ea-8b66-fb1c13fe68c4.gif">   
+    <img width="70%" src="https://user-images.githubusercontent.com/37394664/77042665-acc5d280-69ee-11ea-8c61-4802fac04f76.gif">   
 </div>
 
 ## Release APK (version.0.0.1)
