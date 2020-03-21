@@ -1,5 +1,4 @@
 div.contain {
-  /* width: calc(100% - 80px); */
   padding: 4px 4px;
   position: relative;
   display: grid;
@@ -63,52 +62,9 @@ p.foot {
   border-radius: 6px;
 }
 
-@media (max-width: 550px) {
-  div.contain {
-    margin-left: 0px;
-    grid-template-columns: repeat(auto-fit, minmax(430px, 1fr));
-  }
-}
-
 .containerHistory {
+  width: 100%;
   overflow: scroll;
-  margin-left: 80px;
   padding: 10px;
   max-height: calc(100vh - 80px);
-  margin-top: 80px;
-}
-
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
-  .containerHistory {
-    margin-left: 0px;
-  }
-}
-
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .containerHistory {
-    margin-left: 0px;
-  }
-}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
-  .containerHistory {
-    margin-left: 0px;
-  }
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-  .containerHistory {
-    margin-left: 80px;
-  }
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  .containerHistory {
-    margin-left: 80px;
-  }
 }

@@ -11,6 +11,7 @@ import {
 import { getAllCategory } from "../../redux/actions/category";
 import TableProduct from "./Table";
 import swal from "sweetalert";
+// import { Header } from "../Header";
 
 class AddProduct extends Component {
   state = {
@@ -48,7 +49,7 @@ class AddProduct extends Component {
 
   getProduct = async () => {
     await this.props.dispatch(getAllProduct());
-    const product = this.props.product.productData;
+    const product = this.props.product.productall;
     this.setState({
       product: product
     });
@@ -103,7 +104,7 @@ class AddProduct extends Component {
       fd.set("price", data.price);
       fd.set("id_category", data.id_category);
       this.props.dispatch(addProduct(fd)).then(() => {
-        const product = this.props.product.productData;
+        const product = this.props.product.productall;
         this.setState({
           product: product
         });
@@ -167,7 +168,7 @@ class AddProduct extends Component {
           });
         });
       } else {
-        const product = this.props.product.productData;
+        const product = this.props.product.productall;
         this.setState({
           product: product
         });
@@ -236,7 +237,7 @@ class AddProduct extends Component {
           fd.set("id_category", data.id_category);
           this.props.dispatch(editProduct(data.id, fd)).then(() => {
             this.setState({
-              product: this.props.product.productData
+              product: this.props.product.productall
             });
             this.handleClose();
             swal("Poof! Product has been updated!", {
@@ -268,6 +269,7 @@ class AddProduct extends Component {
     });
     return (
       <Fragment>
+        {/* <Header /> */}
         <div className="daftar">
           <Button
             className="btn btn-info"

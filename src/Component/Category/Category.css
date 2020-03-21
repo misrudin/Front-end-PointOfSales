@@ -1,10 +1,9 @@
 .daftar {
-  margin-top: 80px;
-  margin-left: 80px;
   padding: 20px;
   position: relative;
   overflow: scroll;
   max-height: calc(100vh - 80px);
+  width: 100%;
 }
 
 @media (max-width: 550px) {

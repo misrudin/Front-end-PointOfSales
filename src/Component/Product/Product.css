@@ -6,19 +6,11 @@
 }
 
 .daftar {
-  margin-top: 80px;
-  margin-left: 80px;
   padding: 20px;
   position: relative;
   overflow: scroll;
   max-height: calc(100vh - 80px);
-  /* background-color: red; */
-}
-
-@media (max-width: 550px) {
-  div.daftar {
-    margin-left: 0px;
-  }
+  width: 100%;
 }
 
 .keyword {
@@ -67,13 +59,6 @@
   border: 1px solid rgb(185, 185, 185);
 }
 
-.preview {
-  max-width: 400px;
-  max-height: 250px;
-  border: 2px solid salmon;
-  box-shadow: -1px -1px 20px -1px #888;
-  border-radius: 2px;
-}
 .tbody {
   overflow: scroll;
   height: 100px;

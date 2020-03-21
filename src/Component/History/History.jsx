@@ -3,6 +3,7 @@ import "./History.css";
 import axios from "axios";
 import TableHistory from "./Table";
 import { Table } from "react-bootstrap";
+// import { Header } from "../Header";
 
 class History extends Component {
   constructor(props) {
@@ -119,6 +120,7 @@ class History extends Component {
 
     return (
       <Fragment>
+        {/* <Header />/ */}
         <div className="containerHistory">
           <div className="contain">
             <div className="kotak1">

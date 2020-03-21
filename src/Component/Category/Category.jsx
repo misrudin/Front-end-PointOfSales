@@ -10,6 +10,7 @@ import {
   editCategory
 } from "../../redux/actions/category.js";
 import swal from "sweetalert";
+// import { Header } from "../Header";
 
 class AddCategory extends Component {
   state = {
@@ -153,6 +154,7 @@ class AddCategory extends Component {
     });
     return (
       <Fragment>
+        {/* <Header /> */}
         <div className="daftar">
           <Button
             className="btn btn-info"

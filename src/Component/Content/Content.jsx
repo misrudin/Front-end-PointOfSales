@@ -4,8 +4,8 @@ import Product from "./Product/Product";
 import { connect } from "react-redux";
 import "../Cart/Cart.css";
 import Items from "../Cart/Items";
-import { Modal, Button, Form, FormControl } from "react-bootstrap";
-import { pagination } from "../../redux/actions/product";
+import { Modal, Button } from "react-bootstrap";
+import { pagination, getAllProduct } from "../../redux/actions/product";
 import {
   addProductToCart,
   getAllCart,
@@ -20,16 +20,20 @@ import {
 import swal from "sweetalert";
 import picEmpty from "../../img/food-and-restaurant.svg";
 import { getAllCategory } from "../../redux/actions/category";
-
+// import { Header } from "../Header";
 class Content extends Component {
   state = {
+    productall: [],
     category: [],
     product: [],
     cartData: [],
     cart: {
       id_user: "",
       qty: 1,
-      id_product: ""
+      id_product: "",
+      name: "",
+      image: "",
+      price: ""
     },
     dataproduct: {
       name: "",
@@ -115,7 +119,7 @@ class Content extends Component {
     this.setState({ loading: true });
     const page = this.state.page;
     await this.props.dispatch(pagination(page));
-    console.log(this.props.product.productData);
+    // console.log(this.props.product.productData);
     this.setState({
       product: this.props.product.productData[2],
       loading: false
@@ -127,20 +131,14 @@ class Content extends Component {
     this.setState({
       cartData: this.props.cart.cartData
     });
-    setTimeout(() => {
-      this.sendQty();
-    }, 100);
+    this.sendQty();
   };
 
   getDetailCart = async faktur => {
-    // const faktur = this.state.formCheckOut.faktur
     await this.props.dispatch(getDetail(faktur));
     this.setState({
       detailCart: this.props.cart.cartDetail
     });
-    setTimeout(() => {
-      console.log(this.state.detailCart);
-    }, 2000);
   };
 
   handleAddToCart = product => {
@@ -148,16 +146,18 @@ class Content extends Component {
       const newCart = { ...this.state.cart };
       newCart.id_product = product.id;
       newCart.id_user = this.state.id_user;
+      newCart.name = product.name;
+      newCart.image = product.image;
+      newCart.price = product.price;
       this.setState(
         {
           cart: newCart
         },
         () => {
           const data = this.state.cart;
-          this.props.dispatch(addProductToCart(data));
-          setTimeout(() => {
+          this.props.dispatch(addProductToCart(data)).then(() => {
             this.getAllCart();
-          }, 200);
+          });
         }
       );
     }
@@ -165,15 +165,14 @@ class Content extends Component {
 
   checkoutOk = () => {
     const data = this.state.formCheckOut;
-    this.props.dispatch(checkOutAll(data));
-    setTimeout(() => {
+    this.props.dispatch(checkOutAll(data)).then(() => {
       this.getAllCart();
       this.getDetailCart(data.faktur);
       this.getProduct();
       this.setState({
         printCheckout: true
       });
-    }, 1000);
+    });
   };
 
   handleCheckout = () => {
@@ -205,18 +204,14 @@ class Content extends Component {
       dangerMode: true
     }).then(willDelete => {
       if (willDelete) {
-        this.props.dispatch(deleteAll());
-        this.getAllCart();
-        setTimeout(() => {
+        this.props.dispatch(deleteAll()).then(() => {
           this.getAllCart();
-        }, 1000);
+        });
         swal("Poof! Cart has been deleted!", {
           icon: "success"
         });
       } else {
-        setTimeout(() => {
-          this.getAllCart();
-        }, 100);
+        this.getAllCart();
       }
     });
   };
@@ -225,35 +220,29 @@ class Content extends Component {
     const id_cart = data.id;
     const newQty = data.qty - 1;
     if (newQty < 1) {
-      // this.handleDelete(data)
-      this.props.dispatch(deleteCart(data.id));
-      this.getAllCart();
-      setTimeout(() => {
+      this.props.dispatch(deleteCart(data.id)).then(() => {
         this.getAllCart();
-      }, 20);
+      });
     } else {
-      this.props.dispatch(minQty(id_cart));
-      this.getAllCart();
-      setTimeout(() => {
+      this.props.dispatch(minQty(id_cart)).then(() => {
         this.getAllCart();
-      }, 20);
+      });
     }
   };
 
   handlePlus = data => {
+    // console.log(this.props.product.productall);
     const id_cart = data.id;
-    this.state.product.forEach(e => {
+    this.props.product.productall.forEach(e => {
       if (data.id_product === e.id) {
         if (data.qty >= e.stok) {
           swal("Stok limit!", {
             icon: "warning"
           });
         } else {
-          this.props.dispatch(addQty(id_cart));
-          this.getAllCart();
-          setTimeout(() => {
+          this.props.dispatch(addQty(id_cart)).then(() => {
             this.getAllCart();
-          }, 20);
+          });
         }
       }
     });
@@ -268,26 +257,35 @@ class Content extends Component {
       buttons: true
     }).then(willDelete => {
       if (willDelete) {
-        this.props.dispatch(deleteCart(data.id));
-        this.getAllCart();
+        this.props.dispatch(deleteCart(data.id)).then(() => {
+          this.getAllCart();
+        });
       }
     });
   };
 
   handleNextPage = e => {
     if (this.state.page < this.props.product.productData[0]) {
-      this.setState({
-        page: this.state.page + 1
-      });
-      this.getProduct();
+      this.setState(
+        {
+          page: this.state.page + 1
+        },
+        () => {
+          this.getProduct();
+        }
+      );
     }
   };
   handlePrevPage = e => {
     if (this.state.page > 1) {
-      this.setState({
-        page: this.state.page - 1
-      });
-      this.getProduct();
+      this.setState(
+        {
+          page: this.state.page - 1
+        },
+        () => {
+          this.getProduct();
+        }
+      );
     }
   };
 
@@ -314,6 +312,7 @@ class Content extends Component {
         this.getProduct();
         this.getAllCart();
         this.getCategory();
+        this.props.dispatch(getAllProduct());
       }, 200);
       const user = this.parseJwt();
       this.setState({
@@ -324,13 +323,9 @@ class Content extends Component {
   };
 
   render() {
-    console.log(this.state.product);
-    let filterProduct = this.state.product.filter(
-      product => product.stok !== 0
-    );
-    console.log(filterProduct);
     return (
       <Fragment>
+        {/* <Header /> */}
         <div className="content" id="content">
           <div className="items" id="items">
             {this.state.product.map(product => {
@@ -370,34 +365,8 @@ class Content extends Component {
             )}
           </div>
 
-          <div className="sch">
-            <Form inline>
-              <Form.Control
-                as="select"
-                className="mr-sm-1 ml-2 option"
-                name="categoryKey"
-                onChange={this.sortProduct}
-              >
-                <option value="">All</option>
-                {this.state.category.map(data => {
-                  return (
-                    <option key={data.id} value={data.id}>
-                      {data.nama_category}{" "}
-                    </option>
-                  );
-                })}
-              </Form.Control>
-              <FormControl
-                type="text"
-                onChange={this.handleChange}
-                placeholder="Search Product....."
-                className="mr-sm-1"
-              />
-            </Form>
-          </div>
-
           {/* CART */}
-          <div className="cover">
+          <div className="cover" id="cart">
             <div className="container-cart">
               {this.state.cartData.length > 0 ? (
                 this.state.cartData.map(data => {

@@ -72,7 +72,7 @@ const productReducer = (state = initialValue, action) => {
       };
     case "DELETE_CATEGORY_FULFILLED":
       const dataAfterDelete = state.categoryData.filter(
-        data => data.id != action.payload.data.result.id
+        data => data.id.toString() !== action.payload.data.result.id
       );
       // console.log(dataAfterDelete);
       return {
@@ -99,7 +99,7 @@ const productReducer = (state = initialValue, action) => {
       };
     case "EDIT_CATEGORY_FULFILLED":
       const dataAfterEdit = state.categoryData.map(data => {
-        if (data.id == action.payload.data.result.id) {
+        if (data.id.toString() === action.payload.data.result.id) {
           return action.payload.data.result;
         }
         return data;

@@ -19,7 +19,7 @@ const Product = props => {
 
   useEffect(() => {
     setCart(props.dataCart);
-  });
+  }, [props.dataCart]);
 
   useEffect(() => {
     const arr = [];
@@ -39,7 +39,7 @@ const Product = props => {
     };
 
     sm();
-  }, [cart]);
+  }, [cart, props.data.id]);
   return (
     <div
       className="item"
@@ -53,7 +53,7 @@ const Product = props => {
     >
       {loading ? (
         <div className="loadingContainer2">
-          <div class="lds-ripple">
+          <div className="lds-ripple">
             <div></div>
             <div></div>
           </div>

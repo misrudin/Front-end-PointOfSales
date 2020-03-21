@@ -30,15 +30,51 @@
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+    <script>
+      document.onreadystatechange = function() {
+        let listen = true;
+        if (document.readyState == "interactive") {
+          const bar = document.getElementById("bar");
+          const sidebar = document.getElementById("sidebar");
+          const wrapper = document.getElementById("wrapper");
+          const count = document.getElementById("count");
+          const cart = document.getElementById("cart");
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+          sidebar.addEventListener("click", e => {
+            // console.log(e.target.alt);
+            if (e.target.alt === "menu") {
+              // console.log("menu");
+              // count.style.display = "block";
+              listen = true;
+            } else {
+              // console.log("buken");
+              // count.style.display = "none";
+              listen = false;
+            }
+          });
+
+          if (listen) {
+            count.addEventListener("click", () => {
+              if (cart.style.right != "0px") {
+                cart.style.right = "0px";
+              } else {
+                cart.style.right = "-325px";
+              }
+            });
+          }
+
+          bar.addEventListener("click", () => {
+            if (sidebar.style.left != "0px") {
+              sidebar.style.left = "0px";
+              wrapper.style.marginLeft = "80px";
+            } else {
+              sidebar.style.left = "-80px";
+              wrapper.style.marginLeft = "0px";
+            }
+          });
+        }
+      };
+    </script>
   </body>
 </html>

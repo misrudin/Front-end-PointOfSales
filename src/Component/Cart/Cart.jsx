@@ -1,75 +1,141 @@
-import React, { Component, Fragment } from 'react'
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Button } from "react-bootstrap";
+import Items from "./Items";
+import picEmpty from "../../img/food-and-restaurant.svg";
+import {
+  getQty,
+  getAllCart,
+  deleteCart,
+  deleteAll,
+  minQty,
+  addQty
+} from "../../redux/actions/cart";
+import { getAllProduct } from "../../redux/actions/product";
+import swal from "sweetalert";
 
-import { connect } from 'react-redux'
+const Cart = () => {
+  const { cartData } = useSelector(state => state.cart);
+  const { productall } = useSelector(state => state.product);
+  const [total, settotal] = useState(0);
+  const [cart, setCart] = useState(cartData);
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(getAllProduct());
+    getAllCarts();
+  }, []);
 
+  useEffect(() => {
+    const newTotal = [];
+    cart.forEach(e => {
+      newTotal.push(e.qty * e.price);
+    });
+    // const pushTotal = newTotal.reduce((a, b) => a + b, 0);
+    settotal(newTotal.reduce((a, b) => a + b, 0));
+  }, [cart]);
 
-class Cart extends Component {
-    state = {
-        id_user: '',
-        cart: [],
-        qty: 0,
-        setShow: false,
-        id_cart: '',
-        cekout: false,
-        refresh: false
+  const getAllCarts = async () => {
+    dispatch(getAllCart()).then(() => {
+      setCart(cartData);
+      // sendQty();
+    });
+  };
+
+  const handleMinus = data => {
+    const id_cart = data.id;
+    const newQty = data.qty - 1;
+    if (newQty < 1) {
+      dispatch(deleteCart(data.id)).then(() => {
+        getAllCarts();
+      });
+    } else {
+      dispatch(minQty(id_cart)).then(() => {});
     }
+  };
 
-    handleClose = () => {
-        this.setState({
-            setShow: false,
-            cekout: false
-        })
-    }
-    parseJwt = () => {
-        const token = localStorage.getItem('Token')
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
+  const handlePlus = data => {
+    const id_cart = data.id;
+    productall.forEach(e => {
+      if (data.id_product === e.id) {
+        if (data.qty >= e.stok) {
+          swal("Stok limit!", {
+            icon: "warning"
+          });
+        } else {
+          dispatch(addQty(id_cart)).then(() => {
+            getAllCarts();
+          });
+        }
+      }
+    });
+  };
 
-        const decoded = JSON.parse(jsonPayload);
-        return decoded.id_user
-    };
+  const handleAll = () => {
+    swal({
+      title: "Are you sure?",
+      text: "Cancel the transaction?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true
+    }).then(willDelete => {
+      if (willDelete) {
+        dispatch(deleteAll()).then(() => {
+          getAllCarts();
+        });
+        swal("Poof! Cart has been deleted!", {
+          icon: "success"
+        });
+      } else {
+        getAllCarts();
+      }
+    });
+  };
+  return (
+    <>
+      <div className="covermodal" id="cart">
+        <div className="container-cart">
+          {cart.length > 0 ? (
+            cart.map(data => {
+              return (
+                <Items
+                  key={data.id}
+                  data={data}
+                  minus={() => handleMinus(data)}
+                  plus={() => handlePlus(data)}
+                />
+              );
+            })
+          ) : (
+            <div className="emptyCart">
+              <img src={picEmpty} alt="empty" className="picEmpty" />
+              <h5>Your cart is empty</h5>
+              <p>Please add some items from the menu</p>
+            </div>
+          )}
+        </div>
+        {cartData.length > 0 ? (
+          <>
+            <div className="footerTotal">
+              <p>Total</p> <p>Rp. {total}*</p>
+            </div>
+            <div className="footerBtn">
+              <p>*Belum termasuk ppn</p>
+              <Button
+                className="btn btn-primary"
+                // onClick={() => this.handleCheckout()}
+              >
+                Checkout
+              </Button>
+              <Button className="btn btn-danger" onClick={() => handleAll()}>
+                Cancel
+              </Button>
+            </div>
+          </>
+        ) : null}
+      </div>
+    </>
+  );
+};
 
-
-
-    reloadMe = () => {
-        this.getAllCart()
-    }
-
-    handleCheckout = () => {
-        this.getAllCart()
-    }
-
-
-    // componentDidMount() {
-    //     if (localStorage.getItem('Token')) {
-    //         this.getAllCart()
-    //     }
-    // }
-
-    componentDidUpdate() {
-        // this.getAllCart()
-        console.log('okw')
-    }
-
-    render() {
-        const reloadMe = this.props.cart.reloadMe
-        return (
-            < Fragment >
-
-            </Fragment >
-        )
-    }
-}
-
-
-const mapStateToProps = ({ cart }) => {
-    return {
-        cart
-    }
-}
-
-export default connect(mapStateToProps)(Cart);
+export default Cart;

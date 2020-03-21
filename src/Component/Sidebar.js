@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 export const Sidebar = props => {
   return (
     <>
-      <div className="sideBar">
+      <div className="sideBar" id="sidebar">
         <div className="menuSide">
           <ul>
             <li>

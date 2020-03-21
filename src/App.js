@@ -70,10 +70,7 @@ class App extends Component {
       return (
         <Fragment>
           <Header />
-          <div className="wrapper">
-            {/* call children */}
-            <Sidebar onPress={() => this.handleLogout()} />
-          </div>
+          <Sidebar onPress={() => this.handleLogout()} />
         </Fragment>
       );
     } else {

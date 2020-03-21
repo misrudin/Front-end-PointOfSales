@@ -1,46 +1,42 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import bar from "../img/bar.svg";
+import { Form } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
-export const Header = () => {
-  const { qty } = useSelector(state => state.cart);
-
-  // const showCart = () => {
-  //   const cartcover = document.querySelector(".cover");
-  //   const content = document.getElementById("content");
-  //   const aa = document.getElementById("items");
-  //   // alert(window.innerWidth);
-  //   if (cartcover.style.display === "none") {
-  //     cartcover.style.display = "block";
-  //     cartcover.style.transition = "0.5s";
-  //     if (window.innerWidth > 1200) {
-  //       content.style.width = "calc(100% - 325px)";
-  //       aa.style.width = "calc(100% - 80px)";
-  //       aa.style.gridTemplateColumns = "repeat(3, minmax(200px, 1fr))";
-  //     }
-  //   } else {
-  //     if (window.innerWidth > 1200) {
-  //       content.style.width = "100%";
-  //       aa.style.width = "calc(100% - 80px)";
-  //       aa.style.gridTemplateColumns = "repeat(4, minmax(200px, 1fr))";
-  //     }
-  //     cartcover.style.display = "none";
-  //   }
-  // };
+export const Header = props => {
+  const { qty, isPending } = useSelector(state => state.cart);
 
   return (
     <div>
       <div className="mynav">
         <div className="menu">
-          <Link to="/pos/product">
-            <div className="myTitlePage">
-              <h3 className="home">Hayuu</h3>
-            </div>
-          </Link>
+          <img src={bar} alt="menu" width="40px" className="bar" id="bar" />
+          <div className="searchForm">
+            <Form>
+              <input
+                type="text"
+                className="txtSearch"
+                placeholder="Search ..."
+                name="q"
+              />
+            </Form>
+          </div>
         </div>
 
-        <div className="cart" onClick={() => null}>
-          <p className="cartCount">Cart({qty})</p>
+        <div className="cartNav">
+          <Link to="/pos/product">
+            <p className="cartCount" id="count">
+              Cart({qty})
+            </p>
+          </Link>
+          <p className="cartCountbig">Cart({qty})</p>
+
+          {isPending ? (
+            <div className="loadingCat">
+              <div className="lds-hourglass"></div>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

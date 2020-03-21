@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
-// import Content from './Component/Content/Content';
+// import Cart from "./Component/Cart/Cart";
 import History from "./Component/History/History";
 import Product from "./Component/Product/Product";
 import Content from "./Component/Content/Content";
@@ -24,10 +24,14 @@ const Routing = () => {
         <Route path="/" exact component={Splash} />
         <Route path="/login" exact component={Login} />
         <Route path="/pos" component={App} />
-        <Route path="/pos/product" component={Content} />
-        <Route path="/pos/history" component={History} />
-        <Route path="/pos/product-add" component={Product} />
-        <Route path="/pos/category" component={Category} />
+        <div className="wrapper" id="wrapper">
+          {/* call children */}
+          <Route path="/pos/product" component={Content} />
+          <Route path="/pos/history" component={History} />
+          <Route path="/pos/product-add" component={Product} />
+          <Route path="/pos/category" component={Category} />
+          {/* <Route path="/pos/cart" component={Cart} /> */}
+        </div>
         <Route path="/register" component={Register} />
       </Router>
     </Provider>

@@ -3,7 +3,8 @@ const initialValue = {
   errMsg: [],
   isPending: false,
   isRejected: false,
-  isFulfilled: false
+  isFulfilled: false,
+  productall: []
 };
 
 const productReducer = (state = initialValue, action) => {
@@ -28,7 +29,7 @@ const productReducer = (state = initialValue, action) => {
         ...state,
         isPending: false,
         isFulfilled: true,
-        productData: action.payload.data.result
+        productall: action.payload.data.result
       };
 
     //form post product data
@@ -48,12 +49,12 @@ const productReducer = (state = initialValue, action) => {
       };
     case "ADD_PRODUCT_FULFILLED":
       if (action.payload.data.result) {
-        state.productData.unshift(action.payload.data.result);
+        state.productall.unshift(action.payload.data.result);
         return {
           ...state,
           isPending: false,
           isFulfilled: true,
-          productData: state.productData
+          productall: state.productall
         };
       } else {
         return {
@@ -81,15 +82,15 @@ const productReducer = (state = initialValue, action) => {
         errMsg: action.payload.data
       };
     case "DELETE_PRODUCT_FULFILLED":
-      const dataAfterDelete = state.productData.filter(
-        data => data.id != action.payload.data.result.id
+      const dataAfterDelete = state.productall.filter(
+        data => data.id.toString() !== action.payload.data.result.id
       );
       // console.log(dataAfterDelete);
       return {
         ...state,
         isPending: false,
         isFulfilled: true,
-        productData: dataAfterDelete
+        productall: dataAfterDelete
       };
 
     //update product data
@@ -108,17 +109,17 @@ const productReducer = (state = initialValue, action) => {
         errMsg: action.payload.data
       };
     case "EDIT_PRODUCT_FULFILLED":
-        const dataAfterEdit = state.productData.map(product => {
-          if (product.id == action.payload.data.result.id) {
-            return action.payload.data.result;
-          }
-          return product;
-        });
+      const dataAfterEdit = state.productall.map(product => {
+        if (product.id.toString() === action.payload.data.result.id) {
+          return action.payload.data.result;
+        }
+        return product;
+      });
       return {
         ...state,
         isPending: false,
         isFulfilled: true,
-        productData: dataAfterEdit
+        productall: dataAfterEdit
       };
 
     // pagination
