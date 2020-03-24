@@ -10,6 +10,19 @@ export const getAllProduct = () => {
     })
   };
 };
+export const sortByCategory = key => {
+  return {
+    type: "SORT",
+    payload: axios.get(
+      process.env.REACT_APP_URL + `product/category?id=${key}`,
+      {
+        headers: {
+          token: localStorage.getItem("Token")
+        }
+      }
+    )
+  };
+};
 export const addProduct = fd => {
   return {
     type: "ADD_PRODUCT",
@@ -41,13 +54,24 @@ export const editProduct = (id, fd) => {
   };
 };
 
-export const pagination = page => {
+export const pagination = (key, page) => {
   return {
     type: "PAGE",
-    payload: axios.get(process.env.REACT_APP_URL + `product?page=${page}`, {
-      headers: {
-        token: localStorage.getItem("Token")
+    payload: axios.get(
+      process.env.REACT_APP_URL + `product?key=${key}&page=${page}`,
+      {
+        headers: {
+          token: localStorage.getItem("Token")
+        }
       }
-    })
+    )
+  };
+};
+
+export const search = q => {
+  // console.log(q);
+  return {
+    type: "Q",
+    payload: q
   };
 };

@@ -33,46 +33,29 @@
 
     <script>
       document.onreadystatechange = function() {
-        let listen = true;
         if (document.readyState == "interactive") {
-          const bar = document.getElementById("bar");
-          const sidebar = document.getElementById("sidebar");
-          const wrapper = document.getElementById("wrapper");
-          const count = document.getElementById("count");
-          const cart = document.getElementById("cart");
+          const alll = document.getElementById("root");
 
-          sidebar.addEventListener("click", e => {
-            // console.log(e.target.alt);
-            if (e.target.alt === "menu") {
-              // console.log("menu");
-              // count.style.display = "block";
-              listen = true;
-            } else {
-              // console.log("buken");
-              // count.style.display = "none";
-              listen = false;
-            }
-          });
-
-          if (listen) {
-            count.addEventListener("click", () => {
+          alll.onclick = e => {
+            const sidebar = document.getElementById("sidebar");
+            const wrapper = document.getElementById("wrapper");
+            const cart = document.getElementById("cart");
+            if (e.target.id === "bar") {
+              if (sidebar.style.left === "0px") {
+                sidebar.style.left = "-80px";
+                wrapper.style.marginLeft = "0px";
+              } else {
+                sidebar.style.left = "0px";
+                wrapper.style.marginLeft = "80px";
+              }
+            } else if (e.target.id === "count") {
               if (cart.style.right != "0px") {
                 cart.style.right = "0px";
               } else {
                 cart.style.right = "-325px";
               }
-            });
-          }
-
-          bar.addEventListener("click", () => {
-            if (sidebar.style.left != "0px") {
-              sidebar.style.left = "0px";
-              wrapper.style.marginLeft = "80px";
-            } else {
-              sidebar.style.left = "-80px";
-              wrapper.style.marginLeft = "0px";
             }
-          });
+          };
         }
       };
     </script>

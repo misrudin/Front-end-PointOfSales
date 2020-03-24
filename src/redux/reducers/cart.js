@@ -5,7 +5,8 @@ const initialValue = {
   isRejected: false,
   isFulfilled: false,
   qty: 0,
-  cartDetail: []
+  cartDetail: [],
+  alldetail: []
 };
 
 const cartReducer = (state = initialValue, action) => {
@@ -199,6 +200,28 @@ const cartReducer = (state = initialValue, action) => {
         isPending: false,
         isFulfilled: true,
         cartData: state.cartData
+      };
+    // detail_all
+    case "ALL_DETAIL_PENDING":
+      return {
+        ...state,
+        isPending: true,
+        isRejected: false,
+        isFulfilled: false
+      };
+    case "ALL_DETAIL_REJECTED":
+      return {
+        ...state,
+        isPending: false,
+        isRejected: true,
+        errMsg: action.payload.data
+      };
+    case "ALL_DETAIL_FULFILLED":
+      return {
+        ...state,
+        isPending: false,
+        isFulfilled: true,
+        alldetail: action.payload.data.result
       };
     default:
       return state;

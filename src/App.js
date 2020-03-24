@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import "./App.css";
-import { Header } from "../src/Component/Header";
+import { Header, HeaderCart } from "../src/Component/Header";
 
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
@@ -70,6 +70,7 @@ class App extends Component {
       return (
         <Fragment>
           <Header />
+          <HeaderCart />
           <Sidebar onPress={() => this.handleLogout()} />
         </Fragment>
       );

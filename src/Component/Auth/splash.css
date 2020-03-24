@@ -10,7 +10,7 @@
   width: 13px;
   height: 13px;
   border-radius: 50%;
-  background: rgb(201, 13, 85);
+  background: rgba(19, 8, 160, 0.719);
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 .lds-ellipsis div:nth-child(1) {
@@ -111,8 +111,8 @@
   height: 0;
   margin: 8px;
   box-sizing: border-box;
-  border: 15px solid rgb(231, 12, 103);
-  border-color: rgb(231, 12, 103) transparent rgb(231, 12, 103) transparent;
+  border: 10px solid rgb(250, 0, 104);
+  border-color: rgb(255, 0, 106) transparent rgb(255, 0, 106) transparent;
   animation: lds-hourglass 1.2s infinite;
 }
 @keyframes lds-hourglass {

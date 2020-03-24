@@ -10,7 +10,7 @@ const Splash = ({ history }) => {
   });
   return (
     <div className="container">
-      <div class="lds-ellipsis">
+      <div className="lds-ellipsis">
         <div></div>
         <div></div>
         <div></div>

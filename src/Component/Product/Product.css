@@ -65,3 +65,28 @@
   padding: 0;
   width: 100%;
 }
+
+#sort {
+  width: 200px;
+  margin-left: 10px;
+  padding: 5px 10px 5px 10px;
+  border-radius: 5px;
+  color: #666;
+}
+
+div.headProduct {
+  display: flex;
+  align-items: center;
+  flex-wrap: row;
+}
+
+div.frm {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  justify-content: center;
+}
+
+#sort:focus {
+  outline: none;
+}

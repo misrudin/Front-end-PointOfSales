@@ -20,48 +20,52 @@ import {
 import swal from "sweetalert";
 import picEmpty from "../../img/food-and-restaurant.svg";
 import { getAllCategory } from "../../redux/actions/category";
-// import { Header } from "../Header";
+import { HeaderSearch } from "../Header";
+
 class Content extends Component {
-  state = {
-    productall: [],
-    category: [],
-    product: [],
-    cartData: [],
-    cart: {
+  constructor(props) {
+    super(props);
+    this.state = {
+      productall: [],
+      category: [],
+      product: [],
+      cartData: [],
+      cart: {
+        id_user: "",
+        qty: 1,
+        id_product: "",
+        name: "",
+        image: "",
+        price: ""
+      },
+      dataproduct: {
+        name: "",
+        description: "",
+        price: "",
+        image: null,
+        id_category: "",
+        stok: 0
+      },
+      key: "",
+      categoryKey: "",
+      qty: 0,
+      total: 0,
+      modalCheckout: false,
+      printCheckout: false,
+      formCheckOut: {
+        faktur: "",
+        id_user: "",
+        qty: "",
+        total: ""
+      },
+      detailCart: [],
       id_user: "",
-      qty: 1,
-      id_product: "",
-      name: "",
-      image: "",
-      price: ""
-    },
-    dataproduct: {
-      name: "",
-      description: "",
-      price: "",
-      image: null,
-      id_category: "",
-      stok: 0
-    },
-    keyword: "",
-    categoryKey: "",
-    qty: 0,
-    total: 0,
-    modalCheckout: false,
-    printCheckout: false,
-    formCheckOut: {
-      faktur: "",
-      id_user: "",
-      qty: "",
-      total: ""
-    },
-    detailCart: [],
-    id_user: "",
-    username: "",
-    page: 1,
-    loading: true,
-    hasMore: true
-  };
+      username: "",
+      page: 1,
+      loading: true,
+      hasMore: true
+    };
+  }
 
   handleClose = () => {
     this.setState({
@@ -118,7 +122,7 @@ class Content extends Component {
   getProduct = async () => {
     this.setState({ loading: true });
     const page = this.state.page;
-    await this.props.dispatch(pagination(page));
+    await this.props.dispatch(pagination(this.state.key, page));
     // console.log(this.props.product.productData);
     this.setState({
       product: this.props.product.productData[2],
@@ -322,22 +326,41 @@ class Content extends Component {
     }
   };
 
+  search = key => {
+    this.setState(
+      {
+        key: key,
+        page: 1
+      },
+      () => {
+        this.getProduct();
+      }
+    );
+    // console.log(key);
+  };
+
   render() {
     return (
       <Fragment>
-        {/* <Header /> */}
+        <HeaderSearch onSearch={key => this.search(key)} />
         <div className="content" id="content">
           <div className="items" id="items">
-            {this.state.product.map(product => {
-              return (
-                <Product
-                  key={product.id}
-                  data={product}
-                  addToCart={() => this.handleAddToCart(product)}
-                  dataCart={this.state.cartData}
-                />
-              );
-            })}
+            {this.state.product !== undefined ? (
+              this.state.product.map(product => {
+                return (
+                  <Product
+                    key={product.id}
+                    data={product}
+                    addToCart={() => this.handleAddToCart(product)}
+                    dataCart={this.state.cartData}
+                  />
+                );
+              })
+            ) : (
+              <div className="kosong">
+                <p>Result not found with key : {this.state.key}</p>
+              </div>
+            )}
             {this.state.loading ? (
               <div className="load">
                 <div className="lds-ripple">

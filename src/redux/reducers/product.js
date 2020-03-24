@@ -4,7 +4,8 @@ const initialValue = {
   isPending: false,
   isRejected: false,
   isFulfilled: false,
-  productall: []
+  productall: [],
+  q: ""
 };
 
 const productReducer = (state = initialValue, action) => {
@@ -31,6 +32,28 @@ const productReducer = (state = initialValue, action) => {
         isFulfilled: true,
         productall: action.payload.data.result
       };
+    //for sort category
+    case "SORT_PENDING":
+      return {
+        ...state,
+        isPending: true,
+        isRejected: false,
+        isFulfilled: false
+      };
+    case "SORT_REJECTED":
+      return {
+        ...state,
+        isPending: false,
+        isRejected: true,
+        errMsg: action.payload.data
+      };
+    case "SORT_FULFILLED":
+      return {
+        ...state,
+        isPending: false,
+        isFulfilled: true,
+        productall: action.payload.data.result
+      };
 
     //form post product data
     case "ADD_PRODUCT_PENDING":
@@ -49,7 +72,7 @@ const productReducer = (state = initialValue, action) => {
       };
     case "ADD_PRODUCT_FULFILLED":
       if (action.payload.data.result) {
-        state.productall.unshift(action.payload.data.result);
+        state.productall.push(action.payload.data.result);
         return {
           ...state,
           isPending: false,
@@ -143,6 +166,12 @@ const productReducer = (state = initialValue, action) => {
         isPending: false,
         isFulfilled: true,
         productData: action.payload.data.result
+      };
+
+    case "Q":
+      return {
+        ...state,
+        q: action.payload
       };
 
     default:

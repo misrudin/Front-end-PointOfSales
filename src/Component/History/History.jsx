@@ -3,7 +3,8 @@ import "./History.css";
 import axios from "axios";
 import TableHistory from "./Table";
 import { Table } from "react-bootstrap";
-// import { Header } from "../Header";
+import { connect } from "react-redux";
+import { detail } from "../../redux/actions/cart";
 
 class History extends Component {
   constructor(props) {
@@ -11,7 +12,8 @@ class History extends Component {
 
     this.state = {
       history: [],
-      allhistory: []
+      allhistory: [],
+      detail: []
     };
   }
 
@@ -42,10 +44,15 @@ class History extends Component {
       });
   };
 
+  getAllDetail = () => {
+    this.props.dispatch(detail());
+  };
+
   componentDidMount() {
     if (localStorage.getItem("Token")) {
       this.getHistory();
       this.getAllHistory();
+      this.getAllDetail();
     }
   }
 
@@ -120,7 +127,6 @@ class History extends Component {
 
     return (
       <Fragment>
-        {/* <Header />/ */}
         <div className="containerHistory">
           <div className="contain">
             <div className="kotak1">
@@ -152,7 +158,13 @@ class History extends Component {
               </thead>
               <tbody>
                 {this.state.allhistory.map(data => {
-                  return <TableHistory key={data.faktur} data={data} />;
+                  return (
+                    <TableHistory
+                      key={data.faktur}
+                      data={data}
+                      detail={this.state.detail}
+                    />
+                  );
                 })}
               </tbody>
             </Table>
@@ -163,4 +175,10 @@ class History extends Component {
   }
 }
 
-export default History;
+const mapStateToProps = ({ cart }) => {
+  return {
+    cart
+  };
+};
+
+export default connect(mapStateToProps)(History);

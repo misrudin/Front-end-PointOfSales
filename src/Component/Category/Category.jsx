@@ -10,7 +10,7 @@ import {
   editCategory
 } from "../../redux/actions/category.js";
 import swal from "sweetalert";
-// import { Header } from "../Header";
+import { HeaderSearch } from "../Header";
 
 class AddCategory extends Component {
   state = {
@@ -136,7 +136,7 @@ class AddCategory extends Component {
 
   getData = e => {
     this.setState({
-      keyword: e.target.value
+      keyword: e
     });
   };
 
@@ -154,7 +154,7 @@ class AddCategory extends Component {
     });
     return (
       <Fragment>
-        {/* <Header /> */}
+        <HeaderSearch onSearch={e => this.getData(e)} />
         <div className="daftar">
           <Button
             className="btn btn-info"
@@ -162,13 +162,6 @@ class AddCategory extends Component {
           >
             Add Category
           </Button>
-          <input
-            type="text"
-            name="keyword"
-            placeholder="Search..."
-            className="keyword"
-            onChange={this.getData}
-          />
           <Table responsive="m" className="mt-4" striped bordered hover>
             <thead>
               <tr>

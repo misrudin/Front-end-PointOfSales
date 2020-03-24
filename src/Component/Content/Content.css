@@ -201,6 +201,11 @@ div.sch {
   }
 } */
 
+div.kosong {
+  color: #777;
+  font-size: 14px;
+}
+
 .pages {
   background-color: #f7f9fc;
   margin-left: auto;
@@ -211,7 +216,7 @@ div.sch {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 100px;
+  padding: 0px 100px;
 }
 
 .pages p {
@@ -220,6 +225,7 @@ div.sch {
   color: blue;
   font-weight: bold;
   font-size: 30px;
+  margin-top: 10px;
 }
 
 .load {

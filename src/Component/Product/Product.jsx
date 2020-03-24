@@ -6,12 +6,13 @@ import {
   getAllProduct,
   addProduct,
   deleteProduct,
-  editProduct
+  editProduct,
+  sortByCategory
 } from "../../redux/actions/product";
 import { getAllCategory } from "../../redux/actions/category";
 import TableProduct from "./Table";
 import swal from "sweetalert";
-// import { Header } from "../Header";
+import { HeaderSearch } from "../Header";
 
 class AddProduct extends Component {
   state = {
@@ -30,7 +31,8 @@ class AddProduct extends Component {
       stok: ""
     },
     msg: "",
-    show: false
+    show: false,
+    key: "0"
   };
 
   handleClose = () => {
@@ -251,7 +253,7 @@ class AddProduct extends Component {
 
   getData = e => {
     this.setState({
-      keyword: e.target.value
+      keyword: e
     });
   };
 
@@ -259,6 +261,21 @@ class AddProduct extends Component {
     this.getCategory();
     this.getProduct();
   }
+
+  sortProduct = key => {
+    this.setState({ key: key.target.value }, async () => {
+      if (this.state.key.toString() === "0") {
+        this.getProduct();
+      } else {
+        await this.props.dispatch(sortByCategory(this.state.key)).then(() => {
+          const product = this.props.product.productall;
+          this.setState({
+            product: product
+          });
+        });
+      }
+    });
+  };
 
   render() {
     let filterProduct = this.state.product.filter(product => {
@@ -269,21 +286,28 @@ class AddProduct extends Component {
     });
     return (
       <Fragment>
-        {/* <Header /> */}
+        <HeaderSearch onSearch={e => this.getData(e)} />
         <div className="daftar">
-          <Button
-            className="btn btn-info"
-            onClick={() => this.setState({ modalShow: true })}
-          >
-            Add Product
-          </Button>
-          <input
-            type="text"
-            name="keyword"
-            placeholder="Search..."
-            className="keyword"
-            onChange={this.getData}
-          />
+          <div className="headProduct">
+            <Button
+              className="btn btn-info"
+              onClick={() => this.setState({ modalShow: true })}
+            >
+              Add Product
+            </Button>
+            <div className="frm">
+              <select name="sort" id="sort" onChange={e => this.sortProduct(e)}>
+                <option value="0">All Category</option>
+                {this.state.category.map(data => {
+                  return (
+                    <option key={data.id} value={data.id}>
+                      {data.nama_category}
+                    </option>
+                  );
+                })}
+              </select>
+            </div>
+          </div>
           <Table responsive="m" className="mt-4" striped bordered hover>
             <thead>
               <tr>
@@ -422,7 +446,7 @@ class AddProduct extends Component {
                     {this.state.category.map(data => {
                       return (
                         <option key={data.id} value={data.id}>
-                          {data.nama_category}{" "}
+                          {data.nama_category}
                         </option>
                       );
                     })}
@@ -434,7 +458,6 @@ class AddProduct extends Component {
           </Modal.Body>
           <Modal.Footer>
             <Button variant="primary" onClick={this.AddProduct}>
-              {" "}
               Save
             </Button>
             <Button variant="secondary" onClick={this.handleClose}>
@@ -466,10 +489,6 @@ class AddProduct extends Component {
               {this.state.msg}
             </Alert>
             <Form>
-              {/* <Form.Group as={Row} controlId="formHorizontalName" className="justify-content-center">
-                                <img className="preview" src={this.state.formProduct.image} alt="img" />
-                            </Form.Group> */}
-
               <Form.Group as={Row} controlId="formHorizontalName">
                 <Form.Label column sm={2}>
                   Name

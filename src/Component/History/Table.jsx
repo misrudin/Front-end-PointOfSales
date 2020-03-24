@@ -1,40 +1,20 @@
-import React, { Component, Fragment } from 'react'
-import { connect } from 'react-redux'
-import { getDetail } from '../../redux/actions/cart'
+import React, { Fragment } from "react";
+// import { useSelector } from "react-redux";
 
-class TableHistory extends Component {
-    state = {
-        detail: []
-    }
-    getOrders = async () => {
-        const faktur = this.props.data.faktur
-        await this.props.dispatch(getDetail(faktur))
-        this.setState({
-            detail: this.props.cart.cartDetail[0].name
-        })
-    }
+const TableHistory = props => {
+  //   const { alldetail } = useSelector(state => state.cart);
 
+  return (
+    <Fragment>
+      <tr>
+        <td>{props.data.faktur}</td>
+        <td>{props.data.username}</td>
+        <td>{props.data.date_pay}</td>
+        <td>{props.data.qty}</td>
+        <td>{props.data.total}</td>
+      </tr>
+    </Fragment>
+  );
+};
 
-    render() {
-        return (
-            <Fragment>
-                <tr>
-                    <td>{this.props.data.faktur}</td>
-                    <td>{this.props.data.username}</td>
-                    <td>{this.props.data.date_pay}</td>
-                    <td>{this.props.data.qty}</td>
-                    <td>{this.props.data.total}</td>
-                </tr>
-            </Fragment>
-
-        )
-    }
-}
-
-const mapStateToProps = ({ cart }) => {
-    return {
-        cart
-    }
-}
-
-export default connect(mapStateToProps)(TableHistory)
+export default TableHistory;
