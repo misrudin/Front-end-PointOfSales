@@ -307,6 +307,11 @@ class AddProduct extends Component {
                 })}
               </select>
             </div>
+            {this.props.product.isPending ? (
+              <div className="loadingCat">
+                <div className="lds-hourglass"></div>
+              </div>
+            ) : null}
           </div>
           <Table responsive="m" className="mt-4" striped bordered hover>
             <thead>

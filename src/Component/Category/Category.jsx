@@ -156,12 +156,19 @@ class AddCategory extends Component {
       <Fragment>
         <HeaderSearch onSearch={e => this.getData(e)} />
         <div className="daftar">
-          <Button
-            className="btn btn-info"
-            onClick={() => this.setState({ modalShow: true })}
-          >
-            Add Category
-          </Button>
+          <div className="headProduct">
+            <Button
+              className="btn btn-info"
+              onClick={() => this.setState({ modalShow: true })}
+            >
+              Add Category
+            </Button>
+            {this.props.category.isPending ? (
+              <div className="loadingCat">
+                <div className="lds-hourglass"></div>
+              </div>
+            ) : null}
+          </div>
           <Table responsive="m" className="mt-4" striped bordered hover>
             <thead>
               <tr>

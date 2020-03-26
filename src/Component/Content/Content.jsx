@@ -499,7 +499,7 @@ class Content extends Component {
                 variant="primary"
                 className="btnPrint"
                 type="submit"
-                onClick={this.editProductData}
+                onClick={this.handleClose}
               >
                 Print
               </Button>
