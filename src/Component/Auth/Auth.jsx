@@ -86,9 +86,9 @@ class Login extends Component {
                   className="justify-content-center mt-4"
                 >
                   <Col lg={12}>
-                    <Form.Control
+                    <input
                       type="text"
-                      className="txt"
+                      className="txtr"
                       name="username"
                       required
                       onChange={this.handleChange}
@@ -103,14 +103,17 @@ class Login extends Component {
                   className="justify-content-center mt-3"
                 >
                   <Col lg={12}>
-                    <Form.Control
+                    <input
                       type="password"
-                      className="txt"
+                      className="txtr"
                       name="password"
                       required
                       onChange={this.handleChange}
                       placeholder="Password"
                       value={this.state.user.password}
+                      onKeyPress={e =>
+                        e.key === "Enter" ? this.handleLogin() : null
+                      }
                     />
                   </Col>
                 </Form.Group>
@@ -121,7 +124,7 @@ class Login extends Component {
                 >
                   <Col lg={8}>
                     <Button
-                      className="form-control btn btn-lgn txt mb-3"
+                      className="form-control btn btn-lgn txtr mb-3"
                       onClick={e => this.handleLogin()}
                       name="login"
                     >

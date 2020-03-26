@@ -132,9 +132,9 @@ class Register extends Component {
                   className="justify-content-center mt-3"
                 >
                   <Col lg={12}>
-                    <Form.Control
+                    <input
                       type="text"
-                      className="txtUsername"
+                      className="txtr"
                       name="username"
                       required
                       onChange={this.handleChange}
@@ -149,9 +149,9 @@ class Register extends Component {
                   className="justify-content-center mt-3"
                 >
                   <Col lg={12}>
-                    <Form.Control
+                    <input
                       type="password"
-                      className="txtPassword"
+                      className="txtr"
                       name="password"
                       required
                       onChange={this.handleChange}
@@ -166,14 +166,17 @@ class Register extends Component {
                   className="justify-content-center mt-3"
                 >
                   <Col lg={12}>
-                    <Form.Control
+                    <input
                       type="password"
-                      className="txtRepeat"
+                      className="txtr"
                       name="passwordRepeat"
                       required
                       onChange={this.handleChange}
                       placeholder="Repeat Password"
                       value={this.state.user.passwordRepeat}
+                      onKeyPress={e =>
+                        e.key === "Enter" ? this.validate() : null
+                      }
                     />
                   </Col>
                 </Form.Group>
@@ -184,7 +187,7 @@ class Register extends Component {
                 >
                   <Col lg={8}>
                     <Button
-                      className="form-control btn btn-primary mb-3 txt"
+                      className="form-control btn btn-primary mb-3 btn-register"
                       onClick={this.validate}
                       name="Register"
                     >

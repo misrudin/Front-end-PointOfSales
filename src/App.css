@@ -246,3 +246,10 @@ div.menuSide ul li {
     display: block;
   }
 }
+
+div.imgs {
+  position: absolute;
+  top: 27px;
+  right: 15px;
+  cursor: pointer;
+}

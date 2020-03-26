@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import bar from "../img/bar.svg";
+import search from "../img/search.svg";
 import { useSelector } from "react-redux";
+
 export const Header = props => {
   return (
     <div>
@@ -42,6 +44,9 @@ export const HeaderSearch = props => {
       props.onSearch(q.trim());
     }
   };
+  const handleSearch = e => {
+    props.onSearch(q.trim());
+  };
   return (
     <div>
       <div className="mynav">
@@ -57,6 +62,15 @@ export const HeaderSearch = props => {
               value={q}
               onKeyPress={e => handleChange(e)}
             />
+            <div className="imgs" onClick={() => handleSearch()}>
+              <img
+                src={search}
+                alt="Search"
+                width="20px"
+                className="src"
+                id="src"
+              />
+            </div>
           </div>
         </div>
       </div>

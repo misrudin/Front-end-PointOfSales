@@ -3,11 +3,12 @@ div.main {
   height: 100vh;
   width: 100%;
   z-index: 10;
-  background-color: #f7f9fc;
+  background-image: linear-gradient(to right, #50c9c3, #9bc5c3);
   top: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  /* background-color: red; */
 }
 
 div.bg {
@@ -18,35 +19,59 @@ div.bg {
   background-repeat: no-repeat;
   background-size: 40%;
   background-position: right;
-  z-index: -1;
 }
 
 div.Registerarea {
-  background-color: #fff;
-  width: 400px;
-  height: 450px;
-  box-shadow: 0 0 7px rgba(136, 136, 136, 0.7);
+  position: relative;
+  background-color: rgb(14, 9, 9);
+  min-width: 400px;
+  padding: 10px 40px;
+  box-shadow: 0 0 7px rgba(255, 255, 255, 0.7);
   border-radius: 4px;
-  padding-left: 40px;
-  padding-right: 40px;
-  padding-bottom: 40px;
   text-align: center;
 }
 
 h2.title {
-  text-align: center;
+  z-index: 100;
+  text-align: left;
   display: inline-block;
+  color: #038f88;
   width: 100%;
   padding-top: 20px;
   padding-bottom: 20px;
   border-bottom: 1px solid rgb(209, 209, 209);
 }
 
-/* .form-register input{
-    box-shadow: none;
-    border: 1px solid salmon;
+.txtr {
+  box-shadow: 0 0 7px rgba(136, 136, 136, 0.2);
+  background-color: rgb(14, 9, 9) !important;
+  color: #ddd !important;
+  width: 100%;
+  border: 1px solid rgb(50, 51, 51);
+  padding: 5px 20px 5px 10px;
+  border-radius: 6px;
 }
-.form-register input:active{
-    box-shadow: none !important;
-    border: 1px solid salmon !important;
-} */
+
+.btn-register {
+  background-color: rgb(14, 9, 9) !important;
+}
+
+@media only screen and (max-width: 600px) {
+  div.bg {
+    display: none;
+  }
+  div.Registerarea {
+    position: relative;
+    background-color: rgb(14, 9, 9);
+    min-width: 95%;
+    padding: 10px 40px;
+    box-shadow: 0 0 7px rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    text-align: center;
+  }
+
+  .txt {
+    box-shadow: none;
+    padding: 5px 20px 5px 10px;
+  }
+}

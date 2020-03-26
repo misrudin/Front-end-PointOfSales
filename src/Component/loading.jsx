@@ -4,8 +4,8 @@ import "./Auth/Auth.css";
 
 export const Loading = () => {
   return (
-    <div className="con">
-      <div className="loading">
+    <div className="container-loading">
+      <div className="loading-area">
         {/* <div class="lds-ellipsis">
           <div></div>
           <div></div>
