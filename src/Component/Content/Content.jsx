@@ -141,8 +141,10 @@ class Content extends Component {
   getDetailCart = async faktur => {
     await this.props.dispatch(getDetail(faktur));
     this.setState({
-      detailCart: this.props.cart.cartDetail
+      detailCart: this.props.cart.cartDetail,
+        printCheckout: true
     });
+
   };
 
   handleAddToCart = product => {
@@ -173,9 +175,7 @@ class Content extends Component {
       this.getAllCart();
       this.getDetailCart(data.faktur);
       this.getProduct();
-      this.setState({
-        printCheckout: true
-      });
+      
     });
   };
 
@@ -224,9 +224,17 @@ class Content extends Component {
     const id_cart = data.id;
     const newQty = data.qty - 1;
     if (newQty < 1) {
-      this.props.dispatch(deleteCart(data.id)).then(() => {
+    swal({
+      text: `Delete ${data.name} from cart ?`,
+      buttons: true,
+    }).then(willDelete => {
+      if (willDelete) {
+        this.props.dispatch(deleteCart(data.id)).then(() => {
         this.getAllCart();
       });
+      }
+    });
+      
     } else {
       this.props.dispatch(minQty(id_cart)).then(() => {
         this.getAllCart();

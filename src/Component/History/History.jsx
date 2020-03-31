@@ -131,17 +131,17 @@ class History extends Component {
           <div className="contain">
             <div className="kotak1">
               <p className="head">Today's Income</p>
-              <p className="body">Rp. {this.state.history.INCOME_TODAY}</p>
+              <p className="body">Rp. {this.state.history.INCOME_TODAY ? this.state.history.INCOME_TODAY : 0}</p>
               <p className="foot">{yesterday} % Yesterday</p>
             </div>
             <div className="kotak2">
               <p className="head">Orders</p>
-              <p className="body">{this.state.history.order_week} </p>
+              <p className="body">{this.state.history.order_week ? this.state.history.order_week : 0} </p>
               <p className="foot">{order} % Last Week</p>
             </div>
             <div className="kotak3">
               <p className="head">This Year's Income</p>
-              <p className="body">Rp. {this.state.history.year_omzet} </p>
+              <p className="body">Rp. {this.state.history.year_omzet ? this.state.history.year_omzet : 0} </p>
               <p className="foot">{year} % Last year</p>
             </div>
           </div>
