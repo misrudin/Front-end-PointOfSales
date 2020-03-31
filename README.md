@@ -44,30 +44,51 @@
 		text-decoration: none;
 		color: salmon;
 	}
+	section{
+		padding-top: 20px;
+	}
+	.app{
+		background-color: #eaeaea;
+		color: #fff;
+		font-weight: bold;
+		padding: 2px 5px;
+		border-radius: 10px
+	}
+	.app a{
+		color: #fff;
+	}
 </style>
 
 <div class="header">
 	<ul>
 		<li><a href="#home">home</a></li>
 		<li><a href="#requirements">requirements</a></li>
-		<li><a href="#how-to-run">How To Run</a></li>
+		<li><a href="#run">How To Run</a></li>
 		<li><a href="#screenshoot">screenshoot</a></li>
-		<li><a href="#related-project">related project</a></li>
-		<li><a href="http://localhost:3000" target="_blank">go to app</a></li>
+		<li><a href="#project">related project</a></li>
+		<li class="app"><a href="http://localhost:3000" target="_blank">go to app</a></li>
 	</ul>
 </div>
 
-<h1 id="home" align="center">Hayuu Cafe Front-end</h1>
+
+<section id="home">
+	
+<h1 align="center">Hayuu Cafe Front-end</h1>
 
 Hayuu cafe is an application to manage sales at hayuu cafe, build with ReactJS.
+</section>
 
+<section id="requirements">
+	
 ## Requirements
 * [`npm`](https://www.npmjs.com/get-npm)
 * [`React Js`](https://www.npmjs.com/get-npm)
 * [`react-bootsrap`](https://www.npmjs.com/get-npm)
 * [`sweetalert`](https://www.npmjs.com/get-npm)
+</section>
 
-
+<section id="run">
+	
 ## How To Run
 1. Open your terminal or command prompt
 2. Type `git clone https://github.com/misrudin/Front-end-PointOfSales.git`
@@ -78,7 +99,10 @@ Hayuu cafe is an application to manage sales at hayuu cafe, build with ReactJS.
 		REACT_APP_URL="http://localhost:4001/api/v1/"
 		```
 4. type `npm start` for run dependencies
+</section>
 
+<section id="screenshoot">
+	
 ## Screenshoot
 <div class="demo">
     <div class="items">
@@ -102,7 +126,11 @@ Hayuu cafe is an application to manage sales at hayuu cafe, build with ReactJS.
 		<img class="img-demo" src="./demo/mcategory.png">  
     </div>
 </div>
+</section>
 
+<section id="project">
+	
 ## Related Project
 * [`Hayuu-Cafe-Backend`](https://github.com/misrudin/NodeWithExpress-backend-PointOfSales.git)
 * [`Hayuu-Cafe-Mobile`](https://github.com/misrudin/PosReactNative.git)
+</section>
