@@ -20,7 +20,7 @@ Hayuu cafe is an application to manage sales at hayuu cafe, build with ReactJS.
 	
 ## Requirements
 * [`npm`](https://www.npmjs.com/get-npm)
-* [`React Js`](https://www.npmjs.com/get-npm)
+* [`React Js`](https://reactjs.org/docs/getting-started.html)
 * [`react-bootsrap`](https://react-bootstrap.github.io)
 * [`sweetalert`](https://sweetalert.js.org/)
 </section>
