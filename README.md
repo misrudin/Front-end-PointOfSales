@@ -45,7 +45,7 @@ Hayuu cafe is an application to manage sales at hayuu cafe, build with ReactJS.
 <div class="demo">
     <div class="items">
     	<h4 class="title-demo">Login Page</h4>
-		<img class="img-demo" src="./demo/login.png">  
+		<img class="img-demo" src="https://user-images.githubusercontent.com/37394664/78219692-3d6dd980-74ea-11ea-8c3a-a032edd3f864.png">  
     </div>
     <div class="items">
     	<h4 class="title-demo">Home Page</h4>
