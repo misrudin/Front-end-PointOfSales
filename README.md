@@ -1,11 +1,10 @@
 <div class="header">
 	<ul>
-		<li><a href="#">home</a></li>
 		<li><a href="#requirements">requirements</a></li>
-		<li><a href="#run">How To Run</a></li>
-		<li><a href="#screenshoot">screenshoot</a></li>
-		<li><a href="#project">related project</a></li>
-		<li class="app"><a href="http://localhost:3000" target="_blank">go to app</a></li>
+		<li><a href="#how-to-run">How To Run</a></li>
+		<li><a href="#screenshoot">Screenshoot</a></li>
+		<li><a href="#related-project">Related Project</a></li>
+		<li class="app"><a href="http://bit.ly/hayuu-cafe" target="_blank">go to app</a></li>
 	</ul>
 </div>
 
@@ -22,11 +21,11 @@ Hayuu cafe is an application to manage sales at hayuu cafe, build with ReactJS.
 ## Requirements
 * [`npm`](https://www.npmjs.com/get-npm)
 * [`React Js`](https://www.npmjs.com/get-npm)
-* [`react-bootsrap`](https://www.npmjs.com/get-npm)
-* [`sweetalert`](https://www.npmjs.com/get-npm)
+* [`react-bootsrap`](https://react-bootstrap.github.io)
+* [`sweetalert`](https://sweetalert.js.org/)
 </section>
 
-<section id="run">
+<section id="how-to-run">
 	
 ## How To Run
 1. Open your terminal or command prompt
@@ -67,7 +66,7 @@ Hayuu cafe is an application to manage sales at hayuu cafe, build with ReactJS.
 </div>
 </section>
 
-<section id="project">
+<section id="related-project">
 	
 ## Related Project
 * [`Hayuu-Cafe-Backend`](https://github.com/misrudin/NodeWithExpress-backend-PointOfSales.git)
