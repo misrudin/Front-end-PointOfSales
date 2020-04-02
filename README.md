@@ -3,6 +3,22 @@
 		background-color: #f7f9fc;
 		scroll-behavior: smooth;
 	}
+	/* width */
+	::-webkit-scrollbar {
+	  width: 5px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+	  /* box-shadow: inset 0 0 5px grey; */
+	  border-radius: 2px;
+	}
+
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+	  background: rgb(119, 8, 194);
+	  /* border-radius: 10px; */
+	}
 	.demo{
 		padding: 5px;
 		display: grid;
@@ -61,7 +77,7 @@
 
 <div class="header">
 	<ul>
-		<li><a href="#home">home</a></li>
+		<li><a href="#">home</a></li>
 		<li><a href="#requirements">requirements</a></li>
 		<li><a href="#run">How To Run</a></li>
 		<li><a href="#screenshoot">screenshoot</a></li>

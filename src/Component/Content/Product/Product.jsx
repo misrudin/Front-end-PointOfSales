@@ -40,6 +40,7 @@ const Product = props => {
 
     sm();
   }, [cart, props.data.id]);
+  
   return (
     <div
       className="item"
