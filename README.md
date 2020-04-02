@@ -1,3 +1,11 @@
+<section id="home">
+	
+<h1 align="center">Hayuu Cafe Front-end</h1>
+
+Hayuu cafe is an application to manage sales at hayuu cafe, build with ReactJS.
+</section>
+
+## Table Of Content
 <div class="header">
 	<ul>
 		<li><a href="#requirements">requirements</a></li>
@@ -7,14 +15,6 @@
 		<li class="app"><a href="http://bit.ly/hayuu-cafe" target="_blank">go to app</a></li>
 	</ul>
 </div>
-
-
-<section id="home">
-	
-<h1 align="center">Hayuu Cafe Front-end</h1>
-
-Hayuu cafe is an application to manage sales at hayuu cafe, build with ReactJS.
-</section>
 
 <section id="requirements">
 	
