@@ -5,7 +5,7 @@
 Hayuu cafe is an application to manage sales at hayuu cafe, build with ReactJS.
 </section>
 
-## Table Of Content
+#### Table Of Content
 <div class="header">
 	<ul>
 		<li><a href="#requirements">requirements</a></li>
